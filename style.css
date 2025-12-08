@@ -1,0 +1,597 @@
+/* RESET DASAR */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* WARNA DASAR */
+:root {
+    --color-bg: #f8f5eb; 
+    --color-text: #212121;
+    --color-primary-btn: #000000;
+    --color-secondary-btn-border: #212121;
+}
+
+body {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 20px 40px;
+}
+
+
+#myBtn {
+    display: none; 
+    position: fixed; 
+    bottom: 20px; 
+    z-index: 99; 
+    
+    /* Alignment dengan konten */
+    right: calc(50% - 650px + 40px); 
+    
+    /* --- GLASSMORHISM EFFECT --- */
+    background-color: rgba(255, 255, 255, 0.0); /* Background semi-transparan */
+    backdrop-filter: blur(10px) saturate(180%);
+    -webkit-backdrop-filter: blur(15px) saturate(180%);
+    
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Border Glass */
+    /* ---------------------------- */
+    
+    outline: none; 
+    
+    /* Warna teks mengikuti variabel agar kontras di background putih transparan */
+    color: var(--color-text); 
+    
+    cursor: pointer; 
+    padding: 8px 12px; /* Ditingkatkan sedikit agar lebih nyaman */
+    border-radius: 15px; 
+    font-size: 12px; 
+    
+    /* Tambahkan efek transisi untuk hover */
+    transition: background-color 0.3s, border-color 0.3s, transform 0.3s;
+    
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+  
+  #myBtn i {
+      padding-left:7px;
+  }
+
+
+
+/* ======================================= */
+/* HEADER DAN NAVIGATION (DESKTOP/DEFAULT) */
+/* ======================================= */
+
+/* Menyembunyikan checkbox */
+#menu-toggle {
+    display: none;
+}
+
+/* Styling Hamburger Icon (default tersembunyi di desktop) */
+.hamburger-icon {
+    display: none; 
+    cursor: pointer;
+    width: 30px; 
+    height: 30px; 
+    position: relative;
+    z-index: 100;
+}
+
+/* Styling Garis Hamburger */
+.line {
+    display: block;
+    width: 100%;
+    height: 3px; 
+    background: var(--color-text);
+    border-radius: 5px;
+    position: absolute;
+    left: 0;
+    transition: transform 0.4s ease-in-out, opacity 0.4s ease-in-out, top 0.4s ease-in-out; 
+}
+
+/* Penempatan Garis Awal */
+.line1 {
+    top: 5px;
+}
+
+.line2 {
+    top: 13.5px; /* Posisi tengah */
+}
+
+.line3 {
+    top: 22px;
+}
+
+/* PERUBAHAN UTAMA: Membuat Header Fixed, Terpusat, dengan LIQUID GLASS yang MENGAMBANG */
+.header {
+    position: fixed; 
+    top: 5px; /* DITAMBAH: Jarak 20px dari tepi atas */
+    /* Memusatkan fixed element dan membatasi lebarnya */
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 1300px; 
+    width: 100%; 
+    z-index: 1000; 
+    
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    
+    /* LIQUID GLASS / GLASSMORPHISM */
+    background-color: rgba(255, 255, 255, 0.3); 
+    backdrop-filter: blur(10px) saturate(180%);
+    -webkit-backdrop-filter: blur(15px) saturate(180%);
+    
+    /* Tambahkan Border Radius agar sudut melengkung */
+    border: 1px solid rgba(255, 255, 255, 0.2); 
+    border-radius: 30px; 
+    padding: 20px 40px; 
+    font-weight: 600;
+}
+
+/* Styling Logo Gambar */
+.logo {
+    /* Hapus font-size dan color dari sini */
+}
+.logo img {
+    height: 30px; /* Atur tinggi logo */
+    width: auto;
+    display: block;
+}
+
+/* NAVIGASI LINK - PENYESUAIAN HOVER UNDERLINE */
+.nav a {
+    text-decoration: none;
+    color: var(--color-text);
+    margin-left: 30px;
+    font-size: 16px;
+    transition: color 0.3s;
+    font-family: worksans, sans-serif;
+    
+    /* Tambahan untuk Underline */
+    padding-bottom: 3px; 
+    border-bottom: 2px solid transparent; 
+    transition: color 0.3s, border-bottom-color 0.3s; 
+}
+
+.nav a:hover {
+    color: var(--color-text); /* Teks tetap hitam */
+    border-bottom-color: var(--color-text); /* Underline muncul */
+}
+
+/* ======================================= */
+/* HERO SECTION */
+/* ======================================= */
+
+.hero-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 80vh;
+    padding-top: 100px; /* Ditingkatkan untuk memberi ruang fixed header */
+    margin-bottom: 100px; /* Ruang bawah */
+}
+
+/* Teks Kiri - PERBAIKAN LEBAR */
+.hero-text {
+    width: 50%; /* Menggunakan width 50% */
+}
+
+.hero-text h1 {
+    font-size: 55px;
+    font-family: worksans, sans-serif;
+    font-weight: 700;
+    line-height: 1.1;
+    margin: 0;
+}
+
+.hero-text .job-title {
+    font-size: 40px;
+    font-family: worksans, sans-serif;
+    margin-top: 10px;
+}
+
+/* Styling Tagline H2 Baru (Typing Container) */
+.hero-text h2 {
+    font-size: 20px; /* Ukuran tagline desktop */
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    margin-top: 15px; /* Jarak dari job-title di atas */
+    margin-bottom: 25px; /* Jarak dari tombol CTA di bawah */
+    line-height: 1.5;
+    color: grey
+}
+
+.typed-text {
+    color: rgba(232, 94, 92, 1); /* Warna Peach untuk teks yang diketik */
+}
+
+/* Styling untuk Kursor Typing Animation */
+.cursor {
+    display: inline-block;
+    background-color: var(--color-text);
+    margin-left: 0.1rem;
+    width: 3px; 
+    animation: blink 1s infinite;
+}
+
+/* Kursor saat sedang mengetik */
+.cursor.typing {
+    animation: none;
+}
+
+/* Keyframe Animation untuk efek kedip */
+@keyframes blink {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.cta-buttons {
+    margin-top: 40px;
+    display: flex;
+    gap: 15px;
+}
+
+.btn {
+    padding: 14px 30px;
+    text-decoration: none;
+    font-family: worksans, sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 20px;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s, box-shadow 0.3s, transform 0.3s; /* Yang ini */
+}
+
+/* Primary Button (Mengikuti Secondary Button - Outline) */
+.btn.primary {
+    background-color: transparent;
+    color: var(--color-secondary-btn-border);
+    border: 2px solid var(--color-secondary-btn-border);
+}
+
+/* Secondary Button (Tetap Outline) */
+.btn.secondary {
+    background-color: transparent;
+    color: var(--color-secondary-btn-border);
+    border: 2px solid var(--color-secondary-btn-border);
+}
+
+/* EFEK HOVER UNTUK KEDUA TOMBOL (LIQUID GLASS + ZOOM) */
+.btn:hover {
+    /* Background semi-transparan (Glassmorphism) */
+    background-color: rgba(255, 255, 255, 0.5); 
+    transform: scale(1.05); 
+    border-color: rgba(255, 255, 255, 0.6);
+    
+    /* Efek BLUR */
+    backdrop-filter: blur(12px) saturate(150%);
+    -webkit-backdrop-filter: blur(12px) saturate(150%);
+    
+    /* Efek ZOOM */
+    transform: scale(1.05); /* Tombol membesar 5% */
+    
+    /* Pastikan teks tetap gelap agar kontras */
+    color: var(--color-text); 
+
+    box-shadow: 
+        0 0 15px 0 rgba(239, 139, 95, 0.7),   /* GLOW BIRU MUDA (Siri Blue) */
+        0 0 30px 0 rgba(239, 139, 95, 0.5),   /* GLOW UNGU MUDA (Siri Purple) */
+        0 5px 15px 0 rgba(0, 0, 0, 0.15);      /* SHADOW BAWAH (Floating effect) */
+    
+    color: var(--color-text);
+}
+
+/* Gambar Kanan - PERBAIKAN LEBAR DAN ALIGNMENT */
+.hero-image {
+    display: flex;
+    justify-content: flex-end; /* Memastikan gambar rata kanan di dalam kolomnya */
+    width: 50%; /* Menggunakan width 50% */
+}
+
+.hero-image img {
+    max-width: 80%; /* Batasi ukuran gambar di desktop */
+    height: auto;
+    display: block;
+}
+
+/* ======================================= */
+/* ABOUT ME SECTION (KODE BARU & PENYESUAIAN) */
+/* ======================================= */
+
+.about-section {
+    padding: 80px 0;
+    /* Background dihapus agar konsisten dengan Hero Section */
+}
+
+.about-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 80px;
+}
+
+.about-text {
+    flex: 1;
+    max-width: 50%;
+}
+
+.about-text h2 {
+    font-family: 'poppins', sans-serif;
+    font-size: 45px;
+    margin-bottom: 25px;
+}
+
+.about-text p {
+    font-family: 'poppins', sans-serif;
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    color: rgb(108, 108, 108);
+}
+
+.about-image {
+    flex: 1;
+    display: flex;
+    justify-content: center; /* Gambar rata tengah di kolomnya */
+    max-width: 40%;
+}
+
+/* Styling Gambar menjadi Lingkaran */
+.about-image img {
+    width: 300px;
+    height: 300px;
+    object-fit: cover; /* Memastikan gambar mengisi lingkaran tanpa distorsi */
+    border-radius: 50%; /* Membuat gambar menjadi lingkaran */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+
+/* ================================================= */
+/* MEDIA QUERIES UNTUK RESPONSIVE DESIGN (MOBILE/TABLET) */
+/* ================================================= */
+
+@media (max-width: 992px) {
+    /* Penyesuaian padding untuk fixed header di mobile/tablet */
+    .header {
+        padding: 20px 20px; /* Padding horizontal disamakan dengan container di mobile */
+    }
+    .hero-section {
+        padding-top: 100px; /* Jaga agar konten tidak tertutup header fixed */
+    }
+    
+    .container {
+        padding: 20px 20px;
+    }
+    
+    .hamburger-icon {
+        display: block; 
+    }
+
+    .header {
+        /* position: relative; DIHAPUS */
+        flex-direction: row; 
+        justify-content: space-between; 
+        align-items: center;
+    }
+    
+#myBtn {
+        /* PENTING: Mengganti kalkulasi yang rumit dengan nilai piksel sederhana.
+           Ini memastikan tombol berada 20px dari tepi kanan, sesuai padding container responsive. */
+        right: 20px !important; 
+        
+        /* Z-index ini boleh dipertahankan agar tidak tertutup header */
+        z-index: 1001;
+    }
+
+
+    /* Logika Animasi Silang (X) */
+    #menu-toggle:checked ~ .hamburger-icon .line1 {
+        top: 13.5px;
+        transform: rotate(45deg); 
+    }
+
+    #menu-toggle:checked ~ .hamburger-icon .line2 {
+        opacity: 0; 
+    }
+
+    #menu-toggle:checked ~ .hamburger-icon .line3 {
+        top: 13.5px;
+        transform: rotate(-45deg); 
+    }
+
+    /* Navigasi (Menu) */
+    .nav {
+        position: absolute;
+        top: 60px;
+        right: 0;
+        left: 0;
+        background-color: var(--color-bg);
+        
+        flex-direction: column; 
+        width: 100%;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.4s ease-in-out; 
+        z-index: 99;
+    }
+
+    .nav a {
+        display: block;
+        padding: 15px 20px;
+        margin: 0;
+        text-align: center;
+        border-bottom: 1px solid #eee;
+    }
+    
+    /* LOGIKA MENU BUKA/TUTUP */
+    #menu-toggle:checked ~ .nav {
+        max-height: 300px; 
+    }
+    
+    /* ======================================= */
+    /* HERO SECTION RESPONSIVE */
+    /* ======================================= */
+    /* Hero Section di mobile/tablet */
+    .hero-section {
+        flex-direction: column-reverse; /* Gambar di atas Teks */
+        text-align: center;
+        min-height: unset;
+        padding-top: 100px; /* Jaga agar konten tidak tertutup fixed header */
+        padding-bottom: 5px;
+    }
+
+    .hero-text {
+        width: 100%; /* Menggunakan 100% di mobile */
+        max-width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .hero-text h1 {
+        font-size: 36px;
+        font-family: poppins, sans-serif;
+    }
+    
+    .hero-text .job-title {
+        font-size: 28px; /* Lebih proporsional dari 36px */
+        font-family: poppins, sans-serif;
+    }
+    
+    /* Styling Tagline H2 Responsive */
+    .hero-text h2 {
+        font-size: 24px; /* Penyesuaian font size */
+        margin-bottom: 20px;
+    }
+
+    .cta-buttons {
+        justify-content: center;
+        align-items: center; 
+    }
+
+    /* PERBAIKAN JARAK DAN UKURAN */
+    .hero-image {
+        width: 100%; 
+        max-width: 65%; /* Dikecilkan lagi */
+        justify-content: center;
+        margin-bottom: 40px; /* Jarak ditingkatkan */
+    }
+    
+    /* ======================================= */
+    /* ABOUT ME SECTION RESPONSIVE */
+    /* ======================================= */
+    .about-container {
+        flex-direction: column-reverse; /* Gambar di atas Teks */
+        gap: 30px;
+        text-align: center;
+    }
+
+    .about-text {
+        width: 100%; /* Ditambahkan */
+        max-width: 100%;
+        order: 2; /* Teks di bawah */
+        font-family: poppins, sans-serif;
+    }
+
+    .about-image {
+        width: 100%; /* Ditambahkan */
+        justify-content: center;
+        max-width: 100%;
+        margin-bottom: 20px;
+        order: 1; /* Gambar di atas */
+    }
+
+    .about-image img {
+        width: 250px;
+        height: 250px;
+    }
+
+    .about-text h2 {
+        font-size: 36px;
+    }
+}
+
+/* Untuk layar ponsel (lebar maksimum 600px) */
+@media (max-width: 600px) {
+    /* Penyesuaian padding untuk fixed header di mobile/tablet */
+    .header {
+        padding: 20px; /* Padding horizontal disamakan dengan container di mobile */
+    }
+    
+    /* Tambahkan pengaturan column-reverse di sini */
+    .hero-section {
+        flex-direction: column-reverse;
+    }
+
+    .logo {
+        margin-bottom: 0;
+    }
+    
+    .hero-text h1 {
+        font-size: 30px;
+        font-family: poppins, sans-serif; 
+    }
+    
+    /* Job Title dikembalikan ke ukuran yang nyaman */
+    .hero-text .job-title {
+        font-size: 24px; /* Lebih proporsional dari 30px */
+        font-family: poppins, sans-serif;
+        color: var(--color-text); /* Gunakan variabel warna teks */
+    }
+    
+    /* Styling Tagline H2 Responsive */
+    .hero-text h2 {
+        font-size: 18px;
+        margin-bottom: 15px;
+    }
+    
+    .cta-buttons {
+        flex-direction: column; 
+        align-items: center; 
+    }
+    
+    .btn {
+        width: 70%;
+    }
+    
+    /* PERBAIKAN UKURAN GAMBAR DI SINI */
+    .hero-image {
+        max-width: 80%; /* Dikecilkan lagi */
+    }
+    
+    /* ======================================= */
+    /* ABOUT ME SECTION RESPONSIVE */
+    /* ======================================= */
+    .about-section {
+        padding: 60px 0;
+    }
+
+    .about-image img {
+        width: 200px;
+        height: 200px;
+    }
+
+    .about-text h2 {
+        font-size: 30px;
+        font-family: poppins, sans-serif;
+    }
+
+    .about-text p {
+        font-size: 16px;
+        text-align: left;
+        font-family: poppins, sans-serif;
+    }
+}
