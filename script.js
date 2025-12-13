@@ -199,6 +199,111 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 });
 
+// 1. Ambil referensi elemen-elemen HTML
+const projectsTrack = document.getElementById('projects-track');
+const prevBtn = document.getElementById('prev-btn');
+const nextBtn = document.getElementById('next-btn');
+// Kita menggunakan querySelectorAll untuk mendapatkan semua item (kotak proyek)
+const projectItems = document.querySelectorAll('.project-item');
+
+// Inisialisasi slide saat ini (dimulai dari item pertama)
+let currentSlide = 0;
+const totalItems = projectItems.length;
+
+// Fungsi untuk menggeser track ke posisi slide yang ditentukan
+function updateSlider() {
+    if (totalItems === 0 || projectItems.length === 0) return;
+
+    // Ambil lebar proyek item pertama (termasuk padding dan border)
+    const itemWidth = projectItems[0].offsetWidth; 
+    
+    // Nilai gap yang kita set di CSS adalah 20px
+    const gap = 20; 
+    
+    // Hitung langkah pergeseran: lebar satu item ditambah jarak (gap)
+    const step = itemWidth + gap;
+    
+    // Hitung jarak total pergeseran (negatif karena geser ke kiri)
+    const distance = -currentSlide * step;
+    
+    // Terapkan pergeseran menggunakan CSS transform
+    projectsTrack.style.transform = `translateX(${distance}px)`;
+    
+    // Panggil fungsi untuk mengupdate status tombol
+    updateButtonStatus();
+}
+
+// Fungsi untuk mengupdate status tombol (menghilangkan tombol di awal/akhir)
+function updateButtonStatus() {
+    if (projectItems.length === 0) return;
+    
+    // Hitung berapa item yang terlihat dalam viewport
+    // Kita membulatkan agar perhitungan responsif lebih stabil
+    const visibleItems = Math.round(projectsTrack.parentElement.offsetWidth / projectItems[0].offsetWidth);
+    
+    // Index terakhir yang bisa digeser agar item terakhir tetap terlihat
+    const maxSlide = totalItems - visibleItems; 
+    
+    // Tombol Prev
+    if (currentSlide === 0) {
+        prevBtn.disabled = true;
+        prevBtn.style.opacity = '0.5';
+    } else {
+        prevBtn.disabled = false;
+        prevBtn.style.opacity = '1';
+    }
+
+    // Tombol Next
+    if (currentSlide >= maxSlide) {
+        nextBtn.disabled = true;
+        nextBtn.style.opacity = '0.5';
+    } else {
+        nextBtn.disabled = false;
+        nextBtn.style.opacity = '1';
+    }
+}
+
+// Fungsi untuk menggeser ke slide berikutnya
+function nextSlide() {
+    const visibleItems = Math.round(projectsTrack.parentElement.offsetWidth / projectItems[0].offsetWidth);
+    const maxSlide = totalItems - visibleItems; 
+
+    if (currentSlide < maxSlide) {
+        currentSlide++;
+        updateSlider();
+    }
+}
+
+// Fungsi untuk menggeser ke slide sebelumnya
+function prevSlide() {
+    if (currentSlide > 0) {
+        currentSlide--;
+        updateSlider();
+    }
+}
+
+// 2. Tambahkan Event Listener ke tombol
+// Tambahkan pengecekan null agar tidak error jika tombol belum ada saat script dimuat
+if (nextBtn && prevBtn) {
+    nextBtn.addEventListener('click', nextSlide);
+    prevBtn.addEventListener('click', prevSlide);
+}
+
+
+// 3. Tambahkan Event Listener untuk Responsive (saat ukuran jendela diubah)
+window.addEventListener('resize', () => {
+    // Setelah resize, set currentSlide ke 0 agar tampilan direset
+    currentSlide = 0;
+    updateSlider();
+});
+
+// 4. Inisialisasi slider saat halaman dimuat
+// Menunggu window.onload memastikan semua elemen (termasuk lebar CSS
+
+
+
+
+
 
 document.addEventListener("DOMContentLoaded", function() {
     

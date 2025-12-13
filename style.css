@@ -534,6 +534,205 @@ body {
     }
 }
 
+/* ================================================= */
+/* PROJECTS SECTION (2-Grid Slider Layout) */
+/* ================================================= */
+
+.projects-section {
+    padding: 100px 0; 
+    background-color: var(--color-bg); 
+}
+
+.projects-section h2 {
+    /* Gaya Heading yang seragam dengan section lain */
+    font-size: 45px; 
+    font-weight: 700; 
+    margin-bottom: 50px; 
+    text-align: center;
+    font-family: 'poppins', sans-serif;
+    color: var(--color-text);
+}
+
+/* --- 1. PROJECTS VIEWPORT (Jendela statis yang menampilkan 2 item) --- */
+.projects-viewport {
+    max-width: 1300px; 
+    margin: 0 auto; 
+    padding: 20px 40px 20px 40px; 
+    overflow: hidden; /* PENTING: Menyembunyikan item yang di luar batas 2 kotak */
+    position: relative;
+}
+
+/* --- 2. PROJECTS TRACK (Kontainer yang bergerak) --- */
+.projects-track {
+    display: flex; /* Item berjejer horizontal */
+    /* Lebar track diatur secara dinamis oleh JavaScript, tapi Flexbox bisa menanganinya */
+    gap: 20px; /* Jarak antar kotak */
+    transition: transform 0.5s ease-in-out; /* Animasi geser */
+}
+
+/* ================================================= */
+/* PROJECT ITEM: INTERNAL LAYOUT (40/60 IMAGE-TEXT) */
+/* ================================================= */
+
+.project-content-inner {
+    display: flex; 
+    gap: 30px; /* Jarak antara gambar dan teks ditingkatkan */
+    align-items: center; 
+    /* Properti height: 100% ini penting jika kamu ingin konten mengisi seluruh min-height dari project-item */
+    height: 100%; 
+}
+
+/* Kolom Kiri: Gambar (40% Lebar) */
+.project-image-box {
+    /* Mengambil 40% dari total lebar */
+    flex: 0 0 30%; 
+    
+    /* GAYA VISUAL */
+    border-radius: 8px;
+    overflow: hidden; 
+}
+
+.project-image-box img {
+    width: 100%;
+    height: 100%;
+    /* PENTING: Memastikan gambar mengisi penuh 40% ruang tanpa distorsi */
+    object-fit: contain; 
+    display: block;
+}
+
+
+/* Kolom Kanan: Teks (60% Lebar) */
+.project-text-content {
+    /* Mengambil sisa ruang (60%) */
+    flex: 1; 
+}
+
+.project-text-content h3 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: var(--color-text);
+}
+
+.project-text-content p {
+    font-size: 14px;
+    line-height: 1.5;
+    color: rgb(100, 100, 100);
+}
+
+
+/* --- RESPONSIF: MENGUBAH KE STACKED (GAMBAR DI ATAS) DI MOBILE --- */
+@media (max-width: 600px) {
+    .project-content-inner {
+        flex-direction: column-reverse; /* Tetap pertahankan Gambar di atas Teks di mobile */
+        align-items: flex-start; 
+        gap: 15px;
+    }
+    
+    .project-image-box {
+        /* Di mobile, gambar kembali ke ukuran kecil yang proporsional */
+        flex: 0 0 80px; 
+        width: 80px;
+        height: 80px;
+        /* Hapus align-self: stretch di mobile */
+        align-self: flex-start;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+/* --- 3. PROJECT ITEM (Setiap kotak proyek) --- */
+.project-item {
+    /* Setiap item mengambil tepat 50% dari lebar container untuk 2 kolom */
+    flex: 0 0 calc(50% - 10px); 
+    
+    /* GAYA KARTU: Liquid Glass */
+    padding: 30px; /* Ditingkatkan dari 25px */
+    background-color: rgba(255, 255, 255, 0.1); 
+    backdrop-filter: blur(8px) saturate(150%);
+    -webkit-backdrop-filter: blur(8px) saturate(150%);
+    border: 1px solid rgba(255, 255, 255, 0.2); 
+    border-radius: 30px; 
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1); 
+    
+    min-height: 350px; /* Ditingkatkan dari 200px */
+    position: relative;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.project-item:hover {
+    transform: translateY(-5px); 
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* --- 4. NAVIGATION BUTTONS --- */
+.slider-navigation {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+    gap: 15px;
+}
+
+.slider-btn {
+    padding: 10px 20px;
+    background-color: var(--color-text); /* Warna hitam */
+    color: var(--color-bg); /* Warna teks background */
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.slider-btn:hover {
+    background-color: #555;
+    transform: scale(1.05);
+}
+
+
+/* ================================================= */
+/* MEDIA QUERIES (RESPONSIVE DESIGN) */
+/* ================================================= */
+
+/* Untuk layar sedang/tablet (max 992px) */
+@media (max-width: 992px) {
+    /* PROJECTS TRACK DI TABLET (2 KOLOM, tapi bisa diatur jadi 1.5 jika mau) */
+    /* Kita tetap fokus pada 2 kolom penuh agar konsisten */
+    .project-item {
+        /* Tetap 2 kolom */
+        flex: 0 0 calc(50% - 10px); 
+    }
+    
+    .slider-navigation {
+        margin-top: 30px;
+    }
+}
+
+/* Untuk layar ponsel (max 600px) */
+@media (max-width: 600px) {
+    .projects-viewport {
+        padding: 0 20px;
+    }
+    
+    /* PROJECTS TRACK DI MOBILE (1 ITEM VIEW) */
+    .project-item {
+        /* Setiap item mengambil 100% lebar viewport */
+        flex: 0 0 calc(100% - 20px); /* 100% lebar - gap */
+        min-height: 250px;
+    }
+
+    .slider-navigation {
+        margin-top: 20px;
+    }
+}
+
 
 /* ================================================= */
 /* MEDIA QUERIES UNTUK RESPONSIVE DESIGN */
@@ -590,6 +789,10 @@ body {
         margin: 0 0 10px 0; 
     }
 }
+
+
+
+
 
 /* ================================================= */
 /* MEDIA QUERIES UNTUK RESPONSIVE DESIGN (MOBILE/TABLET) */
