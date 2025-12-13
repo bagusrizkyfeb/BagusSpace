@@ -65,7 +65,6 @@ body {
   }
 
 
-
 /* ======================================= */
 /* HEADER DAN NAVIGATION (DESKTOP/DEFAULT) */
 /* ======================================= */
@@ -113,7 +112,7 @@ body {
 /* PERUBAHAN UTAMA: Membuat Header Fixed, Terpusat, dengan LIQUID GLASS yang MENGAMBANG */
 .header {
     position: fixed; 
-    top: 5px; /* DITAMBAH: Jarak 20px dari tepi atas */
+    top: 0px; /* DITAMBAH: Jarak 20px dari tepi atas */
     /* Memusatkan fixed element dan membatasi lebarnya */
     left: 50%;
     transform: translateX(-50%);
@@ -163,8 +162,16 @@ body {
 }
 
 .nav a:hover {
-    color: var(--color-text); /* Teks tetap hitam */
-    border-bottom-color: var(--color-text); /* Underline muncul */
+    color: var(--color-text);
+    border-bottom-color: var(--color-text); /* Underline default (hitam) */
+}
+
+/* KODE ACTIVE STATE yang LEBIH KUAT (Spesifik) */
+.nav a.active {
+    /* Hapus !important jika tidak ada elemen lain yang memaksanya */
+    color: var(--color-text); 
+    border-bottom-color: rgb(0, 0, 0); /* Warna Peach yang kamu inginkan */
+    font-weight: 600;
 }
 
 /* ======================================= */
@@ -360,6 +367,229 @@ body {
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
+/* ======================================= */
+/* SKILLS SECTION (Kartu Header Gambar) */
+/* ======================================= */
+
+/* ================================================= */
+/* SKILLS SECTION */
+/* ================================================= */
+
+.skills-section {
+    /* Padding vertikal yang besar agar konten tidak terlalu mepet, menyamai About Section */
+    padding: 100px 0; 
+    background-color: var(--color-bg); 
+}
+
+.skills-section h2 {
+    /* Gaya Heading yang seragam dengan About Section */
+    font-size: 50px; 
+    font-weight: 700; 
+    margin-bottom: 50px; 
+    text-align: center;
+    font-family: 'poppins', sans-serif;
+    color: var(--color-text);
+}
+
+/* ======================================= */
+/* SKILLS GRID (4 Kolom Layout) */
+/* ======================================= */
+
+.skills-grid {
+    display: flex;
+    /* Jarak antara kartu */
+    gap: 20px; /* Tingkatkan gap agar ada lebih banyak ruang antara kartu */
+    justify-content: center; 
+    
+    /* NAIKKAN LEBAR MAKSIMUM GRID KESELURUHAN */
+    max-width: 1300px; 
+    
+    margin: 0 auto; 
+    padding: 0 40px;
+}
+
+.skill-card {
+    flex: 1; 
+    
+    /* NAIKKAN LEBAR MAKSIMUM SETIAP KARTU */
+    max-width: 300px; 
+    
+    /* GAYA KARTU PREMIUM: DIUBAH MENJADI LIQUID GLASS */
+    
+    /* 1. Background transparan */
+    background-color: rgba(255, 255, 255, 0.1); /* Putih 10% transparan */
+    
+    /* 2. Efek blur pada elemen di belakangnya (Liquid Glass) */
+    backdrop-filter: blur(8px) saturate(150%);
+    -webkit-backdrop-filter: blur(8px) saturate(150%);
+    
+    /* 3. Border halus (memberi efek cermin) */
+    border: 1px solid rgba(255, 255, 255, 0.2); 
+    
+    border-radius: 15px; 
+    
+    /* Shadow tetap dipertahankan, tapi dibuat sedikit lebih lembut */
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1); 
+    
+    overflow: hidden; 
+    position: relative; 
+    text-align: center; 
+    
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.skill-card:hover {
+    transform: translateY(-5px); 
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+}
+
+
+/* ======================================= */
+/* GAYA HEADER GAMBAR & FADING */
+/* ======================================= */
+
+.skill-header-image {
+    position: relative; 
+    height: 300px; 
+    
+    /* PENTING: Terapkan border radius ke wrapper gambar */
+    border-top-left-radius: 15px; 
+    border-top-right-radius: 15px;
+    
+    /* MASKING: Pertahankan efek memudar */
+    mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+    
+    /* PENTING: Tambahkan overflow hidden di wrapper juga */
+    overflow: hidden; 
+}
+
+.skill-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+    display: block;
+
+}
+
+
+/* ======================================= */
+/* GAYA KONTEN (Ikon, Judul, Deskripsi) */
+/* ======================================= */
+
+.skill-content {
+    padding: 10px 25px 30px;
+    /* GESER KE ATAS: Agar ikon tumpang tindih dengan area gambar */
+    margin-top: -20px; 
+    position: relative;
+    z-index: 2; 
+}
+
+
+.skill-content .skill-title {
+    font-size: 20px;
+    margin-bottom: 10px;
+    text-align: left;
+    font-weight: 700; 
+    color: var(--color-text);
+}
+
+.skill-content .skill-description {
+    font-size: 14px;
+    line-height: 1.6;
+    text-align: left;
+    color: rgb(100, 100, 100); 
+}
+
+
+/* ================================================= */
+/* MEDIA QUERIES UNTUK RESPONSIVE DESIGN */
+/* ================================================= */
+
+/* Untuk layar sedang/tablet (Tampilkan 2 kolom) */
+@media (max-width: 992px) {
+    .skills-grid {
+        flex-wrap: wrap; 
+        gap: 30px; 
+        max-width: 700px; 
+    }
+    
+    .skill-card {
+        flex: 1 1 calc(50% - 15px); 
+        max-width: none;
+    }
+}
+
+/* Untuk layar ponsel (Tampilkan 1 kolom) */
+@media (max-width: 600px) {
+    .skills-grid {
+        flex-direction: column; 
+        gap: 20px;
+        padding: 0 20px;
+        max-width: 100%;
+    }
+
+    .skill-card {
+        flex: 1 1 100%;
+    }
+}
+
+
+/* ================================================= */
+/* MEDIA QUERIES UNTUK RESPONSIVE DESIGN */
+/* ================================================= */
+
+/* Untuk layar tablet (dua kolom) */
+@media (max-width: 992px) {
+    .skills-grid {
+        flex-wrap: wrap; /* Izinkan kartu untuk turun baris */
+        padding: 0 20px;
+    }
+    
+    .skill-card {
+        flex: 1 1 calc(50% - 30px); /* 50% lebar, dikurangi gap */
+        max-width: none;
+    }
+}
+
+/* Untuk layar ponsel (satu kolom) */
+/* Untuk layar ponsel (Tampilkan 1 kolom) */
+@media (max-width: 600px) {
+    .skills-grid {
+        flex-direction: column; 
+        gap: 20px;
+        padding: 0 20px;
+        max-width: 100%;
+    }
+
+    .skill-card {
+        flex: 1 1 100%;
+        /* Di mobile, hapus text-align: center agar teks kembali rata kiri */
+        text-align: left !important; 
+    }
+
+    /* Revisi Gambar Header */
+    .skill-header-image {
+        /* Gambar dibuat lebih pendek agar rasionya lebih baik di layar sempit */
+        height: 160px; 
+    }
+
+    /* Revisi Tumpang Tindih Konten */
+    .skill-content {
+        /* Kurangi geseran ke atas karena gambar lebih pendek */
+        margin-top: -30px; 
+        
+        /* PENTING: Teks rata kiri */
+        text-align: left; 
+        padding: 20px 20px 30px; /* Kurangi padding samping */
+    }
+    
+    /* Revisi Ikon: pindahkan ke kiri jika perlu */
+    .skill-icon-container {
+        /* Hapus auto margin agar tidak ke tengah */
+        margin: 0 0 10px 0; 
+    }
+}
 
 /* ================================================= */
 /* MEDIA QUERIES UNTUK RESPONSIVE DESIGN (MOBILE/TABLET) */
