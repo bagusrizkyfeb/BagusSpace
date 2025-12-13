@@ -383,7 +383,7 @@ body {
 
 .skills-section h2 {
     /* Gaya Heading yang seragam dengan About Section */
-    font-size: 50px; 
+    font-size: 45px; 
     font-weight: 700; 
     margin-bottom: 50px; 
     text-align: center;
@@ -450,7 +450,7 @@ body {
 
 .skill-header-image {
     position: relative; 
-    height: 290px; 
+    height: 250px; 
     
     /* PENTING: Terapkan border radius ke wrapper gambar */
     border-top-left-radius: 15px; 
