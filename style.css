@@ -450,7 +450,7 @@ body {
 
 .skill-header-image {
     position: relative; 
-    height: 300px; 
+    height: 290px; 
     
     /* PENTING: Terapkan border radius ke wrapper gambar */
     border-top-left-radius: 15px; 
