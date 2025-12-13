@@ -413,9 +413,6 @@ body {
     
     /* NAIKKAN LEBAR MAKSIMUM SETIAP KARTU */
     max-width: 300px; 
-    
-    /* GAYA KARTU PREMIUM: DIUBAH MENJADI LIQUID GLASS */
-    
     /* 1. Background transparan */
     background-color: rgba(255, 255, 255, 0.1); /* Putih 10% transparan */
     
@@ -640,28 +637,15 @@ body {
 }
 
 
-
-
-
-
-
-
-
-
 /* --- 3. PROJECT ITEM (Setiap kotak proyek) --- */
 .project-item {
     /* Setiap item mengambil tepat 50% dari lebar container untuk 2 kolom */
     flex: 0 0 calc(50% - 10px); 
-    
     /* GAYA KARTU: Liquid Glass */
     padding: 30px; /* Ditingkatkan dari 25px */
-    background-color: rgba(255, 255, 255, 0.1); 
-    backdrop-filter: blur(8px) saturate(150%);
-    -webkit-backdrop-filter: blur(8px) saturate(150%);
-    border: 1px solid rgba(255, 255, 255, 0.2); 
+    background-color: white;
     border-radius: 30px; 
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1); 
-    
     min-height: 350px; /* Ditingkatkan dari 200px */
     position: relative;
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
@@ -1026,5 +1010,150 @@ body {
         font-size: 16px;
         text-align: left;
         font-family: poppins, sans-serif;
+    }
+    
+}
+
+/* ================================================= */
+/* FOOTER SECTION (MODERN & DYNAMIC LAYOUT) */
+/* ================================================= */
+
+/* ================================================= */
+/* FOOTER SECTION (3 KOLOM MODERN LAYOUT) - RATA TENGAH */
+/* ================================================= */
+
+.main-footer {
+    background-color: var(--color-bg); 
+    padding-top: 80px; 
+    color: #ccc;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Bagian Atas Footer (Info, Links, Sosial) */
+.footer-container-top {
+    max-width: 1300px; 
+    margin: 0 auto; 
+    padding: 0 40px 60px; 
+    display: flex; 
+    /* PERUBAHAN UTAMA: Ubah justify-content menjadi 'center' atau 'space-evenly' */
+    justify-content: space-evenly; /* Memberi ruang yang sama antara kolom */
+    /* Atau ganti dengan: justify-content: center; jika kamu ingin semua kolom berkumpul di tengah */
+    gap: 40px;
+}
+
+/* Kolom Info Kiri (Dibuat lebih fleksibel agar mau ke tengah) */
+.footer-info {
+    flex: 1; 
+    max-width: 350px; /* Batasi lebar agar tidak melebar terlalu jauh */
+}
+
+/* Kolom Links (Ambil ruang normal) */
+.footer-links-group {
+    flex: 1; 
+    max-width: 250px; /* Batasi lebar */
+}
+
+/* Kolom Sosial Kanan (Ambil ruang normal) */
+.footer-social-group {
+    flex: 1; 
+    max-width: 250px; /* Batasi lebar */
+}
+
+/* Gaya Teks (Tidak ada perubahan) */
+.main-footer h4 {
+    color: var(--color-text); 
+    font-size: 20px;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+.main-footer p {
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 10px;
+    color: #aaa;
+}
+
+/* Link Group (Tidak ada perubahan) */
+.footer-links-group ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-links-group li {
+    margin-bottom: 8px;
+}
+
+.footer-links-group a {
+    color: #ccc;
+    text-decoration: none;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+
+.footer-links-group a:hover {
+    color: var(--color-primary, #007bff); 
+}
+
+/* Link Sosial (Tidak ada perubahan) */
+.social-icon {
+    color: #ccc;
+    text-decoration: none;
+    font-size: 16px;
+    margin-bottom: 10px;
+    transition: color 0.3s, transform 0.3s;
+    display: block;
+}
+
+.social-icon:hover {
+    color: var(--color-primary, #007bff);
+}
+
+/* --- FOOTER SEKUNDER (GARIS & HAK CIPTA) --- */
+.footer-secondary {
+    padding: 0 40px 30px; 
+    max-width: 1300px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.footer-divider {
+    border: none;
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.1); 
+    margin: 0 0 30px 0;
+}
+
+.copyright-text {
+    font-size: 13px;
+    color: #999;
+}
+
+x
+/* ================================================= */
+/* MEDIA QUERY (RESPONSIVE) */
+/* ================================================= */
+
+@media (max-width: 768px) {
+    .footer-container-top {
+        flex-direction: column; /* Tumpuk di mobile */
+        gap: 30px;
+        padding-bottom: 40px;
+    }
+    
+    .footer-info,
+    .footer-links-group,
+    .footer-social-group {
+        flex: auto;
+        max-width: 100%;
+    }
+    
+    .footer-social-group .social-icon {
+        /* Kembali ke display block di mobile */
+        display: block;
+    }
+    
+    .footer-secondary {
+        padding: 0 20px 30px;
     }
 }

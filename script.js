@@ -301,6 +301,64 @@ window.addEventListener('resize', () => {
 // Menunggu window.onload memastikan semua elemen (termasuk lebar CSS
 
 
+// =================================================
+// 5. FUNGSI SWIPE GESTURE (Untuk HP/Tablet)
+// =================================================
+
+// Variabel untuk melacak posisi sentuhan
+let touchStartX = 0;
+let touchEndX = 0;
+
+// Ambil referensi ke viewport untuk mendeteksi swipe
+const projectsViewport = document.querySelector('.projects-viewport');
+
+// Ambang batas (threshold) minimal pergeseran dalam piksel agar dianggap sebagai swipe
+const minSwipeDistance = 50; 
+
+// --- EVENT 1: SENTUHAN DIMULAI ---
+projectsViewport.addEventListener('touchstart', (e) => {
+    // Mencatat posisi X awal sentuhan pertama
+    touchStartX = e.touches[0].clientX;
+});
+
+// --- EVENT 2: SENTUHAN BERGERAK (Mencegah Scrolling Vertikal) ---
+projectsViewport.addEventListener('touchmove', (e) => {
+    // Mencegah scrolling vertikal saat kita swipe horizontal
+    // (Tergantung browser, mungkin perlu penyesuaian)
+    // e.preventDefault(); 
+});
+
+
+// --- EVENT 3: SENTUHAN BERAKHIR ---
+projectsViewport.addEventListener('touchend', (e) => {
+    // Mencatat posisi X akhir sentuhan
+    touchEndX = e.changedTouches[0].clientX;
+    
+    // Menghitung jarak pergeseran (positif = swipe ke kanan/Prev, negatif = swipe ke kiri/Next)
+    const distance = touchStartX - touchEndX; 
+    
+    // Periksa apakah jarak pergeseran melebihi ambang batas minimal
+    if (Math.abs(distance) > minSwipeDistance) {
+        // Jika swipe ke KIRI (distance positif, ingin ke slide berikutnya)
+        if (distance > 0) {
+            nextSlide();
+        } 
+        // Jika swipe ke KANAN (distance negatif, ingin ke slide sebelumnya)
+        else if (distance < 0) {
+            prevSlide();
+        }
+    }
+    
+    // Reset nilai sentuhan
+    touchStartX = 0;
+    touchEndX = 0;
+});
+
+
+
+
+
+
 
 
 

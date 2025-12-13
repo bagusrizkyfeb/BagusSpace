@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Landing Page - Bagus</title>
+    <title>Bagus Portofolio</title>
     <link rel="stylesheet" href="style.css"> 
     
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -31,6 +31,7 @@
                 <a href="#home">Home</a>
                 <a href="#about">About</a>
                 <a href="#skills">Skills</a>
+                <a href="#projects">Projects</a>
             </nav>
         </header>
         
@@ -40,8 +41,8 @@
                    <h1>Your Tech Support </h1> 
                      <h2> I am looking for  <span class="typed-text"></span><span class="cursor">&nbsp;</span></h2>
                 <div class="cta-buttons">
-                    <a href="#" class="btn primary">Download CV</a>
-                    <a href="#" class="btn secondary">Contact Me</a>
+                    <a href="https://drive.google.com/file/d/1KXtsjFrLf8XZjZSIZDJBn7WdZlnMWgJQ/view?usp=sharing" target="blank" class="btn primary">Download CV</a>
+                    <a href="https://mail.google.com/mail/u/0/?fs=1&to=hi.bagusrizky@gmail.com&tf=cm" target="blank" class="btn secondary">Contact Me</a>
                 </div>
             </div>
             <div class="hero-image">
@@ -117,9 +118,7 @@
     </div>
 </section>
 
-
-
-<section class="projects-section">
+<section class="projects-section" id="projects"> 
     <div class="container">
         <h2>Project</h2>
         
@@ -224,10 +223,45 @@
     </div>
 </section>
 
-<script>
-    // ... [Kode JavaScript yang aku berikan sebelumnya] ...
-</script>
+<footer class="main-footer">
+    
+    <div class="footer-container-top">
+        <div class="footer-info">
+            <h4>Wrapping Up</h4>
+            <p>Thank you for visiting my portfolio. I’m always open to learning, collaborating, and taking on new challenges in the IT field. Feel free to get in touch if you’d like to connect or work together.</p>
+        </div>
 
+        <div class="footer-links-group">
+            <h4>Quick Links</h4>
+            <ul>
+                <li><a href="#about">About Me</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+        
+        <div class="footer-social-group">
+            <h4>Get in Touch</h4>
+            <a href="https://mail.google.com/mail/u/0/?fs=1&to=hi.bagusrizky@gmail.com&tf=cm" target="blank" class="social-icon">✉️ Email</a>
+            <a href="https://www.linkedin.com/in/bagus-rizky-febriyanto-221a68291/" target="blank" class="social-icon">🔗 LinkedIn</a>
+            <a href="https://github.com/bagusrizkyfeb" target="blank" class="social-icon">🐙 GitHub</a>
+        </div>
+        
+    </div>
+    
+    <div class="footer-secondary">
+        <hr class="footer-divider">
+        <p class="copyright-text">
+            &copy; <span id="current-year-3"></span> Bagus Rizky Ferbiyanto. All rights reserved.
+        </p>
+    </div>
+</footer>
+
+<script>
+    // Automatically update the current year
+    document.getElementById('current-year-3').textContent = new Date().getFullYear();
+</script>
 
 
  <button onclick="topFunction()" id="myBtn" title="Go to top">Back to Top<i class="fa fa-arrow-up"></i></button>
