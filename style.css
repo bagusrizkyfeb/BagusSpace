@@ -941,6 +941,100 @@ body {
     }
 }
 
+
+/* CONTAINER SLIDER */
+
+
+.certificate-section h2 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 45px; /* Ukuran h2 standard di web kamu */
+    font-weight: 700;
+    color: var(--color-text);
+    margin-bottom: 40px;
+    text-align: center;
+    
+}
+
+
+
+
+.slider-wrapper {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    padding: 40px 0; /* Tambah padding biar bayangan (shadow) gak kepotong */
+}
+
+/* TRACK ANIMASI */
+.slide-track {
+    display: flex;
+    /* RUMUS BARU: (Lebar slide 450px + gap 50px) * total 6 slide = 3000px */
+    width: calc(500px * 6); 
+    gap: 50px; /* Jarak antar sertifikat diperlebar */
+    animation: scroll-left 40s linear infinite; /* Durasi ditambah biar nggak terlalu kencang karena ukuran membesar */
+}
+
+/* ITEM SERTIFIKAT */
+.slide {
+    width: 450px; /* Ukuran diperbesar dari 300px ke 450px agar detail teks terbaca */
+    flex-shrink: 0;
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.slide:hover {
+    transform: translateY(-10px) scale(1.02); /* Efek zoom dikit pas hover */
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+}
+
+.slide img {
+    width: 100%;
+    height: 280px; /* Tentukan tinggi tetap agar seragam */
+    object-fit: contain; /* PENTING: Supaya gambar tidak terpotong dan tetap tajam */
+    background: #fff; /* Background putih di belakang gambar jika aspek rasio beda */
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.cert-desc h3 {
+    font-size: 18px; /* Ukuran teks judul sertifikat diperbesar */
+    font-weight: 400;
+    color: var(--color-text);
+    margin-bottom: 8px;
+}
+
+/* KEYFRAMES REVISED */
+@keyframes scroll-left {
+    0% { transform: translateX(0); }
+    100% { 
+        /* Geser sejauh SETENGAH dari jumlah slide (3 slide asli * 500px) */
+        transform: translateX(calc(-500px * 3)); 
+    }
+}
+
+/* RESPONSIVE UNTUK LAYAR KECIL (MOBILE) */
+@media (max-width: 600px) {
+    .slide {
+        width: 300px; /* Di mobile balik ke 300px biar nggak menuhin layar */
+    }
+    .slide img {
+        height: 180px;
+    }
+    @keyframes scroll-left {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(calc(-350px * 3)); } /* 300px + 50px gap */
+    }
+}
+
+
+
+
 /* Untuk layar ponsel (lebar maksimum 600px) */
 @media (max-width: 600px) {
     /* Penyesuaian padding untuk fixed header di mobile/tablet */
@@ -1155,4 +1249,21 @@ body {
     .footer-secondary {
         padding: 0 20px 30px;
     }
+
+
+
+@media (max-width: 600px) {
+    /* Menargetkan semua H2 di semua section */
+    .about-text h2, 
+    .skills-section h2, 
+    .projects-section h2, 
+    .certificate-section h2 {
+        font-size: 35px !important; /* Pakai !important supaya pasti keganti */
+        margin-bottom: 40px;
+        text-align: center;
+    }
+}
+
+
+
 }
