@@ -1201,7 +1201,7 @@ body {
     gap: 10px;
 }
 
-.footer-links-group a:hover, 
+.footer-links-group a:h over, 
 .social-icon:hover {
     color: #fd8434;
     transform: translateX(8px); /* Efek geser kanan pas di-hover */
