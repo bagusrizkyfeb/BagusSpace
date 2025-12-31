@@ -15,7 +15,7 @@
 }
 
 body {
-    background-color: var(--color-bg);
+    background-color: white;
     color: var(--color-text);
     min-height: 100vh;
 }
@@ -306,8 +306,8 @@ body {
 /* Gambar Kanan - PERBAIKAN LEBAR DAN ALIGNMENT */
 .hero-image {
     display: flex;
-    justify-content: flex-end; /* Memastikan gambar rata kanan di dalam kolomnya */
-    width: 50%; /* Menggunakan width 50% */
+    justify-content: center; /* Memastikan gambar rata kanan di dalam kolomnya */
+    width: 40%; /* Menggunakan width 50% */
 }
 
 .hero-image img {
@@ -378,7 +378,7 @@ body {
 .skills-section {
     /* Padding vertikal yang besar agar konten tidak terlalu mepet, menyamai About Section */
     padding: 100px 0; 
-    background-color: var(--color-bg); 
+    background-color: white; 
 }
 
 .skills-section h2 {
@@ -537,7 +537,8 @@ body {
 
 .projects-section {
     padding: 100px 0; 
-    background-color: var(--color-bg); 
+
+    
 }
 
 .projects-section h2 {
@@ -557,6 +558,7 @@ body {
     padding: 20px 40px 20px 40px; 
     overflow: hidden; /* PENTING: Menyembunyikan item yang di luar batas 2 kotak */
     position: relative;
+    
 }
 
 /* --- 2. PROJECTS TRACK (Kontainer yang bergerak) --- */
@@ -608,13 +610,13 @@ body {
     font-size: 20px;
     font-weight: 700;
     margin-bottom: 12px;
-    color: var(--color-text);
+    color: black;
 }
 
 .project-text-content p {
     font-size: 14px;
     line-height: 1.5;
-    color: rgb(100, 100, 100);
+    color: rgb(139, 139, 139);
 }
 
 
@@ -643,7 +645,7 @@ body {
     flex: 0 0 calc(50% - 10px); 
     /* GAYA KARTU: Liquid Glass */
     padding: 30px; /* Ditingkatkan dari 25px */
-    background-color: white;
+    background-color: rgb(255, 255, 255);
     border-radius: 30px; 
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1); 
     min-height: 350px; /* Ditingkatkan dari 200px */
@@ -1108,150 +1110,156 @@ body {
     
 }
 
-/* ================================================= */
-/* FOOTER SECTION (MODERN & DYNAMIC LAYOUT) */
-/* ================================================= */
 
 /* ================================================= */
-/* FOOTER SECTION (3 KOLOM MODERN LAYOUT) - RATA TENGAH */
+/* FOOTER SECTION (MODERN & CONSISTENT LAYOUT) */
 /* ================================================= */
 
 .main-footer {
-    background-color: var(--color-bg); 
-    padding-top: 80px; 
-    color: #ccc;
+   /* 1. Masukkan path gambar kamu di sini */
+/* Background area luar footer disamakan dengan background body kamu */
+    background-color: white; 
+    padding: 60px 0; 
+    width: 100%;
     font-family: 'Poppins', sans-serif;
 }
 
-/* Bagian Atas Footer (Info, Links, Sosial) */
+/* KOTAK PUTIH YANG DI TENGAH */
+.footer-content-wrapper {
+   max-width: 1300px;
+    margin: 0 auto;
+    /* SETTING GAMBAR DI SINI */
+    background-color: #000;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    
+    /* Tambahkan Overlay (Lapisan) supaya teks tetap terbaca jelas */
+    /* Ini akan memberikan lapisan putih transparan di atas gambar */
+    background-blend-mode: overlay; 
+
+    padding: 60px;
+    border-radius: 40px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+    overflow: hidden; /* Biar gambarnya nggak keluar dari border-radius */
+}
+
+/* Tampilan 3 Kolom */
 .footer-container-top {
-    max-width: 1300px; 
-    margin: 0 auto; 
-    padding: 0 40px 60px; 
     display: flex; 
-    /* PERUBAHAN UTAMA: Ubah justify-content menjadi 'center' atau 'space-evenly' */
-    justify-content: space-evenly; /* Memberi ruang yang sama antara kolom */
-    /* Atau ganti dengan: justify-content: center; jika kamu ingin semua kolom berkumpul di tengah */
-    gap: 40px;
+    justify-content: space-between; 
+    gap: 50px;
+    margin-bottom: 50px;
 }
 
-/* Kolom Info Kiri (Dibuat lebih fleksibel agar mau ke tengah) */
+/* Kolom Info (Lebih lebar sedikit) */
 .footer-info {
-    flex: 1; 
-    max-width: 350px; /* Batasi lebar agar tidak melebar terlalu jauh */
+    flex: 1.5; 
+    max-width: 450px;
 }
 
-/* Kolom Links (Ambil ruang normal) */
-.footer-links-group {
-    flex: 1; 
-    max-width: 250px; /* Batasi lebar */
-}
-
-/* Kolom Sosial Kanan (Ambil ruang normal) */
+/* Kolom Links & Social */
+.footer-links-group, 
 .footer-social-group {
-    flex: 1; 
-    max-width: 250px; /* Batasi lebar */
+    flex: 1;
 }
 
-/* Gaya Teks (Tidak ada perubahan) */
+/* Judul H4 di Footer */
 .main-footer h4 {
-    color: var(--color-text); 
+    color: white; 
     font-size: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 22px;
     font-weight: 700;
 }
 
+/* Deskripsi P di Footer */
 .main-footer p {
     font-size: 15px;
-    line-height: 1.6;
-    margin-bottom: 10px;
-    color: #aaa;
+    line-height: 1.7;
+    color: #cecece;
 }
 
-/* Link Group (Tidak ada perubahan) */
+/* Styling List Navigasi */
 .footer-links-group ul {
     list-style: none;
     padding: 0;
 }
 
 .footer-links-group li {
-    margin-bottom: 8px;
+    margin-bottom: 12px;
 }
 
-.footer-links-group a {
-    color: #ccc;
-    text-decoration: none;
-    font-size: 16px;
-    transition: color 0.3s;
-}
-
-.footer-links-group a:hover {
-    color: var(--color-primary, #007bff); 
-}
-
-/* Link Sosial (Tidak ada perubahan) */
+/* Link Navigasi & Social Icon */
+.footer-links-group a, 
 .social-icon {
-    color: #ccc;
+    color: #cecece;
     text-decoration: none;
-    font-size: 16px;
-    margin-bottom: 10px;
-    transition: color 0.3s, transform 0.3s;
-    display: block;
+    font-size: 15px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
+.footer-links-group a:hover, 
 .social-icon:hover {
-    color: var(--color-primary, #007bff);
+    color: #fd8434;
+    transform: translateX(8px); /* Efek geser kanan pas di-hover */
 }
 
-/* --- FOOTER SEKUNDER (GARIS & HAK CIPTA) --- */
-.footer-secondary {
-    padding: 0 40px 30px; 
-    max-width: 1300px;
-    margin: 0 auto;
-    text-align: center;
-}
-
+/* Garis Pemisah */
 .footer-divider {
     border: none;
     height: 1px;
-    background-color: rgba(255, 255, 255, 0.1); 
-    margin: 0 0 30px 0;
+    margin-bottom: 30px;
+}
+
+/* Teks Hak Cipta */
+.footer-secondary {
+    text-align: center;
 }
 
 .copyright-text {
     font-size: 13px;
-    color: #999;
+    color: #aaa;
 }
 
 /* ================================================= */
 /* MEDIA QUERY (RESPONSIVE) */
 /* ================================================= */
 
+/* Tablet (max 992px) */
+@media (max-width: 992px) {
+    .footer-content-wrapper {
+        margin: 0 20px; /* Jarak dari tepi layar di tablet */
+        padding: 40px;
+    }
+}
+
+/* Mobile (max 768px) */
 @media (max-width: 768px) {
     .footer-container-top {
-        flex-direction: column; /* Tumpuk di mobile */
-        gap: 30px;
-        padding-bottom: 40px;
+        flex-direction: column; /* Tumpuk ke bawah */
+        gap: 40px;
+        text-align: left;
     }
     
-    .footer-info,
-    .footer-links-group,
+    .footer-info, 
+    .footer-links-group, 
     .footer-social-group {
-        flex: auto;
         max-width: 100%;
     }
-    
-    .footer-social-group .social-icon {
-        /* Kembali ke display block di mobile */
-        display: block;
-    }
-    
-    .footer-secondary {
-        padding: 0 20px 30px;
+
+    .footer-content-wrapper {
+        padding: 40px 30px;
+        border-radius: 20px; /* Radius lebih kecil di mobile */
     }
 
-
-
+    .footer-links-group a:hover, 
+    .social-icon:hover {
+        transform: none; /* Matikan efek geser di mobile agar stabil */
+    }
+}
 @media (max-width: 600px) {
     /* Menargetkan semua H2 di semua section */
     .about-text h2, 
@@ -1264,6 +1272,3 @@ body {
     }
 }
 
-
-
-}

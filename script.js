@@ -355,14 +355,6 @@ projectsViewport.addEventListener('touchend', (e) => {
 });
 
 
-
-
-
-
-
-
-
-
 document.addEventListener("DOMContentLoaded", function() {
     
     // Inisialisasi Typewriter Effect
