@@ -1182,7 +1182,7 @@ body {
 }
 
 .journey-dot.active {
-  box-shadow: 0 0 0 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 0 6px rgba(255, 2, 2, 0.1);
 }
 
 .journey-dot.locked {
@@ -1209,6 +1209,7 @@ body {
   font-size: 20px;
   margin-bottom: 10px;
 }
+
 
 .journey-card p {
   font-size: 14px;
@@ -1251,6 +1252,109 @@ body {
     width: 100%;
   }
 }
+
+
+/* ======================================= */
+/* SIDE TO WRITE - INTERACTIVE VERSION */
+/* ======================================= */
+
+.side-write-section {
+    padding: 100px 0;
+}
+
+.side-write-section h2 {
+    font-size: 45px;
+    text-align: center;
+    margin-bottom: 50px;
+    font-family: 'poppins', sans-serif;
+}
+
+/* GRID */
+.side-write-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+/* CARD */
+.side-write-card {
+    text-decoration: none;
+    color: var(--color-text);
+    border-radius: 25px;
+    overflow: hidden;
+
+    background-color: rgba(255, 255, 255, 0.35);
+    backdrop-filter: blur(10px) saturate(150%);
+    -webkit-backdrop-filter: blur(10px) saturate(150%);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+
+    box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.side-write-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 45px rgba(0,0,0,0.18);
+}
+
+/* IMAGE HEADER */
+.side-write-image {
+    height: 220px;
+    overflow: hidden;
+
+    /* fading bawah */
+    mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+}
+
+.side-write-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.side-write-card:hover .side-write-image img {
+    transform: scale(1.08);
+}
+
+/* CONTENT */
+.side-write-content {
+    padding: 25px 30px 35px;
+}
+
+.side-write-content h3 {
+    font-size: 22px;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.side-write-content p {
+    font-size: 15px;
+    line-height: 1.6;
+    color: rgb(100, 100, 100);
+    margin-bottom: 20px;
+}
+
+.side-write-cta {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .side-write-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .side-write-image {
+        height: 180px;
+    }
+}
+
+
 
 
 

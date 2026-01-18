@@ -111,49 +111,6 @@ function erase() {
 
 
 // ===========================================
-// 4. ACTIVE NAV STATE DENGAN INTERSECTION OBSERVER
-// ===========================================
-
-// Variabel sections dan navLinks (Pastikan sudah didefinisikan secara global di awal file)
-const sections = document.querySelectorAll('section[id]'); 
-const navLinks = document.querySelectorAll('.nav a[href^="#"]'); 
-
-const options = {
-    root: null, 
-    // rootMargin: Menggunakan 60% margin negatif di bawah. 
-    // Ini memastikan section aktif sampai 40% bagian bawahnya terlihat.
-    rootMargin: '0px 0px -60% 0px', 
-    threshold: 0 
-};
-
-const observer = new IntersectionObserver(entries => {
-    
-    // Logika 1: Hapus semua kelas active terlebih dahulu
-    navLinks.forEach(link => {
-        link.classList.remove('active');
-    });
-
-    // Logika 2: Aktifkan link berdasarkan Section yang sedang terlihat
-    entries.forEach(entry => {
-        
-        // Hanya proses jika section sedang memasuki viewport (isIntersecting)
-        if (entry.isIntersecting) {
-            const id = entry.target.id;
-            const correspondingLink = document.querySelector(`.nav a[href="#${id}"]`);
-            
-            // Tambahkan kelas 'active' pada link yang sesuai
-            if (correspondingLink) {
-                correspondingLink.classList.add('active');
-            }
-        }
-    });
-
-    // Catatan: Pengecekan Home Fallback (window.scrollY) dilakukan di listener terpisah di bawah.
-
-}, options);
-
-
-// ===========================================
 // KASUS KHUSUS HOME FALLBACK (Listener Paling Kuat)
 // ===========================================
 
