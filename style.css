@@ -1324,9 +1324,13 @@ body.dark-theme .side-write-card {
 
 .slide-track {
     display: flex;
-    width: calc(500px * 6);
+    width: calc(500px * 8);
     gap: 50px;
     animation: scroll-left 45s linear infinite;
+}
+
+.slider-wrapper:hover .slide-track {
+    animation-play-state: paused;
 }
 
 /* Frosted glass photo frame */
@@ -1377,13 +1381,44 @@ body.dark-theme .slide img {
     margin-bottom: 8px;
 }
 
+.cert-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.cert-tag {
+    font-size: 11px;
+    font-weight: 500;
+    font-family: 'Work Sans', sans-serif;
+    color: var(--color-accent);
+    background-color: rgba(var(--color-accent-rgb), 0.08);
+    border: 1px solid rgba(var(--color-accent-rgb), 0.15);
+    padding: 3px 8px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+body.dark-theme .cert-tag {
+    background-color: rgba(var(--color-accent-rgb), 0.15);
+    border-color: rgba(var(--color-accent-rgb), 0.25);
+    color: var(--color-accent);
+}
+
+.slide:hover .cert-tag {
+    background-color: var(--color-accent);
+    color: #ffffff;
+    border-color: var(--color-accent);
+}
+
 @keyframes scroll-left {
     0% {
         transform: translateX(0);
     }
 
     100% {
-        transform: translateX(calc(-500px * 3));
+        transform: translateX(calc(-500px * 4));
     }
 }
 

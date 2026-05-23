@@ -178,24 +178,47 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
-    // Logika deteksi bagian aktif menggunakan Intersection Observer
+    // Logika deteksi bagian aktif menggunakan Intersection Observer dengan Set pelacak interaktivitas
+    const intersectingSections = new Set();
+
     const observerOptions = {
         root: null,
-        rootMargin: "-25% 0px -55% 0px", // Pemicu saat bagian tengah-atas halaman masuk ke viewport
+        rootMargin: "-20% 0px -40% 0px", // Pemicu optimal di area baca utama viewport
         threshold: 0
     };
 
     const observerCallback = (entries) => {
-        let activeSectionId = null;
         entries.forEach(entry => {
+            const sectionId = entry.target.getAttribute("id");
             if (entry.isIntersecting) {
-                activeSectionId = entry.target.getAttribute("id");
+                intersectingSections.add(sectionId);
+            } else {
+                intersectingSections.delete(sectionId);
             }
         });
 
-        if (activeSectionId && sectionNames[activeSectionId]) {
-            lastActiveSectionId = activeSectionId;
-            updatePillText(activeSectionId);
+        if (intersectingSections.size > 0) {
+            let bestSectionId = null;
+            let minDistanceToCenter = Infinity;
+            const viewportCenter = window.innerHeight / 2;
+
+            intersectingSections.forEach(sectionId => {
+                const el = document.getElementById(sectionId);
+                if (el) {
+                    const rect = el.getBoundingClientRect();
+                    const elementCenter = rect.top + rect.height / 2;
+                    const distance = Math.abs(elementCenter - viewportCenter);
+                    if (distance < minDistanceToCenter) {
+                        minDistanceToCenter = distance;
+                        bestSectionId = sectionId;
+                    }
+                }
+            });
+
+            if (bestSectionId && sectionNames[bestSectionId]) {
+                lastActiveSectionId = bestSectionId;
+                updatePillText(bestSectionId);
+            }
         }
     };
 
@@ -340,9 +363,68 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    // =======================================
+    // 4.4 CERTIFICATE PREVIEW MODAL & LIGHTBOX
+    // =======================================
+    const certSlides = document.querySelectorAll('.certificate-section .slide');
+    const certModal = document.getElementById('cert-modal');
+    const certModalImg = document.getElementById('cert-modal-img');
+    const certModalTitle = document.getElementById('cert-modal-title');
+    const certCloseBtn = document.getElementById('cert-close-btn');
+
+    const closeCertModal = () => {
+        if (certModal) {
+            certModal.classList.remove('show');
+            if (!cvModal || !cvModal.classList.contains('show')) {
+                document.body.classList.remove('modal-open');
+            }
+        }
+    };
+
+    if (certSlides && certModal && certModalImg && certModalTitle) {
+        certSlides.forEach(slide => {
+            slide.style.cursor = 'pointer';
+            slide.addEventListener('click', (e) => {
+                e.preventDefault();
+                const slideImg = slide.querySelector('img');
+                const slideTitle = slide.querySelector('.cert-desc h3');
+                
+                if (slideImg && slideTitle) {
+                    const imgSrc = slideImg.getAttribute('src');
+                    const titleText = slideTitle.textContent;
+
+                    // 1. Trigger dynamic island alert
+                    triggerPillAlert("Loading Certificate...", "🎓", 1500);
+
+                    // 2. Open modal after 1.5s
+                    setTimeout(() => {
+                        certModalImg.setAttribute('src', imgSrc);
+                        certModalImg.setAttribute('alt', `Preview ${titleText}`);
+                        certModalTitle.textContent = titleText;
+                        certModal.classList.add('show');
+                        document.body.classList.add('modal-open');
+                    }, 1500);
+                }
+            });
+        });
+    }
+
+    if (certCloseBtn) {
+        certCloseBtn.addEventListener('click', closeCertModal);
+    }
+
+    if (certModal) {
+        certModal.addEventListener('click', (e) => {
+            if (e.target === certModal) {
+                closeCertModal();
+            }
+        });
+    }
+
     window.addEventListener('keydown', (e) => {
         if (e.key === "Escape") {
             closeModal();
+            closeCertModal();
         }
     });
 

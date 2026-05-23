@@ -376,11 +376,18 @@
             <h2 class="section-title">Certifications</h2>
             <div class="slider-wrapper">
                 <div class="slide-track">
+                    <!-- Original set of slides -->
                     <div class="slide">
                         <img src="asset/Certificate_1.png" alt="Cert 1" width="772" height="610" loading="lazy"
                             decoding="async">
                         <div class="cert-desc">
                             <h3>Certificate IT Support Google</h3>
+                            <div class="cert-tags">
+                                <span class="cert-tag">Linux</span>
+                                <span class="cert-tag">Networking</span>
+                                <span class="cert-tag">Troubleshooting</span>
+                                <span class="cert-tag">Security</span>
+                            </div>
                         </div>
                     </div>
                     <div class="slide">
@@ -388,6 +395,12 @@
                             decoding="async">
                         <div class="cert-desc">
                             <h3>Front-End Developer Training FGA Kominfo</h3>
+                            <div class="cert-tags">
+                                <span class="cert-tag">HTML5</span>
+                                <span class="cert-tag">CSS3</span>
+                                <span class="cert-tag">JavaScript</span>
+                                <span class="cert-tag">React</span>
+                            </div>
                         </div>
                     </div>
                     <div class="slide">
@@ -395,6 +408,11 @@
                             decoding="async">
                         <div class="cert-desc">
                             <h3>Front-End Programming BAKTI Kominfo</h3>
+                            <div class="cert-tags">
+                                <span class="cert-tag">Web Dev</span>
+                                <span class="cert-tag">UI Layout</span>
+                                <span class="cert-tag">Responsive</span>
+                            </div>
                         </div>
                     </div>
                     <div class="slide">
@@ -402,6 +420,63 @@
                             decoding="async">
                         <div class="cert-desc">
                             <h3>Penyelesaian kursus SQL di Progate</h3>
+                            <div class="cert-tags">
+                                <span class="cert-tag">SQL</span>
+                                <span class="cert-tag">Databases</span>
+                                <span class="cert-tag">Queries</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Cloned set of slides for seamless loop -->
+                    <div class="slide">
+                        <img src="asset/Certificate_1.png" alt="Cert 1 Cloned" width="772" height="610" loading="lazy"
+                            decoding="async">
+                        <div class="cert-desc">
+                            <h3>Certificate IT Support Google</h3>
+                            <div class="cert-tags">
+                                <span class="cert-tag">Linux</span>
+                                <span class="cert-tag">Networking</span>
+                                <span class="cert-tag">Troubleshooting</span>
+                                <span class="cert-tag">Security</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slide">
+                        <img src="asset/Certificate_2.png" alt="Cert 2 Cloned" width="748" height="522" loading="lazy"
+                            decoding="async">
+                        <div class="cert-desc">
+                            <h3>Front-End Developer Training FGA Kominfo</h3>
+                            <div class="cert-tags">
+                                <span class="cert-tag">HTML5</span>
+                                <span class="cert-tag">CSS3</span>
+                                <span class="cert-tag">JavaScript</span>
+                                <span class="cert-tag">React</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slide">
+                        <img src="asset/Certificate_3.png" alt="Cert 3 Cloned" width="793" height="557" loading="lazy"
+                            decoding="async">
+                        <div class="cert-desc">
+                            <h3>Front-End Programming BAKTI Kominfo</h3>
+                            <div class="cert-tags">
+                                <span class="cert-tag">Web Dev</span>
+                                <span class="cert-tag">UI Layout</span>
+                                <span class="cert-tag">Responsive</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slide">
+                        <img src="asset/Certificate_4.png" alt="Cert 4 Cloned" width="792" height="559" loading="lazy"
+                            decoding="async">
+                        <div class="cert-desc">
+                            <h3>Penyelesaian kursus SQL di Progate</h3>
+                            <div class="cert-tags">
+                                <span class="cert-tag">SQL</span>
+                                <span class="cert-tag">Databases</span>
+                                <span class="cert-tag">Queries</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -466,6 +541,19 @@
             <div class="modal-body">
                 <iframe src="https://drive.google.com/file/d/1z1ila6GAvdd8MQ3JgruguVjBZZ6iu2lE/preview" loading="lazy"
                     title="CV Bagus Preview"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sleek Glassmorphic Certificate Preview Modal -->
+    <div id="cert-modal" class="modal-overlay" aria-hidden="true" role="dialog">
+        <div class="modal-container" style="max-width: 800px; height: auto; max-height: 85vh;">
+            <div class="modal-header">
+                <h3 id="cert-modal-title">Certificate Preview</h3>
+                <button class="modal-close-btn" id="cert-close-btn" aria-label="Close Preview">&times;</button>
+            </div>
+            <div class="modal-body" style="display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.05); padding: 20px;">
+                <img id="cert-modal-img" src="" alt="Certificate Preview" style="width: 100%; height: auto; max-height: 65vh; object-fit: contain; border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,0.15);">
             </div>
         </div>
     </div>
