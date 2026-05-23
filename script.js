@@ -113,6 +113,7 @@ document.addEventListener("DOMContentLoaded", () => {
         "skills": "Skills",
         "journey": "Journey",
         "projects": "Projects",
+        "side-write": "Exploration",
         "certificates": "Certificates",
         "footer": "Contact"
     };
@@ -123,6 +124,7 @@ document.addEventListener("DOMContentLoaded", () => {
         "skills": "🛠️",
         "journey": "🧭",
         "projects": "💻",
+        "side-write": "🚀",
         "certificates": "🎓",
         "footer": "✉️"
     };
