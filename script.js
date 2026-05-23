@@ -243,31 +243,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     setTimeout(updateScrollProgress, 100);
 
-    // =======================================
-    // 4.2 OPTION 1: JAKARTA (WIB) TICKING CLOCK
-    // =======================================
-    const updateClock = () => {
-        const timeEl = document.getElementById("pill-time");
-        if (!timeEl) return;
-        try {
-            const options = {
-                timeZone: 'Asia/Jakarta',
-                hour: '2-digit',
-                minute: '2-digit',
-                hour12: false
-            };
-            const formatter = new Intl.DateTimeFormat('id-ID', options);
-            timeEl.textContent = `${formatter.format(new Date())} WIB`;
-        } catch (e) {
-            const now = new Date();
-            const wibTime = new Date(now.getTime() + (now.getTimezoneOffset() + 420) * 60000);
-            const hours = String(wibTime.getHours()).padStart(2, '0');
-            const minutes = String(wibTime.getMinutes()).padStart(2, '0');
-            timeEl.textContent = `${hours}:${minutes} WIB`;
-        }
-    };
-    setInterval(updateClock, 1000);
-    updateClock();
+
 
     // =======================================
     // 4.3 OPTION 4: DYNAMIC ISLAND ALERT BUBBLE
@@ -382,28 +358,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Connect Copy Email button inside Expanded control center
-    const copyEmailBtn = document.getElementById("pill-copy-email");
-    if (copyEmailBtn) {
-        copyEmailBtn.addEventListener('click', (e) => {
-            e.stopPropagation(); // Avoid parent click/hover conflicts
 
-            navigator.clipboard.writeText("hi.bagusrizky@gmail.com").then(() => {
-                const copyTextEl = document.getElementById("copy-text");
-                const originalText = copyTextEl ? copyTextEl.textContent : "Copy Email";
-                if (copyTextEl) copyTextEl.textContent = "Copied!";
-
-                triggerPillAlert("Email Copied! ✉️", "✉️", 3000);
-
-                setTimeout(() => {
-                    if (copyTextEl) copyTextEl.textContent = originalText;
-                }, 3000);
-            }).catch(err => {
-                console.error("Failed to copy text: ", err);
-                triggerPillAlert("Failed to Copy ❌", "❌", 3000);
-            });
-        });
-    }
 
     // =======================================
     // 5. ANIMASI MENGETIK (TYPING EFFECT)
