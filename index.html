@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bagus Portofolio</title>
+    <title>Bagus Rizky Febriyanto | IT Technical Support Portfolio</title>
+    <meta name="description" content="Portfolio of Bagus Rizky Febriyanto, an IT Technical Support Engineer specializing in hardware troubleshooting, network setup, OS administration, and user support.">
     <link rel="stylesheet" href="style.css"> 
     
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Tienne:wght@400;700;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Work+Sans:wght@400;500;600;700&family=Tienne:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
     <div class="container" id="home">
@@ -28,20 +28,27 @@
             </label>
             
             <nav class="nav">
+                <a href="#home">Home</a>
                 <a href="#about">Profile</a>
-                <a href="#skills">Works</a>
+                <a href="#skills">Skills</a>
+                <a href="#journey">Journey</a>
+                <a href="#projects">Projects</a>
+                <a href="#certificates">Certificates</a>
                 <a href="#footer">Contact</a>
+                <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle Theme">
+                    <i class="fa fa-moon-o"></i>
+                </button>
             </nav>
         </header>
         
-<section class="hero-section" id="home">
+        <section class="hero-section" id="home-section">
             <div class="hero-text">
-                  <h1>Hi, I’m Bagus </h1>
-                   <h1>Your Tech Support </h1> 
-                     <h2> I am looking for  <span class="typed-text"></span><span class="cursor">&nbsp;</span></h2>
+                <h1>Hi, I’m Bagus</h1>
+                <h1>Your Tech Support</h1> 
+                <h2>I am looking for <span class="typed-text"></span><span class="cursor">&nbsp;</span></h2>
                 <div class="cta-buttons">
-                    <a href="https://drive.google.com/file/d/1z1ila6GAvdd8MQ3JgruguVjBZZ6iu2lE/view?usp=sharing" target="blank" class="btn primary">Grab My CV</a>
-                    <a href="https://mail.google.com/mail/u/0/?fs=1&to=hi.bagusrizky@gmail.com&tf=cm" target="blank" class="btn secondary">Hit Me Up</a>
+                    <a href="https://drive.google.com/file/d/1z1ila6GAvdd8MQ3JgruguVjBZZ6iu2lE/view?usp=sharing" target="_blank" class="btn primary">Grab My CV</a>
+                    <a href="https://mail.google.com/mail/u/0/?fs=1&to=hi.bagusrizky@gmail.com&tf=cm" target="_blank" class="btn secondary">Hit Me Up</a>
                 </div>
             </div>
             <div class="hero-image">
@@ -49,371 +56,339 @@
             </div>
         </section>
 
-<section class="about-section" id="about">
+        <section class="about-section" id="about">
             <div class="about-container">
                 <div class="about-text">
                     <h2>About Me</h2>
-                    <p>My name’s Bagus Rizky Febriyanto but just call me Bagus (or Mas Gud, if you’re feeling fancy). Keep it chill. Welcome to my super simple portfolio, built with curiosity, kopi, and way too many “one more tweak” kind of nights.</p>
-                    <p>This space is basically my digital home a place where I share my projects, growth, and a little bit of how I survive tech chaos. By day, I work as a Technical Support Engineer, aka the person people call when laptops freeze, Wi-Fi disappears, or printers suddenly develop attitude.</p>
-                    <p>I like breaking things on purpose, fixing them, and figuring out how systems actually work. I’m always tinkering, always learning, and lowkey obsessed with making tech behave. Feel free to scroll around and enjoy the vibes
+                    <p>My name’s Bagus Rizky Febriyanto but just call me Bagus (or Mas Gud, if you’re feeling fancy). Keep it chill. Welcome to my portfolio, built with curiosity, kopi, and way too many “one more tweak” kind of nights.</p>
+                    <p>This space is basically my digital home—a place where I share my projects, growth, and a little bit of how I survive tech chaos. By day, I work as a Technical Support Engineer, aka the person people call when laptops freeze, Wi-Fi disappears, or printers suddenly develop attitude.</p>
+                    <p>I like breaking things on purpose, fixing them, and figuring out how systems actually work. I’m always tinkering, always learning, and lowkey obsessed with making tech behave. Feel free to scroll around and enjoy the vibes.</p>
                 </div>
-
                 <div class="about-image">
                     <img src="asset/about_me.png" alt="Foto Profil Bagus Rizky Febriyanto">
                 </div>
             </div>
         </section>
-        </div>
+    </div> <!-- Closes first container (contains Hero and About) -->
 
-      <section class="skills-section" id="skills">
-    <div class="container">
-        <h2>Skills</h2>
-        <div class="skills-grid">
-            <!--Skill Pertama-->
-            <div class="skill-card">
-                <div class="skill-header-image">
-                    <img src="asset/skill_5.png" alt="Troubleshooting" class="skill-photo">
+    <section class="skills-section" id="skills">
+        <div class="container">
+            <h2>Skills</h2>
+            <div class="skills-grid">
+                <!-- Skill Pertama -->
+                <div class="skill-card">
+                    <div class="skill-icon"><i class="fa fa-desktop"></i></div>
+                    <div class="skill-content">
+                        <h3 class="skill-title">Troubleshooting & Support</h3>
+                        <p class="skill-description">I handle daily onsite and remote technical support for users, mostly dealing with hardware issues like PCs and printers, as well as software and internal application problems. I make sure every case is documented properly and monitor systems to keep daily IT operations running smoothly.</p>
+                    </div>
                 </div>
                 
-                <div class="skill-content">
-                    <h3 class="skill-title">Troubleshooting & Support</h3>
-                    <p class="skill-description">I handle daily onsite and remote technical support for users, mostly dealing with hardware issues like PCs and printers, as well as software and internal application problems. I make sure every case is documented properly and monitor systems to keep daily IT operations running smoothly.</p>
+                <!-- Skill Kedua -->
+                <div class="skill-card">
+                    <div class="skill-icon"><i class="fa fa-wifi"></i></div>
+                    <div class="skill-content">
+                        <h3 class="skill-title">Networking & Infrastructure</h3>
+                        <p class="skill-description">Responsible for basic troubleshooting of LAN and Wi-Fi networks in office and branch environments. Provide initial support for VPN connectivity issues and help ensure users have stable network access to support daily operations.</p>
+                    </div>
                 </div>
-            </div>
-            
-            <!--Skill kedua-->
-            <div class="skill-card">
-                 <div class="skill-header-image">
-                    <img src="asset/skill_7.png" alt="Networking" class="skill-photo">
+
+                <!-- Skill Ketiga -->
+                <div class="skill-card">
+                    <div class="skill-icon"><i class="fa fa-laptop"></i></div>
+                    <div class="skill-content">
+                        <h3 class="skill-title">Hardware & Software Installation</h3>
+                        <p class="skill-description">I handle the installation and configuration of hardware and software, prepare devices for new employees, perform hardware upgrades like laptop RAM installation, and support endpoint security setup and technical onboarding.</p>
+                    </div>
                 </div>
-                <div class="skill-content">
-                    <h3 class="skill-title">Networking & Infrastructure</h3>
-                    <p class="skill-description">Responsible for basic troubleshooting of LAN and Wi-Fi networks in office and branch environments. Provide initial support for VPN connectivity issues and help ensure users have stable network access to support daily operations.</p>
-                </div>
-            </div>
 
-            <!--Skill ketiga-->
-             <div class="skill-card">
-                 <div class="skill-header-image">
-                    <img src="asset/skill_2.png" alt="Networking" class="skill-photo">
-                </div>
-                <div class="skill-content">
-                    <h3 class="skill-title">Hardware & Software Installation</h3>
-                    <p class="skill-description">I handle the installation and configuration of hardware and software, prepare devices for new employees, perform hardware upgrades like laptop RAM installation, and support endpoint security setup and technical onboarding.</p>
-                </div>
-            </div>
-
-            <!--Skill keempat-->
-             <div class="skill-card">
-                 <div class="skill-header-image">
-                    <img src="asset/skill_6.png" alt="Networking" class="skill-photo">
-                </div>
-                <div class="skill-content">
-                    <h3 class="skill-title">Mysql and Java Programing</h3>
-                    <p class="skill-description">I have basic experience with MySQL and Java, including writing simple queries, understanding database structures, and building basic Java programs to support system and application needs.</p>
-                </div>
-            </div>
-            </div>
-    </div>
-</section>
-
-
-<section class="journey-section" id="journey">
-  <div class="container">
-    <h2>Working Journey</h2>
-    <p class="journey-subtitle">
-      A simple map of how my career levels up over time.
-    </p>
-
-    <div class="journey-timeline">
-
-      <!-- Stage 1 -->
-      <div class="journey-item left">
-        <div class="journey-card">
-          <span class="stage-label">PT Mandala Multifinance Tbk </span>
-          <h3>Technical Support Engineer</h3>
-          <p>
-            Started handling more complex IT operations such as endpoint security upgrades, 
-            VPN migration, system monitoring, and IT asset management.
-          </p>
-        </div>
-        <span class="journey-dot"></span>
-      </div>
-
-      <!-- Stage 2 -->
-      <div class="journey-item right">
-        <span class="journey-dot"></span>
-        <div class="journey-card">
-          <span class="stage-label">PT Adira Dinamika Multifinance Tbk</span>
-          <h3>Technical Support Engineer</h3>
-          <p>
-            Currently supporting IT operations at a larger enterprise environment, 
-            focusing on system reliability, user access management, troubleshooting,
-            and technical documentation.
-          </p>
-        </div>
-      </div>
-
-      <!-- Stage 3 -->
-      <div class="journey-item left">
-        <div class="journey-card">
-          <span class="stage-label">PT Adira Dinamika Multifinance Tbk</span>
-          <h3>IT Asset Support</h3>
-          <p>
-            Supported IT asset management by maintaining device inventory, preparing computers and 
-            equipment for new employees, and conducting regular asset audits to ensure accurate records
-          </p>
-        </div>
-        <span class="journey-dot active"></span>
-      </div>
-
-      
-
-      <!-- Stage 4 -->
-      <div class="journey-item right locked">
-        <span class="journey-dot locked"></span>
-        <div class="journey-card">
-          <span class="stage-label">Stage 04 — Locked</span>
-          <h3>Next Level</h3>
-          <p>
-            Specializing in advanced IT support, 
-            focusing on complex troubleshooting, system optimization, and enterprise-level technical solutions
-          </p>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<section class="projects-section" id="projects"> 
-    <div class="container">
-        <h2>Project</h2>
-        
-        <div class="projects-viewport">
-          <div class="projects-track" id="projects-track">
-    
-    <div class="project-item">
-        <div class="project-content-inner">
-            
-            <div class="project-text-content">
-                <h3>Endpoint Security Migration</h3>
-                <p>Participated in the endpoint security replacement from Kaspersky to Sophos by installing Sophos antivirus on user laptops and PCs. Performed basic checks to ensure the antivirus was properly installed and functioning correctly to support endpoint security across user devices.</p>
-            </div>
-            
-            <div class="project-image-box">
-                <img src="asset/project_1.png" alt="Icon Security Sophos" loading="lazy">
-            </div>
-            
-        </div>
-    </div>
-    
-    <div class="project-item">
-        <div class="project-content-inner">
-            <div class="project-text-content">
-                <h3>FortiVPN to FortiEMS Migration</h3>
-                <p>Participated in the VPN migration from FortiVPN to FortiEMS by handling the installation of FortiEMS VPN on user laptops. Performed basic checks to ensure the VPN client was running properly and could be used by users for secure remote access</p>
-            </div>
-            <div class="project-image-box">
-                <img src="asset/project_2.png" alt="Icon VPN" loading="lazy">
-            </div>
-        </div>
-    </div>
-    
-    <div class="project-item">
-        <div class="project-content-inner">
-            <div class="project-text-content">
-                <h3>Disaster Recovery Exercise</h3>
-                <p>I participated in a disaster recovery exercise by setting up network devices, ensuring stable network connectivity, and testing all equipment to make sure everything was properly connected to the testing network.</p>
-            </div>
-            <div class="project-image-box">
-                <img src="asset/project_3.png" alt="Gambar Proyek 3" loading="lazy">
-            </div>
-        </div>
-    </div>
-
-     <div class="project-item">
-        <div class="project-content-inner">
-            <div class="project-text-content">
-                <h3>Server Relocation to BDDC </h3>
-                <p>Responsible for labeling and inventorying all server equipment relocated from the head office, ensuring that all components were properly recorded and accounted for upon arrival at the BDDC.</p>
-            </div>
-            <div class="project-image-box">
-                <img src="asset/project_4.png" alt="Gambar Proyek 3" loading="lazy">
-            </div>
-        </div>
-    </div>
-
-     <div class="project-item">
-        <div class="project-content-inner">
-            <div class="project-text-content">
-                <h3>IT Asset Stock Opname</h3>
-                <p>I Conducted a comprehensive inventory of IT assets, including laptops, PCs, printers, monitors, and access points, to ensure all equipment was accurately recorded and properly managed.</p>
-            </div>
-            <div class="project-image-box">
-                <img src="asset/project_5.png" alt="Gambar Proyek 3" loading="lazy">
-            </div>
-        </div>
-    </div>
-
-     <div class="project-item">
-        <div class="project-content-inner">
-            <div class="project-text-content">
-                <h3>Email Migration</h3>
-                <p>Supported the email migration from Google Workspace to Office 365 by ensuring all users could successfully log in and access their Office 365 email accounts, helping maintain a smooth email service transition.</p>
-            </div>
-            <div class="project-image-box">
-                <img src="asset/project_6.png" alt="Gambar Proyek 3" loading="lazy">
-            </div>
-        </div>
-    </div>
-    
-
-     <div class="project-item">
-        <div class="project-content-inner">
-            <div class="project-text-content">
-                <h3>User Acceptance Testing (UAT)</h3>
-                <p>Estim Ticketing System Module – Conducted user acceptance testing on modules of the new ticketing system during the system transition, ensuring each feature functioned properly and met user requirements before implementation.</p>
-            </div>
-            <div class="project-image-box">
-                <img src="asset/project_7.png" alt="Gambar Proyek 3" loading="lazy">
-            </div>
-        </div>
-    </div>
-
-
-</div>
-        
-        <div class="slider-navigation">
-            <button class="slider-btn" id="prev-btn">Prev</button>
-            <button class="slider-btn" id="next-btn">Next</button>
-        </div>
-    </div>
-</section>
-
-
-
-<section class="side-write-section" id="side-write">
-  <div class="container">
-    <h2>Side Exploration</h2>
-
-    <div class="side-write-grid">
-
-      <!-- Medium Card -->
-      <a href="https://medium.com/@social.bagusrizkyf" target="_blank" class="side-write-card">
-        <div class="side-write-image">
-          <img src="asset/medium_1.png" alt="Medium Writing">
-        </div>
-
-        <div class="side-write-content">
-          <h3>Medium</h3>
-          <p>Nulis buat dokumentasi proses belajar, pengalaman kerja, dan hal-hal seru yang gue temuin di dunia IT & teknologi. 
-            Bukan expert, cuma manusia yang suka belajar.</p>
-          <span class="side-write-cta">Read Articles →</span>
-        </div>
-      </a>
-
-
-      <!-- Dribbble Card -->
-      <a href="https://dribbble.com/bagusrizkyfeb" target="_blank" class="side-write-card">
-        <div class="side-write-image">
-          <img src="asset/dribel_1.png" alt="Dribbble Design">
-        </div>
-
-        <div class="side-write-content">
-          <h3>Dribbble</h3>
-          <p>Iseng belajar design, nyoba-nyoba UI, dan ngulik layout di sela kerjaan IT.
-Masih newbie — cuma seneng eksperimen dan belajar pelan-pelan.</p>
-          <span class="side-write-cta">View Shots →</span>
-        </div>
-      </a>
-
-    </div>
-  </div>
-</section>
-
-
-
-<section class="certificate-section" id="certificates">
-    <div class="container"> <h2 class="section-title">Certifications</h2>
-        
-        <div class="slider-wrapper"> <div class="slide-track">
-                <div class="slide">
-                    <img src="asset/Certificate_1.png" alt="Cert 1">
-                    <div class="cert-desc"><h3>Certificate IT Support Google</h3></div>
-                </div>
-                <div class="slide">
-                    <img src="asset/Certificate_2.png" alt="Cert 2">
-                    <div class="cert-desc"><h3>Front-End Developer Training FGA Kominfo </h3></div>
-                </div>
-                <div class="slide">
-                    <img src="asset/Certificate_3.png" alt="Cert 3">
-                    <div class="cert-desc"><h3>Front-End Programming BAKTI Kominfo</h3></div>
-                </div>
-                
-                <div class="slide">
-                    <img src="asset/Certificate_4.png" alt="Cert 1">
-                    <div class="cert-desc"><h3>Penyelesaian kursus SQL di Progate</h3></div>
-                </div>
+                <!-- Skill Keempat -->
+                <div class="skill-card">
+                    <div class="skill-icon"><i class="fa fa-code"></i></div>
+                    <div class="skill-content">
+                        <h3 class="skill-title">MySQL & Programming</h3>
+                        <p class="skill-description">I have basic experience with MySQL and Java, including writing simple queries, understanding database structures, and building basic Java programs to support system and application needs.</p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-
-
-<footer class="main-footer" id="footer">
-    <div class="footer-content-wrapper">
-        
-        <div class="footer-container-top">
-            
-            <div class="footer-info">
-                <h4>Wrapping Up</h4>
-                <p>Thank you for visiting my portfolio. I’m always open to learning, collaborating, and taking on new challenges in the IT field. Feel free to get in touch if you’d like to connect or work together.</p>
-            </div>
-
-            <div class="footer-links-group">
-                <h4>Quick Links</h4>
-                <ul>
-                    <li><a href="#about">About Me</a></li>
-                    <li><a href="#skills">Skills</a></li>
-                    <li><a href="#projects">Projects</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-social-group">
-                <h4>Get in Touch</h4>
-                <a href="https://mail.google.com/mail/u/0/?fs=1&to=hi.bagusrizky@gmail.com&tf=cm" target="_blank" class="social-icon">
-                    <span>✉️</span> Email
-                </a>
-                <a href="https://www.linkedin.com/in/bagus-rizky-febriyanto-221a68291/" target="_blank" class="social-icon">
-                    <span>🔗</span> LinkedIn
-                </a>
-                <a href="https://github.com/bagusrizkyfeb" target="_blank" class="social-icon">
-                    <span>🐙</span> GitHub
-                </a>
-            </div>
-            
-        </div>
-        
-        <div class="footer-secondary">
-            <hr class="footer-divider">
-            <p class="copyright-text">
-                &copy; <span id="current-year-3"></span> Bagus Rizky Ferbiyanto. All rights reserved.
+    <section class="journey-section" id="journey">
+        <div class="container">
+            <h2>Working Journey</h2>
+            <p class="journey-subtitle">
+                A simple map of how my career levels up over time.
             </p>
+
+            <div class="journey-timeline">
+                <!-- Stage 1 -->
+                <div class="journey-item left">
+                    <div class="journey-card">
+                        <span class="stage-label">PT Mandala Multifinance Tbk</span>
+                        <h3>Technical Support Engineer</h3>
+                        <p>
+                            Started handling more complex IT operations such as endpoint security upgrades, 
+                            VPN migration, system monitoring, and IT asset management.
+                        </p>
+                    </div>
+                    <span class="journey-dot"></span>
+                </div>
+
+                <!-- Stage 2 -->
+                <div class="journey-item right">
+                    <span class="journey-dot"></span>
+                    <div class="journey-card">
+                        <span class="stage-label">PT Adira Dinamika Multifinance Tbk</span>
+                        <h3>Technical Support Engineer</h3>
+                        <p>
+                            Currently supporting IT operations at a larger enterprise environment, 
+                            focusing on system reliability, user access management, troubleshooting,
+                            and technical documentation.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Stage 3 -->
+                <div class="journey-item left">
+                    <div class="journey-card">
+                        <span class="stage-label">PT Adira Dinamika Multifinance Tbk</span>
+                        <h3>IT Asset Support</h3>
+                        <p>
+                            Supported IT asset management by maintaining device inventory, preparing computers and 
+                            equipment for new employees, and conducting regular asset audits to ensure accurate records.
+                        </p>
+                    </div>
+                    <span class="journey-dot active"></span>
+                </div>
+
+                <!-- Stage 4 -->
+                <div class="journey-item right locked">
+                    <span class="journey-dot locked"></span>
+                    <div class="journey-card">
+                        <span class="stage-label">Stage 04 — Locked</span>
+                        <h3>Next Level</h3>
+                        <p>
+                            Specializing in advanced IT support, 
+                            focusing on complex troubleshooting, system optimization, and enterprise-level technical solutions.
+                        </p>
+                    </div>
+                </div>
+            </div>
         </div>
+    </section>
 
-    </div> </footer>
+    <section class="projects-section" id="projects"> 
+        <div class="container">
+            <h2>Projects</h2>
+            
+            <div class="projects-viewport">
+                <div class="projects-track" id="projects-track">
+                    <!-- Project 1 -->
+                    <div class="project-item">
+                        <div class="project-content-inner">
+                            <div class="project-text-content">
+                                <h3>Endpoint Security Migration</h3>
+                                <p>Participated in the endpoint security replacement from Kaspersky to Sophos by installing Sophos antivirus on user laptops and PCs. Performed basic checks to ensure the antivirus was properly installed and functioning correctly to support endpoint security across user devices.</p>
+                            </div>
+                            <div class="project-image-box">
+                                <img src="asset/project_1.png" alt="Icon Security Sophos" loading="lazy">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Project 2 -->
+                    <div class="project-item">
+                        <div class="project-content-inner">
+                            <div class="project-text-content">
+                                <h3>FortiVPN to FortiEMS Migration</h3>
+                                <p>Participated in the VPN migration from FortiVPN to FortiEMS by handling the installation of FortiEMS VPN on user laptops. Performed basic checks to ensure the VPN client was running properly and could be used by users for secure remote access.</p>
+                            </div>
+                            <div class="project-image-box">
+                                <img src="asset/project_2.png" alt="Icon VPN" loading="lazy">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Project 3 -->
+                    <div class="project-item">
+                        <div class="project-content-inner">
+                            <div class="project-text-content">
+                                <h3>Disaster Recovery Exercise</h3>
+                                <p>I participated in a disaster recovery exercise by setting up network devices, ensuring stable network connectivity, and testing all equipment to make sure everything was properly connected to the testing network.</p>
+                            </div>
+                            <div class="project-image-box">
+                                <img src="asset/project_3.png" alt="Disaster Recovery" loading="lazy">
+                            </div>
+                        </div>
+                    </div>
 
+                    <!-- Project 4 -->
+                    <div class="project-item">
+                        <div class="project-content-inner">
+                            <div class="project-text-content">
+                                <h3>Server Relocation to BDDC</h3>
+                                <p>Responsible for labeling and inventorying all server equipment relocated from the head office, ensuring that all components were properly recorded and accounted for upon arrival at the BDDC.</p>
+                            </div>
+                            <div class="project-image-box">
+                                <img src="asset/project_4.png" alt="Server Relocation" loading="lazy">
+                            </div>
+                        </div>
+                    </div>
 
-<script>
-    // Automatically update the current year
-    document.getElementById('current-year-3').textContent = new Date().getFullYear();
-</script>
+                    <!-- Project 5 -->
+                    <div class="project-item">
+                        <div class="project-content-inner">
+                            <div class="project-text-content">
+                                <h3>IT Asset Stock Opname</h3>
+                                <p>I Conducted a comprehensive inventory of IT assets, including laptops, PCs, printers, monitors, and access points, to ensure all equipment was accurately recorded and properly managed.</p>
+                            </div>
+                            <div class="project-image-box">
+                                <img src="asset/project_5.png" alt="Stock Opname" loading="lazy">
+                            </div>
+                        </div>
+                    </div>
 
+                    <!-- Project 6 -->
+                    <div class="project-item">
+                        <div class="project-content-inner">
+                            <div class="project-text-content">
+                                <h3>Email Migration</h3>
+                                <p>Supported the email migration from Google Workspace to Office 365 by ensuring all users could successfully log in and access their Office 365 email accounts, helping maintain a smooth email service transition.</p>
+                            </div>
+                            <div class="project-image-box">
+                                <img src="asset/project_6.png" alt="Email Migration" loading="lazy">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Project 7 -->
+                    <div class="project-item">
+                        <div class="project-content-inner">
+                            <div class="project-text-content">
+                                <h3>User Acceptance Testing (UAT)</h3>
+                                <p>Estim Ticketing System Module – Conducted user acceptance testing on modules of the new ticketing system during the system transition, ensuring each feature functioned properly and met user requirements before implementation.</p>
+                            </div>
+                            <div class="project-image-box">
+                                <img src="asset/project_7.png" alt="UAT Testing" loading="lazy">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="slider-navigation">
+                    <button class="slider-btn" id="prev-btn">Prev</button>
+                    <button class="slider-btn" id="next-btn">Next</button>
+                </div>
+            </div>
+        </div>
+    </section>
 
- <button onclick="topFunction()" id="myBtn" title="Go to top">Back to Top<i class="fa fa-arrow-up"></i></button>
-        </div> <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> <script src="script.js"></script> 
+    <section class="side-write-section" id="side-write">
+        <div class="container">
+            <h2>Side Exploration</h2>
+
+            <div class="side-write-grid">
+                <!-- Medium Card -->
+                <a href="https://medium.com/@social.bagusrizkyf" target="_blank" class="side-write-card">
+                    <div class="side-write-image">
+                        <img src="asset/medium_1.png" alt="Medium Writing">
+                    </div>
+                    <div class="side-write-content">
+                        <h3>Medium</h3>
+                        <p>Nulis buat dokumentasi proses belajar, pengalaman kerja, dan hal-hal seru yang gue temuin di dunia IT & teknologi. Bukan expert, cuma manusia yang suka belajar.</p>
+                        <span class="side-write-cta">Read Articles →</span>
+                    </div>
+                </a>
+
+                <!-- Dribbble Card -->
+                <a href="https://dribbble.com/bagusrizkyfeb" target="_blank" class="side-write-card">
+                    <div class="side-write-image">
+                        <img src="asset/dribel_1.png" alt="Dribbble Design">
+                    </div>
+                    <div class="side-write-content">
+                        <h3>Dribbble</h3>
+                        <p>Iseng belajar design, nyoba-nyoba UI, dan ngulik layout di sela kerjaan IT. Masih newbie — cuma seneng eksperimen dan belajar pelan-pelan.</p>
+                        <span class="side-write-cta">View Shots →</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="certificate-section" id="certificates">
+        <div class="container"> 
+            <h2 class="section-title">Certifications</h2>
+            <div class="slider-wrapper"> 
+                <div class="slide-track">
+                    <div class="slide">
+                        <img src="asset/Certificate_1.png" alt="Cert 1">
+                        <div class="cert-desc"><h3>Certificate IT Support Google</h3></div>
+                    </div>
+                    <div class="slide">
+                        <img src="asset/Certificate_2.png" alt="Cert 2">
+                        <div class="cert-desc"><h3>Front-End Developer Training FGA Kominfo</h3></div>
+                    </div>
+                    <div class="slide">
+                        <img src="asset/Certificate_3.png" alt="Cert 3">
+                        <div class="cert-desc"><h3>Front-End Programming BAKTI Kominfo</h3></div>
+                    </div>
+                    <div class="slide">
+                        <img src="asset/Certificate_4.png" alt="Cert 4">
+                        <div class="cert-desc"><h3>Penyelesaian kursus SQL di Progate</h3></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="main-footer" id="footer">
+        <div class="footer-content-wrapper">
+            <div class="footer-container-top">
+                <div class="footer-info">
+                    <h4>Wrapping Up</h4>
+                    <p>Thank you for visiting my portfolio. I’m always open to learning, collaborating, and taking on new challenges in the IT field. Feel free to get in touch if you’d like to connect or work together.</p>
+                </div>
+
+                <div class="footer-links-group">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#about">About Me</a></li>
+                        <li><a href="#skills">Skills</a></li>
+                        <li><a href="#projects">Projects</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-social-group">
+                    <h4>Get in Touch</h4>
+                    <a href="https://mail.google.com/mail/u/0/?fs=1&to=hi.bagusrizky@gmail.com&tf=cm" target="_blank" class="social-icon">
+                        <span>✉️</span> Email
+                    </a>
+                    <a href="https://www.linkedin.com/in/bagus-rizky-febriyanto-221a68291/" target="_blank" class="social-icon">
+                        <span>🔗</span> LinkedIn
+                    </a>
+                    <a href="https://github.com/bagusrizkyfeb" target="_blank" class="social-icon">
+                        <span>🐙</span> GitHub
+                    </a>
+                </div>
+            </div>
+            
+            <div class="footer-secondary">
+                <hr class="footer-divider">
+                <p class="copyright-text">
+                    &copy; <span id="current-year-3"></span> Bagus Rizky Febriyanto. All rights reserved.
+                </p>
+            </div>
+        </div> 
+    </footer>
+
+    <button onclick="topFunction()" id="myBtn" title="Go to top">Back to Top<i class="fa fa-arrow-up"></i></button>
+
+    <script>
+        // Automatically update the current year
+        document.getElementById('current-year-3').textContent = new Date().getFullYear();
+    </script>
+    
+    <script src="script.js"></script> 
 </body>
 </html>
