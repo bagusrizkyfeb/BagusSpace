@@ -36,12 +36,182 @@ document.addEventListener("DOMContentLoaded", () => {
             if (document.body.classList.contains("dark-theme")) {
                 applyTheme("light");
                 localStorage.setItem("theme", "light");
+                triggerPillAlert("Light Mode Active", "☀️", 2000);
             } else {
                 applyTheme("dark");
                 localStorage.setItem("theme", "dark");
+                triggerPillAlert("Dark Mode Active", "🌙", 2000);
             }
         });
     }
+
+    // =======================================
+    // 1.1 DYNAMIC HEADER GREETING WIDGET (Next to Logo)
+    // =======================================
+    const greetingWidget = document.getElementById("system-time-widget");
+    let currentLangIndex = 0;
+    let greetingInterval = null;
+    let isScrollGreetingActive = false;
+    let activeGreetings = [];
+
+    const greetingsPool = {
+        morning: [
+            "Selamat Pagi! 🌅",         // Indonesian
+            "Good Morning! 🌅",         // English
+            "Ohayou Gozaimasu! 🌅",    // Japanese
+            "Bonjour! 🌅",             // French
+            "¡Buenos Días! 🌅",         // Spanish
+            "Guten Morgen! 🌅",         // German
+            "Buongiorno! 🌅"            // Italian
+        ],
+        afternoon: [
+            "Selamat Siang! ☀️",
+            "Good Afternoon! ☀️",
+            "Konnichiwa! ☀️",
+            "Bon Après-midi! ☀️",
+            "¡Buenas Tardes! ☀️",
+            "Guten Tag! ☀️",
+            "Buon Pomeriggio! ☀️"
+        ],
+        evening: [
+            "Selamat Sore! 🌇",
+            "Good Evening! 🌇",
+            "Konbanwa! 🌇",
+            "Bonsoir! 🌇",
+            "¡Buenas Tardes! 🌇",
+            "Guten Abend! 🌇",
+            "Buonasera! 🌇"
+        ],
+        night: [
+            "Selamat Malam! 🌌",
+            "Good Night! 🌌",
+            "Oyasumi Nasai! 🌌",
+            "Bonne Nuit! 🌌",
+            "¡Buenas Noches! 🌌",
+            "Gute Nacht! 🌌",
+            "Buonanotte! 🌌"
+        ]
+    };
+
+    // Custom Liquid Gel dynamic width transition helper
+    const animateWidgetText = (newText) => {
+        if (!greetingWidget) return;
+        const statusText = greetingWidget.querySelector(".status-text");
+        if (!statusText) return;
+
+        // 1. Measure initial start width
+        const startWidth = greetingWidget.offsetWidth;
+        
+        // 2. Lock the widget width to prevent snapping
+        greetingWidget.style.width = `${startWidth}px`;
+
+        // 3. Fade out the text
+        statusText.style.opacity = "0";
+        statusText.style.transform = "translateY(-6px)";
+
+        setTimeout(() => {
+            // 4. Update the text content behind the scenes
+            statusText.textContent = newText;
+
+            // 5. Measure the natural target width for the new text
+            greetingWidget.style.width = "auto";
+            const targetWidth = greetingWidget.offsetWidth;
+            
+            // 6. Restore locked width instantly so it can transition
+            greetingWidget.style.width = `${startWidth}px`;
+            
+            // Force layout reflow
+            greetingWidget.offsetHeight;
+
+            // 7. Transition width to target size smoothly
+            greetingWidget.style.width = `${targetWidth}px`;
+            
+            // Fade text back in
+            statusText.style.opacity = "1";
+            statusText.style.transform = "translateY(0)";
+
+            // 8. After the transition finishes (600ms), unlock width back to auto
+            setTimeout(() => {
+                if (greetingWidget.style.width === `${targetWidth}px`) {
+                    greetingWidget.style.width = "auto";
+                }
+            }, 600);
+        }, 150);
+    };
+
+    const startGreetingCycle = () => {
+        if (!greetingWidget) return;
+        
+        clearInterval(greetingInterval);
+        greetingInterval = setInterval(() => {
+            if (isScrollGreetingActive) return; // Pause cycle during scroll greeting
+            
+            currentLangIndex = (currentLangIndex + 1) % activeGreetings.length;
+            const nextText = activeGreetings[currentLangIndex];
+            
+            // Smoothly morph widget text using measuring algorithm
+            animateWidgetText(nextText);
+        }, 8000); // 8 seconds interval
+    };
+
+    if (greetingWidget) {
+        const statusText = greetingWidget.querySelector(".status-text");
+        
+        const hour = new Date().getHours();
+
+        if (hour >= 5 && hour < 12) {
+            activeGreetings = greetingsPool.morning;
+        } else if (hour >= 12 && hour < 17) {
+            activeGreetings = greetingsPool.afternoon;
+        } else if (hour >= 17 && hour < 19) {
+            activeGreetings = greetingsPool.evening;
+        } else {
+            activeGreetings = greetingsPool.night;
+        }
+
+        // Set initial first language greeting
+        if (statusText) statusText.textContent = activeGreetings[0];
+
+        // Start cycling every 8 seconds
+        startGreetingCycle();
+    }
+
+    // =======================================
+    // 1.2 ONE-TIME SCROLL GREETING TRIGGER
+    // =======================================
+    let hasTriggeredScrollWelcome = false;
+
+    window.addEventListener("scroll", () => {
+        if (window.scrollY > 150 && !hasTriggeredScrollWelcome) {
+            hasTriggeredScrollWelcome = true;
+            isScrollGreetingActive = true; // Pause multi-language interval
+            
+            // Pool of fun scroll messages
+            const welcomeMessages = [
+                "yuhu, you start scrolling! 🚀",
+                "Hold on tight, let's explore! 🧭",
+                "Vibe check: scrolling activated! 😎",
+                "Welcome! Enjoy the scroll! ✨"
+            ];
+            const randomMessage = welcomeMessages[Math.floor(Math.random() * welcomeMessages.length)];
+            
+            if (greetingWidget) {
+                // Morph to scroll message smoothly using measuring algorithm
+                animateWidgetText(randomMessage);
+
+                // Revert back to language cycling after 3 seconds
+                setTimeout(() => {
+                    isScrollGreetingActive = false; // Resume cycling
+                    
+                    // Revert to current index language greeting smoothly
+                    animateWidgetText(activeGreetings[currentLangIndex]);
+                    
+                    // Restart the cycle loop
+                    startGreetingCycle();
+                }, 3000); // Revert after 3 seconds
+            }
+        }
+    }, { passive: true });
 
     // =======================================
     // 2. BACK TO TOP BUTTON
@@ -363,7 +533,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // =======================================
+        // =======================================
     // 4.4 CERTIFICATE PREVIEW MODAL & LIGHTBOX
     // =======================================
     const certSlides = document.querySelectorAll('.certificate-section .slide');

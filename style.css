@@ -11,8 +11,71 @@ html {
     overflow-x: hidden;
 }
 
-/* ======================================= */
-/* TEMA & VARIABEL WARNA (LIGHT/DARK) */
+.logo img {
+    height: 28px;
+    width: auto;
+    display: block;
+    transition: filter 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Logo Wrapper and Interactive Welcome Greeting Widget */
+.logo-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.system-time-widget {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    background-color: rgba(255, 255, 255, 0.38);
+    backdrop-filter: blur(20px) saturate(170%);
+    -webkit-backdrop-filter: blur(20px) saturate(170%);
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    font-family: 'Poppins', 'Work Sans', sans-serif;
+    font-size: 12.5px;
+    font-weight: 500;
+    color: var(--color-text);
+    box-shadow: 0 4px 15px var(--shadow-color), inset 0 1px 1px rgba(255, 255, 255, 0.35);
+    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    cursor: default;
+    user-select: none;
+    margin-left: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+body.dark-theme .system-time-widget {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 15px var(--shadow-color), inset 0 1px 1px rgba(255, 255, 255, 0.05);
+}
+
+.system-time-widget:hover {
+    background-color: var(--color-accent);
+    color: #ffffff;
+    border-color: var(--color-accent);
+    transform: scale(1.03) translateY(-1px);
+    box-shadow: 0 8px 22px rgba(var(--color-accent-rgb), 0.25), var(--glow-shadow);
+}
+
+body.dark-theme .system-time-widget:hover {
+    background-color: var(--color-accent);
+}
+
+.system-time-widget .status-text {
+    display: inline-block;
+    transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+
+
+
+
+/* Dynamic Active Section Pill - dynamic scroll indicator positioned next to Dark Mode toggle */
 /* ======================================= */
 :root {
     --color-bg: #f5f5f7;
@@ -398,14 +461,14 @@ body.dark-theme .nav-active-pill {
     /* Scroll-driven Liquid Gel Fusion docks on desktop */
     .header.fused .nav-active-pill {
         border-radius: 20px 0 0 20px !important;
-        border-right: none !important;
+        border-right-color: transparent !important;
         margin-right: 0 !important; /* Clear gap for seamless merge */
         box-shadow: none !important; /* Seamless drop shadow merge */
     }
 
     .header.fused .theme-toggle-btn {
         border-radius: 0 20px 20px 0 !important;
-        border-left: none !important;
+        border-left-color: transparent !important;
         height: 38px !important; /* Matches desktop pill height */
         width: 38px !important; /* Snug square-rounded */
         box-shadow: none !important; /* Seamless merge */
@@ -414,7 +477,7 @@ body.dark-theme .nav-active-pill {
     /* Fused dark mode hover adjustments: Trigger spring separation to restore circular shape */
     .header.fused:has(.theme-toggle-btn:hover) .nav-active-pill {
         border-radius: 20px !important;
-        border-right: 1px solid rgba(255, 255, 255, 0.45) !important;
+        border-right-color: rgba(255, 255, 255, 0.45) !important;
         margin-right: 15px !important; /* Temporarily restore spacing gap */
     }
 
@@ -424,9 +487,9 @@ body.dark-theme .nav-active-pill {
 
     .header.fused .theme-toggle-btn:hover {
         border-radius: 50% !important; /* Perfect circular shape */
-        border-left: 1px solid rgba(255, 255, 255, 0.45) !important;
-        height: 36px !important; /* Match standard size */
-        width: 36px !important;
+        border-left-color: rgba(255, 255, 255, 0.45) !important;
+        height: 38px !important; /* Kept at 38px to prevent jumpy layout shifts! */
+        width: 38px !important;  /* Kept at 38px to prevent jumpy layout shifts! */
         transform: scale(1.1) rotate(15deg) !important; /* Safe premium scaling */
         box-shadow: 0 8px 22px rgba(var(--color-accent-rgb), 0.35), var(--glow-shadow) !important;
     }
@@ -1744,7 +1807,7 @@ body.dark-theme .cert-tag {
 
 /* Small Phones */
 @media (max-width: 600px) {
-    .logo {
+    .logo-wrapper {
         display: none !important;
     }
 
@@ -1811,29 +1874,7 @@ body.dark-theme .cert-tag {
         box-shadow: none !important; /* Seamless merge */
     }
 
-    /* Fused dark mode hover adjustments: Trigger spring separation on mobile */
-    .header.fused:has(.theme-toggle-btn:hover) .nav-active-pill {
-        border-radius: 18px !important;
-        border-right: 1px solid rgba(255, 255, 255, 0.45) !important;
-        margin-right: 12px !important;
-    }
 
-    body.dark-theme .header.fused:has(.theme-toggle-btn:hover) .nav-active-pill {
-        border-right-color: rgba(255, 255, 255, 0.1) !important;
-    }
-
-    .header.fused .theme-toggle-btn:hover {
-        border-radius: 50% !important; /* Perfect circular shape */
-        border-left: 1px solid rgba(255, 255, 255, 0.45) !important;
-        height: 32px !important; /* Match standard size */
-        width: 32px !important;
-        transform: scale(1.1) rotate(15deg) !important; /* Safe premium scaling */
-        box-shadow: 0 8px 22px rgba(var(--color-accent-rgb), 0.35), var(--glow-shadow) !important;
-    }
-
-    body.dark-theme .header.fused .theme-toggle-btn:hover {
-        border-left-color: rgba(255, 255, 255, 0.1) !important;
-    }
 
     .hero-text h1 {
         font-size: 32px;
