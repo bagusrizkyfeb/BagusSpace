@@ -257,14 +257,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 const elementPosition = targetElement.getBoundingClientRect().top;
                 const offsetPosition = elementPosition + window.pageYOffset - HEADER_HEIGHT_OFFSET;
 
-                if (window.smoothScrollInstance) {
-                    window.smoothScrollInstance.scrollTo(offsetPosition);
-                } else {
-                    window.scrollTo({
-                        top: offsetPosition,
-                        behavior: "smooth"
-                    });
-                }
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: "smooth"
+                });
             }
         });
     });
@@ -780,97 +776,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }, { passive: true });
     }
 
-    // =======================================
-    // 8. MOMENTUM SMOOTH SCROLL (INERTIA)
-    // =======================================
-    class SmoothMomentumScroll {
-        constructor() {
-            this.targetY = window.scrollY;
-            this.currentY = window.scrollY;
-            this.isMoving = false;
-            this.ease = 0.08; // Buttery smooth interpolation coefficient
 
-            const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-            if (prefersReducedMotion) return;
-
-            // Only apply custom smooth wheel on mouse users, bypass touchpad native smooth scroll
-            window.addEventListener("wheel", this.onWheel.bind(this), { passive: false });
-            window.addEventListener("scroll", this.onScroll.bind(this), { passive: true });
-            window.addEventListener("keydown", this.onKeyDown.bind(this));
-        }
-
-        scrollTo(y) {
-            this.targetY = Math.max(0, Math.min(y, document.documentElement.scrollHeight - window.innerHeight));
-            this.startLoop();
-        }
-
-        onWheel(e) {
-            // Trackpads send tiny micro-movements or support side scrolling. We let them scroll natively.
-            const isTouchPad = Math.abs(e.deltaX) > 0 || (Math.abs(e.deltaY) < 40 && Math.abs(e.deltaY) % 1 !== 0);
-            if (isTouchPad) {
-                this.targetY = window.scrollY;
-                return;
-            }
-
-            e.preventDefault();
-
-            this.targetY += e.deltaY;
-            this.targetY = Math.max(0, Math.min(this.targetY, document.documentElement.scrollHeight - window.innerHeight));
-
-            this.startLoop();
-        }
-
-        onScroll() {
-            // Sync with browser scroll events (e.g., clicking anchor link or top button)
-            if (!this.isMoving) {
-                this.targetY = window.scrollY;
-                this.currentY = window.scrollY;
-            }
-        }
-
-        onKeyDown(e) {
-            const keys = ["ArrowUp", "ArrowDown", "PageUp", "PageDown", "Space"];
-            if (!keys.includes(e.key)) return;
-
-            // Let inputs or textareas scroll naturally
-            if (["INPUT", "TEXTAREA"].includes(document.activeElement.tagName)) return;
-
-            let amount = 0;
-            if (e.key === "ArrowUp") amount = -45;
-            else if (e.key === "ArrowDown") amount = 45;
-            else if (e.key === "PageUp") amount = -window.innerHeight * 0.8;
-            else if (e.key === "PageDown") amount = window.innerHeight * 0.8;
-            else if (e.key === "Space") amount = e.shiftKey ? -window.innerHeight * 0.8 : window.innerHeight * 0.8;
-
-            e.preventDefault();
-            this.targetY += amount;
-            this.targetY = Math.max(0, Math.min(this.targetY, document.documentElement.scrollHeight - window.innerHeight));
-
-            this.startLoop();
-        }
-
-        startLoop() {
-            if (!this.isMoving) {
-                this.isMoving = true;
-                requestAnimationFrame(this.tick.bind(this));
-            }
-        }
-
-        tick() {
-            const diff = this.targetY - this.currentY;
-            this.currentY += diff * this.ease;
-
-            window.scrollTo(0, this.currentY);
-
-            if (Math.abs(diff) > 0.5) {
-                requestAnimationFrame(this.tick.bind(this));
-            } else {
-                this.isMoving = false;
-                this.currentY = this.targetY;
-                window.scrollTo(0, this.targetY);
-            }
-        }
-    }
 
     // =======================================
     // 9. INTERACTIVE FOOTER: DROP A VIBE & QUICK CONNECT
@@ -925,7 +831,4 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-
-    // Inisialisasi Smooth Momentum Scroll secara global agar dapat diakses dari modul lain
-    window.smoothScrollInstance = new SmoothMomentumScroll();
 });
