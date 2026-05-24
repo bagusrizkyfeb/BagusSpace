@@ -101,7 +101,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // 1. Measure initial start width
         const startWidth = greetingWidget.offsetWidth;
-        
+
         // 2. Lock the widget width to prevent snapping
         greetingWidget.style.width = `${startWidth}px`;
 
@@ -116,16 +116,16 @@ document.addEventListener("DOMContentLoaded", () => {
             // 5. Measure the natural target width for the new text
             greetingWidget.style.width = "auto";
             const targetWidth = greetingWidget.offsetWidth;
-            
+
             // 6. Restore locked width instantly so it can transition
             greetingWidget.style.width = `${startWidth}px`;
-            
+
             // Force layout reflow
             greetingWidget.offsetHeight;
 
             // 7. Transition width to target size smoothly
             greetingWidget.style.width = `${targetWidth}px`;
-            
+
             // Fade text back in
             statusText.style.opacity = "1";
             statusText.style.transform = "translateY(0)";
@@ -141,14 +141,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const startGreetingCycle = () => {
         if (!greetingWidget) return;
-        
+
         clearInterval(greetingInterval);
         greetingInterval = setInterval(() => {
             if (isScrollGreetingActive) return; // Pause cycle during scroll greeting
-            
+
             currentLangIndex = (currentLangIndex + 1) % activeGreetings.length;
             const nextText = activeGreetings[currentLangIndex];
-            
+
             // Smoothly morph widget text using measuring algorithm
             animateWidgetText(nextText);
         }, 8000); // 8 seconds interval
@@ -156,14 +156,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (greetingWidget) {
         const statusText = greetingWidget.querySelector(".status-text");
-        
+
         const hour = new Date().getHours();
 
         if (hour >= 5 && hour < 12) {
             activeGreetings = greetingsPool.morning;
-        } else if (hour >= 12 && hour < 17) {
+        } else if (hour >= 12 && hour < 16) {
             activeGreetings = greetingsPool.afternoon;
-        } else if (hour >= 17 && hour < 19) {
+        } else if (hour >= 16 && hour < 19) {
             activeGreetings = greetingsPool.evening;
         } else {
             activeGreetings = greetingsPool.night;
@@ -185,7 +185,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (window.scrollY > 150 && !hasTriggeredScrollWelcome) {
             hasTriggeredScrollWelcome = true;
             isScrollGreetingActive = true; // Pause multi-language interval
-            
+
             // Pool of fun scroll messages
             const welcomeMessages = [
                 "yuhu, you start scrolling! 🚀",
@@ -194,7 +194,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 "Welcome! Enjoy the scroll! ✨"
             ];
             const randomMessage = welcomeMessages[Math.floor(Math.random() * welcomeMessages.length)];
-            
+
             if (greetingWidget) {
                 // Morph to scroll message smoothly using measuring algorithm
                 animateWidgetText(randomMessage);
@@ -202,10 +202,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 // Revert back to language cycling after 3 seconds
                 setTimeout(() => {
                     isScrollGreetingActive = false; // Resume cycling
-                    
+
                     // Revert to current index language greeting smoothly
                     animateWidgetText(activeGreetings[currentLangIndex]);
-                    
+
                     // Restart the cycle loop
                     startGreetingCycle();
                 }, 3000); // Revert after 3 seconds
@@ -465,7 +465,7 @@ document.addEventListener("DOMContentLoaded", () => {
             activeTextSpan.textContent = message;
             activeTextSpan.style.opacity = "1";
             activeTextSpan.style.transform = "translateY(0)";
-            
+
             if (emoji === "") {
                 activeIconSpan.style.display = "none";
             } else {
@@ -509,10 +509,10 @@ document.addEventListener("DOMContentLoaded", () => {
     if (cvBtn && cvModal) {
         cvBtn.addEventListener('click', (e) => {
             e.preventDefault(); // Stop default tab navigation
-            
+
             // 1. Trigger the Dynamic Island Alert notification (runs for exactly 3 seconds, no icon, custom message)
             triggerPillAlert("Opening my CV...", "", 3000);
-            
+
             // 2. Open the glassmorphic modal overlay after the 3-second alert finishes completely
             setTimeout(() => {
                 cvModal.classList.add('show');
@@ -533,7 +533,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-        // =======================================
+    // =======================================
     // 4.4 CERTIFICATE PREVIEW MODAL & LIGHTBOX
     // =======================================
     const certSlides = document.querySelectorAll('.certificate-section .slide');
@@ -558,7 +558,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 e.preventDefault();
                 const slideImg = slide.querySelector('img');
                 const slideTitle = slide.querySelector('.cert-desc h3');
-                
+
                 if (slideImg && slideTitle) {
                     const imgSrc = slideImg.getAttribute('src');
                     const titleText = slideTitle.textContent;
@@ -871,6 +871,60 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
     }
+
+    // =======================================
+    // 9. INTERACTIVE FOOTER: DROP A VIBE & QUICK CONNECT
+    // =======================================
+    const createParticleBurst = (emoji, x, y) => {
+        for (let i = 0; i < 18; i++) {
+            const particle = document.createElement("span");
+            particle.className = "vibe-particle";
+            particle.textContent = emoji;
+            
+            // Random velocity & angle
+            const angle = Math.random() * Math.PI * 2;
+            const velocity = 50 + Math.random() * 120;
+            
+            // Calculate offsets
+            const targetX = Math.cos(angle) * velocity;
+            const targetY = Math.sin(angle) * velocity - 20; // pull upwards slightly
+            const targetRotation = Math.random() * 360 - 180;
+            
+            // Apply inline styles for GPU transition
+            particle.style.setProperty("--x", `${targetX}px`);
+            particle.style.setProperty("--y", `${targetY}px`);
+            particle.style.setProperty("--r", `${targetRotation}deg`);
+            
+            // Position at click center
+            particle.style.left = `${x}px`;
+            particle.style.top = `${y}px`;
+            
+            document.body.appendChild(particle);
+            
+            // Cleanup after animation finishes
+            setTimeout(() => {
+                particle.remove();
+            }, 800);
+        }
+    };
+
+    // Drop a Vibe Click Handler
+    const vibeButtons = document.querySelectorAll(".vibe-btn");
+    vibeButtons.forEach(btn => {
+        btn.addEventListener("click", (e) => {
+            const emoji = btn.getAttribute("data-emoji");
+            const rect = btn.getBoundingClientRect();
+            const clickX = rect.left + rect.width / 2;
+            const clickY = rect.top + rect.height / 2;
+            
+            // 1. Fire Particle Burst
+            createParticleBurst(emoji, clickX, clickY);
+            
+            // 2. Trigger Dynamic Island Alert
+            triggerPillAlert(`+1 Vibe dropped: ${emoji}!`, emoji, 2500);
+        });
+    });
+
 
     // Inisialisasi Smooth Momentum Scroll secara global agar dapat diakses dari modul lain
     window.smoothScrollInstance = new SmoothMomentumScroll();

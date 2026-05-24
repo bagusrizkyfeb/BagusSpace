@@ -1525,91 +1525,135 @@ body.dark-theme .cert-tag {
     pointer-events: none;
 }
 
-.footer-container-top {
+.footer-minimal-container {
     display: flex;
-    justify-content: space-between;
-    gap: 50px;
-    margin-bottom: 50px;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 25px;
+    margin-bottom: 40px;
     position: relative;
     z-index: 2;
 }
 
-.footer-info {
-    flex: 1.5;
-    max-width: 450px;
-}
-
-.footer-links-group,
-.footer-social-group {
-    flex: 1;
-}
-
-.main-footer h4 {
+.footer-logo-centered {
     font-family: 'Work Sans', sans-serif;
+    font-size: 32px;
+    font-weight: 800;
     color: #ffffff;
-    font-size: 19px;
-    margin-bottom: 22px;
-    font-weight: 700;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.15);
+    letter-spacing: -1px;
+    background: linear-gradient(135deg, #ffffff 0%, rgba(255, 255, 255, 0.7) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin: 0;
+    text-shadow: 0 4px 20px rgba(255, 255, 255, 0.1);
 }
 
-.main-footer p {
+.footer-bio-centered {
     font-family: 'Poppins', sans-serif;
-    font-size: 15px;
-    line-height: 1.7;
+    font-size: 14.5px;
+    line-height: 1.8;
     color: var(--color-footer-text);
+    max-width: 600px;
+    margin: 0;
 }
 
-.footer-links-group ul {
-    list-style: none;
-    padding: 0;
+.footer-socials-centered {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    margin-top: 5px;
 }
 
-.footer-links-group li {
-    margin-bottom: 12px;
-}
-
-.footer-links-group a {
-    font-family: 'Poppins', sans-serif;
-    color: var(--color-footer-text);
-    text-decoration: none;
-    font-size: 15px;
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+.social-btn-centered {
     display: inline-flex;
     align-items: center;
-    gap: 10px;
-}
-
-.footer-links-group a:hover {
-    color: var(--color-accent);
-    transform: translateX(6px);
-    text-shadow: 0 0 8px rgba(var(--color-accent-rgb), 0.3);
-}
-
-/* Floating macOS app controls for social links */
-.social-icon {
-    font-family: 'Poppins', sans-serif;
-    color: var(--color-footer-text);
-    text-decoration: none;
-    font-size: 14.5px;
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    background: rgba(255, 255, 255, 0.05);
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.04);
     border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 14px;
-    padding: 10px 18px;
-    margin-bottom: 12px;
-    width: fit-content;
+    color: var(--color-footer-text);
+    font-size: 17px;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-.social-icon:hover {
+.social-btn-centered:hover {
     background: rgba(var(--color-accent-rgb), 0.15);
     border-color: var(--color-accent);
     color: #ffffff;
-    transform: translateY(-4px) scale(1.05);
+    transform: translateY(-4px) scale(1.1);
+    box-shadow: 0 8px 24px rgba(var(--color-accent-rgb), 0.3);
+}
+
+.vibe-container-centered {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.vibe-title {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #ffffff;
+    letter-spacing: 0.5px;
+}
+
+.vibe-buttons {
+    display: flex;
+    gap: 12px;
+}
+
+.vibe-btn {
+    width: 42px;
+    height: 42px;
+    font-size: 18px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.vibe-btn:hover {
+    background: rgba(var(--color-accent-rgb), 0.15);
+    border-color: var(--color-accent);
+    transform: translateY(-4px) scale(1.15) rotate(8deg);
     box-shadow: 0 8px 20px rgba(var(--color-accent-rgb), 0.25);
+}
+
+.vibe-btn:active {
+    transform: translateY(-1px) scale(0.95);
+}
+
+/* Vibe Particle Burst Styles */
+.vibe-particle {
+    position: fixed;
+    z-index: 10000;
+    pointer-events: none;
+    font-size: 18px;
+    animation: particle-fly 0.8s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
+}
+
+@keyframes particle-fly {
+    0% {
+        transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translate3d(var(--x), var(--y), 0) scale(0) rotate(var(--r));
+        opacity: 0;
+    }
 }
 
 .footer-divider {
