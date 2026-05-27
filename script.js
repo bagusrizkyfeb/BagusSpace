@@ -180,53 +180,13 @@ document.addEventListener("DOMContentLoaded", () => {
     // 1.2 ONE-TIME SCROLL GREETING TRIGGER
     // =======================================
     let hasTriggeredScrollWelcome = false;
-
-    window.addEventListener("scroll", () => {
-        if (window.scrollY > 150 && !hasTriggeredScrollWelcome) {
-            hasTriggeredScrollWelcome = true;
-            isScrollGreetingActive = true; // Pause multi-language interval
-
-            // Pool of fun scroll messages
-            const welcomeMessages = [
-                "yuhu, you start scrolling! 🚀",
-                "Hold on tight, let's explore! 🧭",
-                "Vibe check: scrolling activated! 😎",
-                "Welcome! Enjoy the scroll! ✨"
-            ];
-            const randomMessage = welcomeMessages[Math.floor(Math.random() * welcomeMessages.length)];
-
-            if (greetingWidget) {
-                // Morph to scroll message smoothly using measuring algorithm
-                animateWidgetText(randomMessage);
-
-                // Revert back to language cycling after 3 seconds
-                setTimeout(() => {
-                    isScrollGreetingActive = false; // Resume cycling
-
-                    // Revert to current index language greeting smoothly
-                    animateWidgetText(activeGreetings[currentLangIndex]);
-
-                    // Restart the cycle loop
-                    startGreetingCycle();
-                }, 3000); // Revert after 3 seconds
-            }
-        }
-    }, { passive: true });
+    // Scroll welcome trigger — will fire from the unified scroll handler below
 
     // =======================================
     // 2. BACK TO TOP BUTTON
     // =======================================
     const mybutton = document.getElementById("myBtn");
-
-    window.addEventListener("scroll", () => {
-        if (mybutton) {
-            if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
-                mybutton.style.display = "block";
-            } else {
-                mybutton.style.display = "none";
-            }
-        }
-    }, { passive: true });
+    // Back-to-top button visibility — handled in unified scroll handler below
 
     // topFunction dipanggil via atribut onclick di HTML
     window.topFunction = () => {
@@ -393,25 +353,12 @@ document.addEventListener("DOMContentLoaded", () => {
         if (section) observer.observe(section);
     });
 
-    // Fallback scroll listener (pasif): Reset ke Home jika kembali ke paling atas, dan toggle .fused
-    window.addEventListener("scroll", () => {
-        const header = document.querySelector(".header");
-        if (window.scrollY < 100) {
-            lastActiveSectionId = "home";
-            updatePillText("home");
-            if (header) header.classList.remove("fused");
-        } else {
-            if (header) header.classList.add("fused");
-        }
-    }, { passive: true });
-
     // =======================================
     // 4.1 GLOBAL READING PROGRESS BAR (ON PILL BOTTOM)
     // =======================================
+    const progressLine = document.querySelector(".nav-active-pill .nav-progress-line");
     const updateScrollProgress = () => {
         if (isAlertActive) return; // Prevent overwriting 100% alert progress
-
-        const progressLine = document.querySelector(".nav-active-pill .nav-progress-line");
         if (!progressLine) return;
 
         const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
@@ -421,16 +368,70 @@ document.addEventListener("DOMContentLoaded", () => {
         progressLine.style.width = `${percentage}%`;
     };
 
-    window.addEventListener("scroll", updateScrollProgress, { passive: true });
+    // =======================================
+    // UNIFIED SCROLL HANDLER (rAF-throttled — replaces all individual scroll listeners)
+    // =======================================
+    const header = document.querySelector(".header");
+    const welcomeMessages = [
+        "yuhu, you start scrolling! 🚀",
+        "Hold on tight, let's explore! 🧭",
+        "Vibe check: scrolling activated! 😎",
+        "Welcome! Enjoy the scroll! ✨"
+    ];
+
+    let rafPending = false;
+    const onScroll = () => {
+        if (rafPending) return;
+        rafPending = true;
+        requestAnimationFrame(() => {
+            const scrollY = window.scrollY;
+
+            // 1. Scroll welcome trigger (one-time)
+            if (scrollY > 150 && !hasTriggeredScrollWelcome) {
+                hasTriggeredScrollWelcome = true;
+                isScrollGreetingActive = true;
+                const randomMessage = welcomeMessages[Math.floor(Math.random() * welcomeMessages.length)];
+                if (greetingWidget) {
+                    animateWidgetText(randomMessage);
+                    setTimeout(() => {
+                        isScrollGreetingActive = false;
+                        animateWidgetText(activeGreetings[currentLangIndex]);
+                        startGreetingCycle();
+                    }, 3000);
+                }
+            }
+
+            // 2. Back-to-top button
+            if (mybutton) {
+                mybutton.style.display = (scrollY > 200) ? "block" : "none";
+            }
+
+            // 3. Header fused state + home pill reset
+            if (scrollY < 100) {
+                lastActiveSectionId = "home";
+                updatePillText("home");
+                if (header) header.classList.remove("fused");
+            } else {
+                if (header) header.classList.add("fused");
+            }
+
+            // 4. Reading progress bar
+            updateScrollProgress();
+
+            rafPending = false;
+        });
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    // Re-use updateScrollProgress reference for alert restoration
 
     // Aktifkan teks & icon awal saat pertama kali dimuat jika berada di paling atas, dan inisialisasi status .fused
-    const initialHeader = document.querySelector(".header");
     if (window.scrollY < 100) {
         if (activeTextSpan) activeTextSpan.textContent = "Home";
         if (activeIconSpan) activeIconSpan.textContent = "🏠";
-        if (initialHeader) initialHeader.classList.remove("fused");
+        if (header) header.classList.remove("fused");
     } else {
-        if (initialHeader) initialHeader.classList.add("fused");
+        if (header) header.classList.add("fused");
     }
     setTimeout(updateScrollProgress, 100);
 
@@ -473,7 +474,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 150);
 
         // Solid progress line to 100% during alert
-        const progressLine = document.querySelector(".nav-active-pill .nav-progress-line");
         if (progressLine) {
             progressLine.style.width = "100%";
         }
@@ -830,5 +830,31 @@ document.addEventListener("DOMContentLoaded", () => {
             triggerPillAlert(`+1 Vibe dropped: ${emoji}!`, emoji, 2500);
         });
     });
+
+    // =======================================
+    // 10. PAUSE CERTIFICATE SLIDER WHEN OFF-SCREEN
+    // Continuous CSS animation wastes GPU compositor resources when not visible
+    // =======================================
+    const slideTrack = document.querySelector('.slide-track');
+    if (slideTrack && 'IntersectionObserver' in window) {
+        const certSection = document.querySelector('.certificate-section');
+        const sliderObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                slideTrack.style.animationPlayState = entry.isIntersecting ? 'running' : 'paused';
+            });
+        }, {
+            threshold: 0,
+            rootMargin: '150px 0px 150px 0px'
+        });
+        if (certSection) sliderObserver.observe(certSection);
+    }
+
+    // =======================================
+    // 11. REDUCE MOTION ACCESSIBILITY SUPPORT
+    // Respect OS-level "Reduce Motion" preference
+    // =======================================
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        if (slideTrack) slideTrack.style.animationPlayState = 'paused';
+    }
 
 });
