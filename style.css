@@ -31,13 +31,13 @@ html {
     gap: 8px;
     padding: 6px 14px;
     border-radius: 20px;
-    background-color: rgba(255, 255, 255, 0.88);
-    border: 1px solid rgba(255, 255, 255, 0.6);
+    background-color: rgba(240, 243, 248, 0.85);
+    border: 1px solid rgba(0, 0, 0, 0.08);
     font-family: 'Poppins', 'Work Sans', sans-serif;
     font-size: 12.5px;
     font-weight: 500;
     color: var(--color-text);
-    box-shadow: 0 4px 15px var(--shadow-color), inset 0 1px 1px rgba(255, 255, 255, 0.5);
+    box-shadow: 0 4px 15px var(--shadow-color), inset 0 1px 1px rgba(255, 255, 255, 0.8);
     transition: background-color 0.4s ease, color 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, border-color 0.4s ease;
     cursor: default;
     user-select: none;
@@ -47,9 +47,9 @@ html {
 }
 
 body.dark-theme .system-time-widget {
-    background-color: rgba(16, 17, 34, 0.88);
-    border-color: rgba(255, 255, 255, 0.1);
-    box-shadow: 0 4px 15px var(--shadow-color), inset 0 1px 1px rgba(255, 255, 255, 0.04);
+    background-color: rgba(28, 30, 52, 0.8);
+    border-color: rgba(255, 255, 255, 0.14);
+    box-shadow: 0 4px 15px var(--shadow-color), inset 0 1px 1px rgba(255, 255, 255, 0.05);
 }
 
 .system-time-widget:hover {
@@ -334,13 +334,13 @@ body.dark-theme .logo img {
     border-radius: 20px;
     width: 135px;
     height: 38px;
-    background-color: rgba(255, 255, 255, 0.82);
-    border: 1px solid rgba(255, 255, 255, 0.65);
+    background-color: rgba(240, 243, 248, 0.85);
+    border: 1px solid rgba(0, 0, 0, 0.08);
     font-size: 14px;
     font-weight: 600;
     font-family: 'Work Sans', sans-serif;
     color: var(--color-text);
-    box-shadow: 0 4px 15px var(--shadow-color), inset 0 1px 1px rgba(255, 255, 255, 0.5);
+    box-shadow: 0 4px 15px var(--shadow-color), inset 0 1px 1px rgba(255, 255, 255, 0.8);
     transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1), height 0.6s cubic-bezier(0.16, 1, 0.3, 1), border-radius 0.6s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease, margin 0.6s cubic-bezier(0.16, 1, 0.3, 1);
     user-select: none;
     pointer-events: auto;
@@ -352,9 +352,9 @@ body.dark-theme .logo img {
 }
 
 body.dark-theme .nav-active-pill {
-    background-color: rgba(16, 17, 34, 0.85);
-    border-color: rgba(255, 255, 255, 0.1);
-    box-shadow: 0 4px 15px var(--shadow-color), inset 0 1px 1px rgba(255, 255, 255, 0.04);
+    background-color: rgba(28, 30, 52, 0.8);
+    border-color: rgba(255, 255, 255, 0.14);
+    box-shadow: 0 4px 15px var(--shadow-color), inset 0 1px 1px rgba(255, 255, 255, 0.05);
 }
 
 .pill-header {
@@ -402,17 +402,17 @@ body.dark-theme .nav-active-pill {
     /* Fused dark mode hover adjustments: Trigger spring separation to restore circular shape */
     .header.fused:has(.theme-toggle-btn:hover) .nav-active-pill {
         border-radius: 20px !important;
-        border-right-color: rgba(255, 255, 255, 0.45) !important;
+        border-right-color: rgba(0, 0, 0, 0.08) !important;
         margin-right: 15px !important; /* Temporarily restore spacing gap */
     }
 
     body.dark-theme .header.fused:has(.theme-toggle-btn:hover) .nav-active-pill {
-        border-right-color: rgba(255, 255, 255, 0.1) !important;
+        border-right-color: rgba(255, 255, 255, 0.14) !important;
     }
 
     .header.fused .theme-toggle-btn:hover {
         border-radius: 50% !important; /* Perfect circular shape */
-        border-left-color: rgba(255, 255, 255, 0.45) !important;
+        border-left-color: rgba(0, 0, 0, 0.08) !important;
         height: 38px !important; /* Kept at 38px to prevent jumpy layout shifts! */
         width: 38px !important;  /* Kept at 38px to prevent jumpy layout shifts! */
         transform: scale(1.1) rotate(15deg) !important; /* Safe premium scaling */
@@ -420,7 +420,7 @@ body.dark-theme .nav-active-pill {
     }
 
     body.dark-theme .header.fused .theme-toggle-btn:hover {
-        border-left-color: rgba(255, 255, 255, 0.1) !important;
+        border-left-color: rgba(255, 255, 255, 0.14) !important;
     }
 }
 
@@ -428,15 +428,15 @@ body.dark-theme .nav-active-pill {
 .nav-active-pill.alert-active {
     width: 205px !important;
     height: 38px !important;
-    background-color: rgba(255, 255, 255, 0.45) !important;
-    border-color: rgba(255, 255, 255, 0.65) !important;
-    border-top-color: rgba(255, 255, 255, 0.65) !important;
+    background-color: rgba(240, 243, 248, 0.95) !important;
+    border-color: rgba(0, 0, 0, 0.08) !important;
+    border-top-color: rgba(0, 0, 0, 0.08) !important;
     color: var(--color-text) !important;
-    box-shadow: 0 4px 15px var(--shadow-color), inset 0 1px 1px rgba(255, 255, 255, 0.35) !important;
+    box-shadow: 0 4px 15px var(--shadow-color), inset 0 1px 1px rgba(255, 255, 255, 0.8) !important;
 }
 
 body.dark-theme .nav-active-pill.alert-active {
-    background-color: rgba(255, 255, 255, 0.08) !important;
+    background-color: rgba(28, 30, 52, 0.95) !important;
     border-color: rgba(255, 255, 255, 0.15) !important;
     border-top-color: rgba(255, 255, 255, 0.15) !important;
     color: var(--color-text) !important;
@@ -463,8 +463,8 @@ body.dark-theme .nav-active-pill.alert-active {
 
 /* DARK MODE TOGGLE BUTTON */
 .theme-toggle-btn {
-    background: rgba(255, 255, 255, 0.82);
-    border: 1px solid rgba(255, 255, 255, 0.65);
+    background: rgba(240, 243, 248, 0.85);
+    border: 1px solid rgba(0, 0, 0, 0.08);
     color: var(--color-text);
     font-size: 16px;
     cursor: pointer;
@@ -474,14 +474,14 @@ body.dark-theme .nav-active-pill.alert-active {
     width: 36px;
     height: 36px;
     border-radius: 50%;
-    box-shadow: 0 4px 15px var(--shadow-color), inset 0 1px 1px rgba(255, 255, 255, 0.5);
+    box-shadow: 0 4px 15px var(--shadow-color), inset 0 1px 1px rgba(255, 255, 255, 0.8);
     transition: background-color 0.4s ease, color 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, border-color 0.4s ease, border-radius 0.4s ease;
 }
 
 body.dark-theme .theme-toggle-btn {
-    background: rgba(16, 17, 34, 0.85);
-    border-color: rgba(255, 255, 255, 0.1);
-    box-shadow: 0 4px 15px var(--shadow-color), inset 0 1px 1px rgba(255, 255, 255, 0.04);
+    background: rgba(28, 30, 52, 0.8);
+    border-color: rgba(255, 255, 255, 0.14);
+    box-shadow: 0 4px 15px var(--shadow-color), inset 0 1px 1px rgba(255, 255, 255, 0.05);
 }
 
 .theme-toggle-btn:hover {
