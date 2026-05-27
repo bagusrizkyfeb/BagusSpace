@@ -31,16 +31,13 @@ html {
     gap: 8px;
     padding: 6px 14px;
     border-radius: 20px;
-    /* Fixed element — backdrop-filter is safe: small area, position:fixed compositor layer */
-    background-color: rgba(255, 255, 255, 0.35);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.5);
+    background-color: rgba(255, 255, 255, 0.88);
+    border: 1px solid rgba(255, 255, 255, 0.6);
     font-family: 'Poppins', 'Work Sans', sans-serif;
     font-size: 12.5px;
     font-weight: 500;
     color: var(--color-text);
-    box-shadow: 0 4px 15px var(--shadow-color), inset 0 1px 1px rgba(255, 255, 255, 0.4);
+    box-shadow: 0 4px 15px var(--shadow-color), inset 0 1px 1px rgba(255, 255, 255, 0.5);
     transition: background-color 0.4s ease, color 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, border-color 0.4s ease;
     cursor: default;
     user-select: none;
@@ -50,9 +47,9 @@ html {
 }
 
 body.dark-theme .system-time-widget {
-    background-color: rgba(16, 17, 34, 0.5);
+    background-color: rgba(16, 17, 34, 0.88);
     border-color: rgba(255, 255, 255, 0.1);
-    box-shadow: 0 4px 15px var(--shadow-color), inset 0 1px 1px rgba(255, 255, 255, 0.05);
+    box-shadow: 0 4px 15px var(--shadow-color), inset 0 1px 1px rgba(255, 255, 255, 0.04);
 }
 
 .system-time-widget:hover {
@@ -213,51 +210,36 @@ html::before {
        Simple fixed elements without will-change are composited cheaply. */
 }
 
-/* Peach/Orange blob - Top Left */
+/* Peach/Orange blob - Top Left — STATIC (no animation: blobs moving + backdrop-filter = jank) */
 body::before {
     top: -20%;
-    left: -20%;
-    width: 80vw;
-    height: 80vw;
-    background: radial-gradient(circle at 40% 40%, var(--blob-1) 0%, rgba(255, 159, 10, 0) 65%);
-    /* Very slow — reduce GPU compositor work per second */
-    animation: float-blob-1 90s infinite alternate ease-in-out;
-}
-
-/* Purple blob - Bottom Right */
-body::after {
-    bottom: -20%;
-    right: -20%;
+    left: -15%;
     width: 75vw;
     height: 75vw;
-    background: radial-gradient(circle at 60% 60%, var(--blob-2) 0%, rgba(168, 85, 247, 0) 65%);
-    animation: float-blob-2 110s infinite alternate ease-in-out;
+    background: radial-gradient(circle at 38% 38%, var(--blob-1) 0%, rgba(255, 159, 10, 0) 68%);
 }
 
-/* Cyan/Blue blob - Mid Right */
+/* Purple blob - Bottom Right — STATIC */
+body::after {
+    bottom: -18%;
+    right: -18%;
+    width: 72vw;
+    height: 72vw;
+    background: radial-gradient(circle at 62% 62%, var(--blob-2) 0%, rgba(168, 85, 247, 0) 68%);
+}
+
+/* Cyan/Blue blob - Mid Right — STATIC */
 html::before {
-    top: 25%;
-    right: -15%;
-    width: 65vw;
-    height: 65vw;
-    background: radial-gradient(circle at 60% 40%, var(--blob-3) 0%, rgba(6, 182, 212, 0) 65%);
-    animation: float-blob-3 100s infinite alternate ease-in-out;
+    top: 28%;
+    right: -12%;
+    width: 62vw;
+    height: 62vw;
+    background: radial-gradient(circle at 62% 38%, var(--blob-3) 0%, rgba(6, 182, 212, 0) 68%);
 }
 
-@keyframes float-blob-1 {
-    0%   { transform: translate(0, 0); }
-    100% { transform: translate(4vw, -5vh); }
-}
-
-@keyframes float-blob-2 {
-    0%   { transform: translate(0, 0); }
-    100% { transform: translate(-5vw, 5vh); }
-}
-
-@keyframes float-blob-3 {
-    0%   { transform: translate(0, 0); }
-    100% { transform: translate(4vw, -4vh); }
-}
+/* @keyframes removed — blob animations disabled to allow efficient backdrop-filter on fixed nav.
+   Moving blobs + backdrop-filter = browser must re-composite 3 layers every scroll frame.
+   Static blobs + backdrop-filter = 2 stable layers, cheap to composite. */
 
 /* ======================================= */
 /* BACK TO TOP BUTTON */
@@ -268,13 +250,8 @@ html::before {
     bottom: 25px;
     z-index: 1001;
     right: calc(50% - 650px + 40px);
-
-    /* Safe to use backdrop-filter: fixed position, small element, doesn't move on scroll */
-    background-color: rgba(255, 255, 255, 0.35);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.5);
-
+    background-color: rgba(255, 255, 255, 0.88);
+    border: 1px solid rgba(255, 255, 255, 0.6);
     outline: none;
     color: var(--color-text);
     cursor: pointer;
@@ -282,15 +259,14 @@ html::before {
     border-radius: 20px;
     font-size: 13px;
     font-weight: 600;
-    box-shadow: 0 8px 30px var(--shadow-color), inset 0 1px 1px rgba(255, 255, 255, 0.4);
-
+    box-shadow: 0 8px 30px var(--shadow-color), inset 0 1px 1px rgba(255, 255, 255, 0.5);
     transition: background-color 0.4s ease, color 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, border-color 0.4s ease;
 }
 
 body.dark-theme #myBtn {
-    background-color: rgba(16, 17, 34, 0.5);
+    background-color: rgba(16, 17, 34, 0.88);
     border-color: rgba(255, 255, 255, 0.1);
-    box-shadow: 0 8px 30px var(--shadow-color);
+    box-shadow: 0 8px 30px var(--shadow-color), inset 0 1px 1px rgba(255, 255, 255, 0.04);
 }
 
 #myBtn:hover {
@@ -320,27 +296,21 @@ body.dark-theme #myBtn {
     max-width: 1220px;
     width: calc(100% - 80px);
     z-index: 1000;
-
     display: flex;
     justify-content: space-between;
     align-items: center;
-
-    /* Liquid glass dock — safe for fixed: small area, position:fixed = own compositor layer
-       No saturate() to save one GPU pass. Blur at 20px (reduced from 25px). */
-    background-color: rgba(255, 255, 255, 0.55);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.65);
+    background-color: rgba(255, 255, 255, 0.92);
+    border: 1px solid rgba(255, 255, 255, 0.7);
     border-radius: 35px;
     padding: 12px 35px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.06), inset 0 1px 2px rgba(255, 255, 255, 0.6);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.06), inset 0 1px 2px rgba(255, 255, 255, 0.7);
     transition: background-color 0.5s ease, border-color 0.5s ease, box-shadow 0.5s ease;
 }
 
 body.dark-theme .header {
-    background-color: rgba(10, 11, 24, 0.65);
-    border-color: rgba(255, 255, 255, 0.1);
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    background-color: rgba(10, 11, 24, 0.95);
+    border-color: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
 body.dark-theme .logo img {
@@ -364,16 +334,13 @@ body.dark-theme .logo img {
     border-radius: 20px;
     width: 135px;
     height: 38px;
-    /* Liquid glass nested inside header — safe: inherits parent fixed compositor layer */
-    background-color: rgba(255, 255, 255, 0.45);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.55);
+    background-color: rgba(255, 255, 255, 0.82);
+    border: 1px solid rgba(255, 255, 255, 0.65);
     font-size: 14px;
     font-weight: 600;
     font-family: 'Work Sans', sans-serif;
     color: var(--color-text);
-    box-shadow: 0 4px 15px var(--shadow-color), inset 0 1px 1px rgba(255, 255, 255, 0.45);
+    box-shadow: 0 4px 15px var(--shadow-color), inset 0 1px 1px rgba(255, 255, 255, 0.5);
     transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1), height 0.6s cubic-bezier(0.16, 1, 0.3, 1), border-radius 0.6s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease, margin 0.6s cubic-bezier(0.16, 1, 0.3, 1);
     user-select: none;
     pointer-events: auto;
@@ -385,9 +352,9 @@ body.dark-theme .logo img {
 }
 
 body.dark-theme .nav-active-pill {
-    background-color: rgba(16, 17, 34, 0.55);
-    border-color: rgba(255, 255, 255, 0.12);
-    box-shadow: 0 4px 15px var(--shadow-color), inset 0 1px 1px rgba(255, 255, 255, 0.05);
+    background-color: rgba(16, 17, 34, 0.85);
+    border-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 15px var(--shadow-color), inset 0 1px 1px rgba(255, 255, 255, 0.04);
 }
 
 .pill-header {
@@ -496,11 +463,8 @@ body.dark-theme .nav-active-pill.alert-active {
 
 /* DARK MODE TOGGLE BUTTON */
 .theme-toggle-btn {
-    /* Liquid glass — safe: fixed context, tiny element */
-    background: rgba(255, 255, 255, 0.45);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.55);
+    background: rgba(255, 255, 255, 0.82);
+    border: 1px solid rgba(255, 255, 255, 0.65);
     color: var(--color-text);
     font-size: 16px;
     cursor: pointer;
@@ -510,14 +474,14 @@ body.dark-theme .nav-active-pill.alert-active {
     width: 36px;
     height: 36px;
     border-radius: 50%;
-    box-shadow: 0 4px 15px var(--shadow-color), inset 0 1px 1px rgba(255, 255, 255, 0.45);
+    box-shadow: 0 4px 15px var(--shadow-color), inset 0 1px 1px rgba(255, 255, 255, 0.5);
     transition: background-color 0.4s ease, color 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, border-color 0.4s ease, border-radius 0.4s ease;
 }
 
 body.dark-theme .theme-toggle-btn {
-    background: rgba(16, 17, 34, 0.55);
-    border-color: rgba(255, 255, 255, 0.12);
-    box-shadow: 0 4px 15px var(--shadow-color), inset 0 1px 1px rgba(255, 255, 255, 0.05);
+    background: rgba(16, 17, 34, 0.85);
+    border-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 15px var(--shadow-color), inset 0 1px 1px rgba(255, 255, 255, 0.04);
 }
 
 .theme-toggle-btn:hover {
