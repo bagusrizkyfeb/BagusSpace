@@ -517,6 +517,92 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    // =======================================
+    // LIQUID GLASS CLICK EFFECT FOR BUTTONS
+    // Creates an expanding soft blob + sheen sweep
+    // =======================================
+    const createLiquidClickEffect = (btn, clientX, clientY) => {
+        // Create blob element
+        const blob = document.createElement('span');
+        blob.className = 'liquid-blob';
+
+        // Compute position relative to button
+        const rect = btn.getBoundingClientRect();
+        const x = clientX - rect.left;
+        const y = clientY - rect.top;
+
+        blob.style.left = `${x}px`;
+        blob.style.top = `${y}px`;
+
+        // Size scaling based on button dimensions
+        const maxDim = Math.max(rect.width, rect.height);
+        const baseSize = Math.max(24, Math.min(48, Math.round(maxDim * 0.12)));
+        blob.style.width = `${baseSize}px`;
+        blob.style.height = `${baseSize}px`;
+
+        btn.appendChild(blob);
+
+        // Force reflow then expand
+        requestAnimationFrame(() => {
+            blob.classList.add('expand');
+            // sheen sweep
+            btn.classList.add('sheen');
+        });
+
+        // Cleanup after animation
+        const remove = () => {
+            blob.remove();
+            btn.classList.remove('sheen');
+        };
+
+        blob.addEventListener('transitionend', remove, { once: true });
+        // Fallback removal in case transitionend doesn't fire
+        setTimeout(remove, 800);
+    };
+
+    // Attach to all .btn elements
+    const allButtons = document.querySelectorAll('.btn');
+    allButtons.forEach(b => {
+        b.addEventListener('click', (ev) => {
+            // Use event client coords; if keyboard-activated, center the effect
+            let cx = ev.clientX;
+            let cy = ev.clientY;
+            if (typeof cx !== 'number' || cx === 0) {
+                const r = b.getBoundingClientRect();
+                cx = r.left + r.width / 2;
+                cy = r.top + r.height / 2;
+            }
+            createLiquidClickEffect(b, cx, cy);
+        });
+    });
+
+    // Attach liquid click effect to project boxes (pointer + touch support)
+    const projectCards = document.querySelectorAll('.project-item');
+    projectCards.forEach(card => {
+        card.style.cursor = 'pointer';
+
+        card.addEventListener('pointerdown', (ev) => {
+            // If invoked by keyboard or programmatically, center the effect
+            const cx = (ev.clientX && ev.clientY) ? ev.clientX : (card.getBoundingClientRect().left + card.offsetWidth / 2);
+            const cy = (ev.clientX && ev.clientY) ? ev.clientY : (card.getBoundingClientRect().top + card.offsetHeight / 2);
+            createLiquidClickEffect(card, cx, cy);
+        }, { passive: true });
+
+        // Also support touchstart for some mobile browsers
+        card.addEventListener('touchstart', (ev) => {
+            const t = ev.touches[0];
+            if (t) createLiquidClickEffect(card, t.clientX, t.clientY);
+        }, { passive: true });
+
+        // Optional: keyboard activation (Enter / Space)
+        card.addEventListener('keydown', (ev) => {
+            if (ev.key === 'Enter' || ev.key === ' ') {
+                const r = card.getBoundingClientRect();
+                createLiquidClickEffect(card, r.left + r.width / 2, r.top + r.height / 2);
+            }
+        });
+    });
+
     if (modalCloseBtn) {
         modalCloseBtn.addEventListener('click', closeModal);
     }
