@@ -13,13 +13,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 
-    <!-- Preload critical above-the-fold image for Largest Contentful Paint (LCP) -->
-    <link rel="preload" href="asset/hero_foto.png" as="image" fetchpriority="high">
-
     <link
         href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Work+Sans:wght@400;500;600;700&family=Tienne:wght@400;700;900&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="asset/lottie.min.js" defer></script>
+    <script src="asset/hero-lottie-data.js" defer></script>
 
     <!-- Defer JavaScript execution until after HTML parsing is complete -->
     <script src="script.js" defer></script>
@@ -68,8 +67,7 @@
                 </div>
             </div>
             <div class="hero-image">
-                <img src="asset/hero-image3.png" alt="Bagus, IT Technical Support Engineer" width="240" height="410"
-                    decoding="async" fetchpriority="high">
+                <div id="hero-lottie" role="img" aria-label="Animasi hero portfolio Bagus"></div>
             </div>
         </section>
 
@@ -489,6 +487,28 @@
             </div>
         </div>
     </section>
+    <!-- ===== NEW: STATS SECTION ===== -->
+    <section class="stats-section" id="stats">
+        <div class="container">
+            <h2>By The Numbers</h2>
+            <p class="stats-subtitle">Measuring the impact and progress</p>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value" data-target="4">0</div>
+                    <p class="stat-label">Years Experience</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" data-target="7">0</div>
+                    <p class="stat-label">Projects Completed</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" data-target="4">0</div>
+                    <p class="stat-label">Certifications</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
 
     <footer class="main-footer" id="footer">
         <div class="footer-content-wrapper">

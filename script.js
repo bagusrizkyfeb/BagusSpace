@@ -1,5 +1,22 @@
 document.addEventListener("DOMContentLoaded", () => {
     // =======================================
+    // HERO LOTTIE ANIMATION (LOCAL, FILE-SAFE)
+    // =======================================
+    const heroLottieContainer = document.getElementById("hero-lottie");
+    if (heroLottieContainer && window.lottie && window.HERO_LOTTIE_DATA) {
+        window.lottie.loadAnimation({
+            container: heroLottieContainer,
+            renderer: "svg",
+            loop: true,
+            autoplay: true,
+            animationData: window.HERO_LOTTIE_DATA,
+            rendererSettings: {
+                preserveAspectRatio: "xMidYMid meet"
+            }
+        });
+    }
+
+    // =======================================
     // 1. DARK MODE / THEME TOGGLE
     // =======================================
     const themeToggleBtn = document.getElementById("theme-toggle");
@@ -241,6 +258,7 @@ document.addEventListener("DOMContentLoaded", () => {
         "projects": "Projects",
         "side-write": "Exploration",
         "certificates": "Certificates",
+        "stats": "Stats",
         "footer": "Contact"
     };
 
@@ -252,6 +270,7 @@ document.addEventListener("DOMContentLoaded", () => {
         "projects": "💻",
         "side-write": "🚀",
         "certificates": "🎓",
+        "stats": "📊",
         "footer": "✉️"
     };
 
@@ -687,7 +706,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    const footerEmailBtn = document.querySelector('.footer-social-group a[href*="mail.google.com"]');
+    const footerEmailBtn = document.querySelector('.footer-socials-centered a[href*="mail.google.com"]');
     if (footerEmailBtn) {
         footerEmailBtn.addEventListener('click', () => {
             triggerPillAlert("Sending Email... ✉️", "✉️", 3000);
@@ -942,5 +961,141 @@ document.addEventListener("DOMContentLoaded", () => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
         if (slideTrack) slideTrack.style.animationPlayState = 'paused';
     }
+
+    // =======================================
+    // 12. LAZY LOADING FOR IMAGES
+    // =======================================
+    if ('IntersectionObserver' in window) {
+        const lazyImages = document.querySelectorAll('img[loading="lazy"]');
+        const imageObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    img.src = img.src; // Trigger actual load
+                    imageObserver.unobserve(img);
+                }
+            });
+        }, { rootMargin: '50px' });
+
+        lazyImages.forEach(img => imageObserver.observe(img));
+    }
+
+    // Count stats when the section enters the viewport.
+    (function animateStatsOnScroll(){
+        const statEls = document.querySelectorAll('.stat-value');
+        const statsSection = document.querySelector('.stats-section');
+        if (!statEls.length || !statsSection) return;
+
+        const animateValue = (el) => {
+            if (el.dataset.counted === 'true') return;
+            el.dataset.counted = 'true';
+
+            const target = Number(el.getAttribute('data-target') || 0);
+            const duration = 1200;
+            const startTime = Date.now();
+
+            const tick = () => {
+                const elapsed = Date.now() - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const eased = 1 - Math.pow(1 - progress, 3);
+                el.textContent = Math.round(target * eased);
+
+                if (progress < 1) {
+                    setTimeout(tick, 16);
+                } else {
+                    el.textContent = target;
+                }
+            };
+
+            tick();
+        };
+
+        if ('IntersectionObserver' in window) {
+            const statsObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        statEls.forEach(animateValue);
+                        statsObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.35 });
+
+            statsObserver.observe(statsSection);
+        } else {
+            statEls.forEach(animateValue);
+        }
+    })();
+
+    // =======================================
+    // 15. SMOOTH SCROLL ANIMATIONS FOR SECTIONS
+    // =======================================
+    const observeElements = (selector, animationClass) => {
+        if ('IntersectionObserver' in window) {
+            const elements = document.querySelectorAll(selector);
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add(animationClass);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1, rootMargin: '0px 0px -100px 0px' });
+
+            elements.forEach(el => observer.observe(el));
+        }
+    };
+
+    // Add fade-in animation to cards
+    observeElements('.testimonial-card, .stat-card, .contact-item', 'fade-in');
+
+    // =======================================
+    // 16. SKILL BARS ANIMATION
+    // =======================================
+    const animateSkillBars = () => {
+        const skillBars = document.querySelectorAll('.bar-fill');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'slideIn 1s ease-out forwards';
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.3 });
+
+        skillBars.forEach(bar => observer.observe(bar));
+    };
+
+    animateSkillBars();
+
+    // =======================================
+    // 17. ADD FADE-IN ANIMATION CSS
+    // =======================================
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                width: 0;
+            }
+            to {
+                width: var(--width, 100%);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.6s ease-out forwards !important;
+        }
+    `;
+    document.head.appendChild(style);
 
 });
