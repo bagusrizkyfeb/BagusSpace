@@ -258,7 +258,6 @@ document.addEventListener("DOMContentLoaded", () => {
         "projects": "Projects",
         "side-write": "Exploration",
         "certificates": "Certificates",
-        "stats": "Stats",
         "footer": "Contact"
     };
 
@@ -270,7 +269,6 @@ document.addEventListener("DOMContentLoaded", () => {
         "projects": "💻",
         "side-write": "🚀",
         "certificates": "🎓",
-        "stats": "📊",
         "footer": "✉️"
     };
 
@@ -983,7 +981,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Count stats when the section enters the viewport.
     (function animateStatsOnScroll(){
         const statEls = document.querySelectorAll('.stat-value');
-        const statsSection = document.querySelector('.stats-section');
+        const statsSection = document.querySelector('.hero-stats');
         if (!statEls.length || !statsSection) return;
 
         const animateValue = (el) => {
@@ -1010,6 +1008,16 @@ document.addEventListener("DOMContentLoaded", () => {
             tick();
         };
 
+        const animateIfVisible = () => {
+            const rect = statsSection.getBoundingClientRect();
+            const visible = rect.top < window.innerHeight && rect.bottom > 0;
+            if (visible) {
+                statEls.forEach(animateValue);
+                return true;
+            }
+            return false;
+        };
+
         if ('IntersectionObserver' in window) {
             const statsObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
@@ -1021,6 +1029,8 @@ document.addEventListener("DOMContentLoaded", () => {
             }, { threshold: 0.35 });
 
             statsObserver.observe(statsSection);
+            setTimeout(animateIfVisible, 500);
+            window.addEventListener('load', () => setTimeout(animateIfVisible, 250), { once: true });
         } else {
             statEls.forEach(animateValue);
         }
