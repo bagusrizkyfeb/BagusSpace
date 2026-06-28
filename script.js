@@ -978,28 +978,23 @@ document.addEventListener("DOMContentLoaded", () => {
         lazyImages.forEach(img => imageObserver.observe(img));
     }
 
-    // Count stats when the section enters the viewport.
-    (function animateStatsOnScroll(){
-        const statEls = document.querySelectorAll('.stat-value');
-        const statsSection = document.querySelector('.hero-stats');
-        if (!statEls.length || !statsSection) return;
+    // Count hero stats shortly after the hero is ready.
+    (function animateHeroStats(){
+        const statEls = document.querySelectorAll('.hero-stats .stat-value');
+        if (!statEls.length) return;
 
         const animateValue = (el) => {
-            if (el.dataset.counted === 'true') return;
-            el.dataset.counted = 'true';
-
             const target = Number(el.getAttribute('data-target') || 0);
-            const duration = 1200;
+            const duration = 1100;
             const startTime = Date.now();
 
             const tick = () => {
-                const elapsed = Date.now() - startTime;
-                const progress = Math.min(elapsed / duration, 1);
+                const progress = Math.min((Date.now() - startTime) / duration, 1);
                 const eased = 1 - Math.pow(1 - progress, 3);
                 el.textContent = Math.round(target * eased);
 
                 if (progress < 1) {
-                    setTimeout(tick, 16);
+                    setTimeout(tick, 24);
                 } else {
                     el.textContent = target;
                 }
@@ -1008,32 +1003,7 @@ document.addEventListener("DOMContentLoaded", () => {
             tick();
         };
 
-        const animateIfVisible = () => {
-            const rect = statsSection.getBoundingClientRect();
-            const visible = rect.top < window.innerHeight && rect.bottom > 0;
-            if (visible) {
-                statEls.forEach(animateValue);
-                return true;
-            }
-            return false;
-        };
-
-        if ('IntersectionObserver' in window) {
-            const statsObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        statEls.forEach(animateValue);
-                        statsObserver.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.35 });
-
-            statsObserver.observe(statsSection);
-            setTimeout(animateIfVisible, 500);
-            window.addEventListener('load', () => setTimeout(animateIfVisible, 250), { once: true });
-        } else {
-            statEls.forEach(animateValue);
-        }
+        setTimeout(() => statEls.forEach(animateValue), 500);
     })();
 
     // =======================================
