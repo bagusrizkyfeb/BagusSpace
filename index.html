@@ -7,24 +7,23 @@
     <title>Bagus Rizky Febriyanto | IT Technical Support Portfolio</title>
     <meta name="description"
         content="Portfolio of Bagus Rizky Febriyanto, an IT Technical Support Engineer specializing in hardware troubleshooting, network setup, OS administration, and user support.">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=hero-typewriter-5">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 
     <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Work+Sans:wght@400;500;600;700&family=Tienne:wght@400;700;900&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Press+Start+2P&family=Work+Sans:wght@400;500;600;700&family=Tienne:wght@400;700;900&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="asset/lottie.min.js" defer></script>
-    <script src="asset/hero-lottie-data.js" defer></script>
-
+    <script src="asset/hero-lottie-data.js?v=rubiks-1" defer></script>
     <!-- Defer JavaScript execution until after HTML parsing is complete -->
-    <script src="script.js?v=hero-stats-2" defer></script>
+    <script src="script.js?v=hero-typewriter-5" defer></script>
 </head>
 
-<body>
+<body class="dark-theme">
     <div class="container" id="home">
 
         <header class="header">
@@ -50,43 +49,40 @@
 
             <!-- Theme Toggle next to the Dynamic Pill -->
             <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle Theme">
-                <i class="fa fa-moon-o"></i>
+                <i class="fa fa-sun-o"></i>
             </button>
         </header>
 
         <section class="hero-section" id="home-section">
             <div class="hero-text">
-                <h1>Hi, I’m Bagus</h1>
-                <p class="hero-role">Technical Support Engineer</p>
-                <p class="hero-summary">I help users solve daily IT issues, keep devices ready, and support smoother technical operations.</p>
+                <h1 class="hero-title-typing" aria-label="Hi, I’m Bagus. I’m Technical Support.">
+                    <span class="hero-type-reserve" aria-hidden="true">I’m Technical Support</span>
+                    <span class="hero-type-live" aria-hidden="true">
+                        <span class="hero-type-text">Hi, I’m Bagus</span>
+                        <span class="hero-type-cursor"></span>
+                    </span>
+                </h1>
+                <p class="hero-summary">I help users deal with daily tech chaos in a chill way, from laptops acting up,
+                    apps being dramatic, networks going moody, to the tiny fixes that quietly keep everyone moving. I’m
+                    into clean documentation, practical troubleshooting, and making IT support feel less ribet.</p>
                 <div class="cta-buttons">
                     <a href="https://drive.google.com/file/d/1z1ila6GAvdd8MQ3JgruguVjBZZ6iu2lE/view?usp=sharing"
                         target="_blank" class="btn primary">Grab My CV</a>
                     <a href="https://mail.google.com/mail/u/0/?fs=1&to=hi.bagusrizky@gmail.com&tf=cm" target="_blank"
                         class="btn secondary">Hit Me Up</a>
                 </div>
-                <div class="hero-stats" aria-label="Portfolio highlights">
-                    <div class="hero-stat">
-                        <strong><span class="stat-value" data-target="4">0</span>+</strong>
-                        <span>Years Experience</span>
-                    </div>
-                    <div class="hero-stat">
-                        <strong><span class="stat-value" data-target="7">0</span></strong>
-                        <span>Projects Completed</span>
-                    </div>
-                    <div class="hero-stat">
-                        <strong><span class="stat-value" data-target="4">0</span></strong>
-                        <span>Certifications</span>
-                    </div>
-                </div>
             </div>
             <div class="hero-image">
-                <div id="hero-lottie" role="img" aria-label="Animasi hero portfolio Bagus"></div>
+                <div id="hero-lottie" role="img" aria-label="Animasi kubus rubik isometric"></div>
             </div>
         </section>
 
         <section class="about-section" id="about">
             <div class="about-container">
+                <div class="about-image">
+                    <img src="asset/about_me.png" alt="Foto Profil Bagus Rizky Febriyanto" width="401" height="401"
+                        loading="lazy" decoding="async">
+                </div>
                 <div class="about-text">
                     <h2>About Me</h2>
                     <p>My name’s Bagus Rizky Febriyanto but just call me Bagus (or Mas Gud, if you’re feeling fancy).
@@ -99,13 +95,31 @@
                         always tinkering, always learning, and lowkey obsessed with making tech behave. Feel free to
                         scroll around and enjoy the vibes.</p>
                 </div>
-                <div class="about-image">
-                    <img src="asset/about_me.png" alt="Foto Profil Bagus Rizky Febriyanto" width="401" height="401"
-                        loading="lazy" decoding="async">
-                </div>
             </div>
         </section>
     </div> <!-- Closes first container (contains Hero and About) -->
+
+    <section class="stats-section" id="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="stat-icon" aria-hidden="true"><i class="fa fa-briefcase"></i></span>
+                    <strong class="stat-number"><span class="stat-value" data-target="4">0</span>+</strong>
+                    <span class="stat-label">Years Experience</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-icon" aria-hidden="true"><i class="fa fa-check-circle"></i></span>
+                    <strong class="stat-number"><span class="stat-value" data-target="7">0</span></strong>
+                    <span class="stat-label">Projects Completed</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-icon" aria-hidden="true"><i class="fa fa-certificate"></i></span>
+                    <strong class="stat-number"><span class="stat-value" data-target="4">0</span></strong>
+                    <span class="stat-label">Certifications</span>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <section class="skills-section" id="skills">
         <div class="container">
@@ -234,6 +248,7 @@
                     <div class="project-item">
                         <div class="project-content-inner">
                             <div class="project-text-content">
+                                <span class="project-kicker"><i class="fa fa-shield"></i> Security</span>
                                 <h3>Endpoint Security Migration</h3>
                                 <p>Participated in the endpoint security replacement from Kaspersky to Sophos by
                                     installing Sophos antivirus on user laptops and PCs. Performed basic checks to
@@ -251,6 +266,7 @@
                     <div class="project-item">
                         <div class="project-content-inner">
                             <div class="project-text-content">
+                                <span class="project-kicker"><i class="fa fa-lock"></i> VPN Access</span>
                                 <h3>FortiVPN to FortiEMS Migration</h3>
                                 <p>Participated in the VPN migration from FortiVPN to FortiEMS by handling the
                                     installation of FortiEMS VPN on user laptops. Performed basic checks to ensure the
@@ -268,6 +284,7 @@
                     <div class="project-item">
                         <div class="project-content-inner">
                             <div class="project-text-content">
+                                <span class="project-kicker"><i class="fa fa-sitemap"></i> Recovery</span>
                                 <h3>Disaster Recovery Exercise</h3>
                                 <p>I participated in a disaster recovery exercise by setting up network devices,
                                     ensuring stable network connectivity, and testing all equipment to make sure
@@ -284,6 +301,7 @@
                     <div class="project-item">
                         <div class="project-content-inner">
                             <div class="project-text-content">
+                                <span class="project-kicker"><i class="fa fa-server"></i> Infrastructure</span>
                                 <h3>Server Relocation to BDDC</h3>
                                 <p>Responsible for labeling and inventorying all server equipment relocated from the
                                     head office, ensuring that all components were properly recorded and accounted for
@@ -300,6 +318,7 @@
                     <div class="project-item">
                         <div class="project-content-inner">
                             <div class="project-text-content">
+                                <span class="project-kicker"><i class="fa fa-archive"></i> Asset Control</span>
                                 <h3>IT Asset Stock Opname</h3>
                                 <p>I Conducted a comprehensive inventory of IT assets, including laptops, PCs, printers,
                                     monitors, and access points, to ensure all equipment was accurately recorded and
@@ -316,6 +335,7 @@
                     <div class="project-item">
                         <div class="project-content-inner">
                             <div class="project-text-content">
+                                <span class="project-kicker"><i class="fa fa-envelope-o"></i> Collaboration</span>
                                 <h3>Email Migration</h3>
                                 <p>Supported the email migration from Google Workspace to Office 365 by ensuring all
                                     users could successfully log in and access their Office 365 email accounts, helping
@@ -332,6 +352,7 @@
                     <div class="project-item">
                         <div class="project-content-inner">
                             <div class="project-text-content">
+                                <span class="project-kicker"><i class="fa fa-check-square-o"></i> Testing</span>
                                 <h3>User Acceptance Testing (UAT)</h3>
                                 <p>Estim Ticketing System Module – Conducted user acceptance testing on modules of the
                                     new ticketing system during the system transition, ensuring each feature functioned
@@ -346,8 +367,8 @@
                 </div>
 
                 <div class="slider-navigation">
-                    <button class="slider-btn" id="prev-btn">Prev</button>
-                    <button class="slider-btn" id="next-btn">Next</button>
+                    <button class="slider-btn" id="prev-btn" aria-label="Previous project"><i class="fa fa-angle-left"></i></button>
+                    <button class="slider-btn" id="next-btn" aria-label="Next project"><i class="fa fa-angle-right"></i></button>
                 </div>
             </div>
         </div>

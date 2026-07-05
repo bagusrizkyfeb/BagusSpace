@@ -37,14 +37,19 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
-    // Cek preferensi tema tersimpan atau default sistem
+    // Default website is dark, but the user's toggle choice still persists.
+    const themeDefaultVersion = "dark-default-v1";
     const savedTheme = localStorage.getItem("theme");
-    const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const savedThemeDefaultVersion = localStorage.getItem("themeDefaultVersion");
 
-    if (savedTheme === "dark" || (!savedTheme && systemPrefersDark)) {
+    if (savedThemeDefaultVersion !== themeDefaultVersion) {
+        localStorage.setItem("theme", "dark");
+        localStorage.setItem("themeDefaultVersion", themeDefaultVersion);
         applyTheme("dark");
-    } else {
+    } else if (savedTheme === "light") {
         applyTheme("light");
+    } else {
+        applyTheme("dark");
     }
 
     // Event listener untuk klik toggle tema
@@ -253,6 +258,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const sectionNames = {
         "home": "Home",
         "about": "Profile",
+        "stats": "Numbers",
         "skills": "Skills",
         "journey": "Journey",
         "projects": "Projects",
@@ -264,6 +270,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const sectionIcons = {
         "home": "🏠",
         "about": "👤",
+        "stats": "📊",
         "skills": "🛠️",
         "journey": "🧭",
         "projects": "💻",
@@ -593,33 +600,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // Attach liquid click effect to project boxes (pointer + touch support)
-    const projectCards = document.querySelectorAll('.project-item');
-    projectCards.forEach(card => {
-        card.style.cursor = 'pointer';
-
-        card.addEventListener('pointerdown', (ev) => {
-            // If invoked by keyboard or programmatically, center the effect
-            const cx = (ev.clientX && ev.clientY) ? ev.clientX : (card.getBoundingClientRect().left + card.offsetWidth / 2);
-            const cy = (ev.clientX && ev.clientY) ? ev.clientY : (card.getBoundingClientRect().top + card.offsetHeight / 2);
-            createLiquidClickEffect(card, cx, cy);
-        }, { passive: true });
-
-        // Also support touchstart for some mobile browsers
-        card.addEventListener('touchstart', (ev) => {
-            const t = ev.touches[0];
-            if (t) createLiquidClickEffect(card, t.clientX, t.clientY);
-        }, { passive: true });
-
-        // Optional: keyboard activation (Enter / Space)
-        card.addEventListener('keydown', (ev) => {
-            if (ev.key === 'Enter' || ev.key === ' ') {
-                const r = card.getBoundingClientRect();
-                createLiquidClickEffect(card, r.left + r.width / 2, r.top + r.height / 2);
-            }
-        });
-    });
-
     if (modalCloseBtn) {
         modalCloseBtn.addEventListener('click', closeModal);
     }
@@ -714,57 +694,67 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     // =======================================
-    // 5. ANIMASI MENGETIK (TYPING EFFECT)
+    // 5. HERO TITLE TYPEWRITER
     // =======================================
-    const typedTextSpan = document.querySelector(".typed-text");
-    const cursorSpan = document.querySelector(".cursor");
+    const heroTitle = document.querySelector(".hero-title-typing");
+    const heroTypeText = document.querySelector(".hero-type-text");
+    const heroTypeCursor = document.querySelector(".hero-type-cursor");
+    const heroPhrases = ["Hi, I’m Bagus", "I’m Technical Support"];
+    const reduceHeroTypingMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    const textArray = ["New Experience", "New Journey", "New Opportunities", "New Knowledge"];
-    const typingDelay = 120;
-    const erasingDelay = 60;
-    const newTextDelay = 1500; // Jeda sebelum teks mulai dihapus
+    if (heroTitle && heroTypeText && heroTypeCursor && heroPhrases.length) {
+        let heroPhraseIndex = 0;
+        let heroCharIndex = 0;
+        let isHeroDeleting = false;
 
-    let textArrayIndex = 0;
-    let charIndex = 0;
+        const heroTypingDelay = 125;
+        const heroDeletingDelay = 70;
+        const heroHoldDelay = 1850;
+        const heroStartDelay = 520;
+        const heroSwapDelay = 520;
 
-    function type() {
-        if (typedTextSpan && cursorSpan) {
-            if (charIndex < textArray[textArrayIndex].length) {
-                if (!cursorSpan.classList.contains("typing")) {
-                    cursorSpan.classList.add("typing");
+        const setHeroTypingState = (typing) => {
+            heroTitle.classList.toggle("is-typing", typing);
+        };
+
+        const tickHeroTypewriter = () => {
+            const currentPhrase = heroPhrases[heroPhraseIndex];
+            heroTypeText.textContent = currentPhrase.slice(0, heroCharIndex);
+
+            if (!isHeroDeleting) {
+                setHeroTypingState(true);
+                if (heroCharIndex < currentPhrase.length) {
+                    heroCharIndex++;
+                    setTimeout(tickHeroTypewriter, heroTypingDelay);
+                } else {
+                    setHeroTypingState(false);
+                    isHeroDeleting = true;
+                    setTimeout(tickHeroTypewriter, heroHoldDelay);
                 }
-                typedTextSpan.textContent += textArray[textArrayIndex].charAt(charIndex);
-                charIndex++;
-                setTimeout(type, typingDelay);
-            } else {
-                cursorSpan.classList.remove("typing");
-                setTimeout(erase, newTextDelay);
+                return;
             }
-        }
-    }
 
-    function erase() {
-        if (typedTextSpan && cursorSpan) {
-            if (charIndex > 0) {
-                if (!cursorSpan.classList.contains("typing")) {
-                    cursorSpan.classList.add("typing");
-                }
-                typedTextSpan.textContent = textArray[textArrayIndex].substring(0, charIndex - 1);
-                charIndex--;
-                setTimeout(erase, erasingDelay);
-            } else {
-                cursorSpan.classList.remove("typing");
-                textArrayIndex++;
-                if (textArrayIndex >= textArray.length) {
-                    textArrayIndex = 0;
-                }
-                setTimeout(type, typingDelay + 400);
+            if (isHeroDeleting && heroCharIndex > 0) {
+                heroCharIndex--;
+                setHeroTypingState(true);
+                setTimeout(tickHeroTypewriter, heroDeletingDelay);
+                return;
             }
-        }
-    }
 
-    if (textArray.length && typedTextSpan && cursorSpan) {
-        setTimeout(type, 500);
+            isHeroDeleting = false;
+            heroPhraseIndex = (heroPhraseIndex + 1) % heroPhrases.length;
+            heroTypeText.textContent = "";
+            setHeroTypingState(false);
+            setTimeout(tickHeroTypewriter, heroSwapDelay);
+        };
+
+        if (reduceHeroTypingMotion) {
+            heroTypeText.textContent = heroPhrases[0];
+            heroTypeCursor.style.display = "none";
+        } else {
+            heroTypeText.textContent = "";
+            setTimeout(tickHeroTypewriter, heroStartDelay);
+        }
     }
 
     // =======================================
@@ -978,12 +968,16 @@ document.addEventListener("DOMContentLoaded", () => {
         lazyImages.forEach(img => imageObserver.observe(img));
     }
 
-    // Count hero stats shortly after the hero is ready.
-    (function animateHeroStats(){
-        const statEls = document.querySelectorAll('.hero-stats .stat-value');
+    // Count stats when the new numbers section enters the viewport.
+    (function animateStatsWhenVisible(){
+        const statsSection = document.querySelector('.stats-section');
+        const statEls = document.querySelectorAll('.stats-section .stat-value');
         if (!statEls.length) return;
 
         const animateValue = (el) => {
+            if (el.dataset.counted === 'true') return;
+            el.dataset.counted = 'true';
+
             const target = Number(el.getAttribute('data-target') || 0);
             const duration = 1100;
             const startTime = Date.now();
@@ -1003,30 +997,121 @@ document.addEventListener("DOMContentLoaded", () => {
             tick();
         };
 
-        setTimeout(() => statEls.forEach(animateValue), 500);
+        if ('IntersectionObserver' in window && statsSection) {
+            const statsObserver = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        statEls.forEach(animateValue);
+                        statsObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.35 });
+
+            statsObserver.observe(statsSection);
+        } else {
+            setTimeout(() => statEls.forEach(animateValue), 500);
+        }
     })();
 
     // =======================================
-    // 15. SMOOTH SCROLL ANIMATIONS FOR SECTIONS
+    // 15. SMOOTH SCROLL REVEAL FOR SECTIONS
     // =======================================
-    const observeElements = (selector, animationClass) => {
-        if ('IntersectionObserver' in window) {
-            const elements = document.querySelectorAll(selector);
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
+    (function setupScrollReveal(){
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const revealTargets = new Set();
+
+        const revealSets = [
+            {
+                selector: '.hero-text h1, .hero-summary, .cta-buttons, .skills-section h2, .journey-section h2, .journey-subtitle, .projects-section h2, .side-write-section h2, .certificate-section h2, .footer-logo-centered, .footer-bio-centered, .vibe-title',
+                effect: 'reveal-soft'
+            },
+            {
+                selector: '.hero-image, .about-image',
+                effect: 'reveal-from-left'
+            },
+            {
+                selector: '.about-text h2, .about-text p',
+                effect: 'reveal-from-right'
+            },
+            {
+                selector: '.stats-section .stat-card, .skill-card, .journey-card, .project-item, .side-write-card, .footer-content-wrapper',
+                effect: 'reveal-card'
+            },
+            {
+                selector: '.stat-icon, .skill-icon, .project-kicker, .side-write-cta, .social-btn-centered, .vibe-btn, .cert-tag',
+                effect: 'reveal-icon'
+            },
+            {
+                selector: '.slider-navigation, .slider-wrapper',
+                effect: 'reveal-soft'
+            }
+        ];
+
+        revealSets.forEach(({ selector, effect }) => {
+            document.querySelectorAll(selector).forEach((element) => {
+                element.classList.add('scroll-reveal', effect);
+                revealTargets.add(element);
+            });
+        });
+
+        document.querySelectorAll('.journey-dot').forEach((element) => {
+            element.classList.add('scroll-reveal-dot');
+            revealTargets.add(element);
+        });
+
+        document.querySelectorAll('.hero-section, section, footer').forEach((section) => {
+            const sectionItems = Array.from(section.querySelectorAll('.scroll-reveal, .scroll-reveal-dot'))
+                .sort((a, b) => (a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1));
+
+            sectionItems.forEach((element, index) => {
+                element.style.setProperty('--reveal-delay', `${Math.min(index * 65, 390)}ms`);
+            });
+        });
+
+        if (prefersReducedMotion || !('IntersectionObserver' in window)) {
+            revealTargets.forEach((element) => element.classList.add('is-visible'));
+            return;
+        }
+
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.14,
+            rootMargin: '0px 0px -72px 0px'
+        });
+
+        revealTargets.forEach((element) => revealObserver.observe(element));
+
+        const revealGroupedItems = (sectionSelector, targetsSelector) => {
+            const section = document.querySelector(sectionSelector);
+            if (!section) return;
+
+            const groupObserver = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
                     if (entry.isIntersecting) {
-                        entry.target.classList.add(animationClass);
-                        observer.unobserve(entry.target);
+                        section.querySelectorAll(targetsSelector).forEach((element) => {
+                            element.classList.add('is-visible');
+                            revealObserver.unobserve(element);
+                        });
+                        groupObserver.unobserve(entry.target);
                     }
                 });
-            }, { threshold: 0.1, rootMargin: '0px 0px -100px 0px' });
+            }, {
+                threshold: 0.12,
+                rootMargin: '0px 0px -72px 0px'
+            });
 
-            elements.forEach(el => observer.observe(el));
-        }
-    };
+            groupObserver.observe(section);
+        };
 
-    // Add fade-in animation to cards
-    observeElements('.testimonial-card, .stat-card, .contact-item', 'fade-in');
+        revealGroupedItems('.projects-section', '.project-item, .project-kicker, .slider-navigation');
+        revealGroupedItems('.certificate-section', '.slider-wrapper, .cert-tag');
+    })();
 
     // =======================================
     // 16. SKILL BARS ANIMATION
