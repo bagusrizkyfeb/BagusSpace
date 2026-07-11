@@ -526,7 +526,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
-    if (cvBtn && cvModal) {
+    if (cvBtn && cvModal && !cvBtn.hasAttribute('download')) {
         cvBtn.addEventListener('click', (e) => {
             e.preventDefault(); // Stop default tab navigation
 
