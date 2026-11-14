@@ -703,75 +703,48 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     // =======================================
-    // 5. HERO TITLE TYPEWRITER (INTERACTIVE IT TERMINAL)
+    // 5. HERO TITLE TYPEWRITER
     // =======================================
     const heroTitle = document.querySelector(".hero-title-typing");
     const heroTypeText = document.querySelector(".hero-type-text");
     const heroTypeCursor = document.querySelector(".hero-type-cursor");
     const heroPhrases = [
-        { prefix: "Hi, I’m ", highlight: "Bagus", module: "network", alert: "Hello from Bagus! 👋" },
-        { prefix: "I’m ", highlight: "ICT Support", module: "network", alert: "Role: ICT Support 🌐" },
-        { prefix: "I’m ", highlight: "Technical Support", module: "hardware", alert: "Role: Technical Support 💻" },
-        { prefix: "I Fix ", highlight: "Tech Chaos", module: "security", alert: "Troubleshooting Mode ⚡" },
-        { prefix: "Keeping ", highlight: "IT Systems Up", module: "asset", alert: "99.98% Uptime Ops 🛡️" }
+        "Hey, I’m Bagus Rizky",
+        "I’m ICT Support",
+        "I’m Technical Support",
+        "I Tame Daily IT Chaos",
+        "Keeping Systems Alive",
+        "Your Go-To Tech Guy"
     ];
 
     if (heroTitle && heroTypeText && heroTypeCursor && heroPhrases.length) {
         let heroPhraseIndex = 0;
         let heroCharIndex = 0;
         let isHeroDeleting = false;
-        let heroTypeTimer = null;
 
-        const heroTypingDelay = 95;
-        const heroDeletingDelay = 55;
-        const heroHoldDelay = 1950;
-        const heroStartDelay = 360;
-        const heroSwapDelay = 360;
-        const scrambleChars = "01_<>/#*";
+        const heroTypingDelay = 115;
+        const heroDeletingDelay = 65;
+        const heroHoldDelay = 1850;
+        const heroStartDelay = 480;
+        const heroSwapDelay = 480;
 
         const setHeroTypingState = (typing) => {
             heroTitle.classList.toggle("is-typing", typing);
         };
 
-        const renderHeroPhrase = (phrase, charCount, showScramble = false) => {
-            const fullText = phrase.prefix + phrase.highlight;
-            const visible = fullText.slice(0, charCount);
-            const prefixPart = visible.slice(0, phrase.prefix.length);
-            const highlightPart = visible.slice(phrase.prefix.length);
-
-            heroTypeText.textContent = "";
-            if (prefixPart) {
-                heroTypeText.appendChild(document.createTextNode(prefixPart));
-            }
-            if (highlightPart) {
-                const highlightSpan = document.createElement("span");
-                highlightSpan.className = "hero-type-highlight";
-                highlightSpan.textContent = highlightPart;
-                heroTypeText.appendChild(highlightSpan);
-            }
-            if (showScramble && charCount > 0 && charCount < fullText.length) {
-                const scrambleSpan = document.createElement("span");
-                scrambleSpan.className = "hero-type-scramble";
-                scrambleSpan.textContent = scrambleChars[Math.floor(Math.random() * scrambleChars.length)];
-                heroTypeText.appendChild(scrambleSpan);
-            }
-        };
-
         const tickHeroTypewriter = () => {
-            const phrase = heroPhrases[heroPhraseIndex];
-            const fullLength = phrase.prefix.length + phrase.highlight.length;
+            const currentPhrase = heroPhrases[heroPhraseIndex];
+            heroTypeText.textContent = currentPhrase.slice(0, heroCharIndex);
 
             if (!isHeroDeleting) {
                 setHeroTypingState(true);
-                if (heroCharIndex < fullLength) {
+                if (heroCharIndex < currentPhrase.length) {
                     heroCharIndex++;
-                    renderHeroPhrase(phrase, heroCharIndex, true);
-                    heroTypeTimer = setTimeout(tickHeroTypewriter, heroTypingDelay);
+                    setTimeout(tickHeroTypewriter, heroTypingDelay);
                 } else {
-                    renderHeroPhrase(phrase, fullLength, false);
                     setHeroTypingState(false);
                     isHeroDeleting = true;
-                    heroTypeTimer = setTimeout(tickHeroTypewriter, heroHoldDelay);
+                    setTimeout(tickHeroTypewriter, heroHoldDelay);
                 }
                 return;
             }
@@ -779,8 +752,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (isHeroDeleting && heroCharIndex > 0) {
                 heroCharIndex--;
                 setHeroTypingState(true);
-                renderHeroPhrase(phrase, heroCharIndex, false);
-                heroTypeTimer = setTimeout(tickHeroTypewriter, heroDeletingDelay);
+                setTimeout(tickHeroTypewriter, heroDeletingDelay);
                 return;
             }
 
@@ -788,52 +760,11 @@ document.addEventListener("DOMContentLoaded", () => {
             heroPhraseIndex = (heroPhraseIndex + 1) % heroPhrases.length;
             heroTypeText.textContent = "";
             setHeroTypingState(false);
-            heroTypeTimer = setTimeout(tickHeroTypewriter, heroSwapDelay);
+            setTimeout(tickHeroTypewriter, heroSwapDelay);
         };
-
-        const cycleHeroTitleInteractive = () => {
-            clearTimeout(heroTypeTimer);
-            heroPhraseIndex = (heroPhraseIndex + 1) % heroPhrases.length;
-            const phrase = heroPhrases[heroPhraseIndex];
-            const fullLength = phrase.prefix.length + phrase.highlight.length;
-
-            isHeroDeleting = true;
-            heroCharIndex = fullLength;
-            setHeroTypingState(true);
-
-            // Fast cyber-decode burst before landing on the selected phrase
-            let frame = 0;
-            const totalFrames = 4;
-            const runDecodeFrame = () => {
-                frame++;
-                if (frame < totalFrames) {
-                    const partial = Math.max(1, Math.floor((fullLength * frame) / totalFrames));
-                    renderHeroPhrase(phrase, partial, true);
-                    heroTypeTimer = setTimeout(runDecodeFrame, 42);
-                } else {
-                    renderHeroPhrase(phrase, fullLength, false);
-                    setHeroTypingState(false);
-                    heroTypeTimer = setTimeout(tickHeroTypewriter, heroHoldDelay);
-                }
-            };
-
-            runDecodeFrame();
-            if (typeof window.switchHeroItModule === "function") {
-                window.switchHeroItModule(phrase.module);
-            }
-            triggerPillAlert(phrase.alert, "💻", 1800);
-        };
-
-        heroTitle.addEventListener("click", cycleHeroTitleInteractive);
-        heroTitle.addEventListener("keydown", (e) => {
-            if (e.key === "Enter" || e.key === " ") {
-                e.preventDefault();
-                cycleHeroTitleInteractive();
-            }
-        });
 
         heroTypeText.textContent = "";
-        heroTypeTimer = setTimeout(tickHeroTypewriter, heroStartDelay);
+        setTimeout(tickHeroTypewriter, heroStartDelay);
     }
 
     // =======================================
@@ -1386,11 +1317,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 const nextIdx = (moduleOrder.indexOf(activeModuleKey) + 1) % moduleOrder.length;
                 renderItModule(moduleOrder[nextIdx], false);
             }, 6500);
-        };
-
-        window.switchHeroItModule = (moduleKey) => {
-            renderItModule(moduleKey, false);
-            resetConsoleCycle();
         };
 
         const runDiagnosticsScan = () => {
