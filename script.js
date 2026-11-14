@@ -1,22 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
     // =======================================
-    // HERO LOTTIE ANIMATION (LOCAL, FILE-SAFE)
-    // =======================================
-    const heroLottieContainer = document.getElementById("hero-lottie");
-    if (heroLottieContainer && window.lottie && window.HERO_LOTTIE_DATA) {
-        window.lottie.loadAnimation({
-            container: heroLottieContainer,
-            renderer: "svg",
-            loop: true,
-            autoplay: true,
-            animationData: window.HERO_LOTTIE_DATA,
-            rendererSettings: {
-                preserveAspectRatio: "xMidYMid meet"
-            }
-        });
-    }
-
-    // =======================================
     // 1. DARK MODE / THEME TOGGLE
     // =======================================
     const themeToggleBtn = document.getElementById("theme-toggle");
@@ -196,6 +179,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Start cycling every 8 seconds
         startGreetingCycle();
+
+        // Interactive click: cycle to the next greeting immediately
+        greetingWidget.addEventListener("click", () => {
+            if (isScrollGreetingActive || !activeGreetings.length) return;
+            currentLangIndex = (currentLangIndex + 1) % activeGreetings.length;
+            animateWidgetText(activeGreetings[currentLangIndex]);
+            startGreetingCycle();
+        });
     }
 
     // =======================================
@@ -376,6 +367,24 @@ document.addEventListener("DOMContentLoaded", () => {
     navSections.forEach(section => {
         if (section) observer.observe(section);
     });
+
+    // Interactive Dynamic Pill click: jump smoothly to the next section
+    if (activeTextPill) {
+        const sectionOrder = ["home", "about", "stats", "skills", "journey", "projects", "side-write", "certificates", "footer"];
+        activeTextPill.setAttribute("title", "Click to jump to next section");
+        activeTextPill.addEventListener("click", () => {
+            if (isAlertActive) return;
+            const currentIndex = sectionOrder.indexOf(lastActiveSectionId);
+            const nextId = sectionOrder[(currentIndex + 1) % sectionOrder.length];
+            const targetEl = document.getElementById(nextId);
+            if (!targetEl) return;
+
+            const top = nextId === "home"
+                ? 0
+                : targetEl.getBoundingClientRect().top + window.pageYOffset - HEADER_HEIGHT_OFFSET;
+            window.scrollTo({ top, behavior: "smooth" });
+        });
+    }
 
     // =======================================
     // 4.1 GLOBAL READING PROGRESS BAR (ON PILL BOTTOM)
@@ -694,42 +703,75 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     // =======================================
-    // 5. HERO TITLE TYPEWRITER
+    // 5. HERO TITLE TYPEWRITER (INTERACTIVE IT TERMINAL)
     // =======================================
     const heroTitle = document.querySelector(".hero-title-typing");
     const heroTypeText = document.querySelector(".hero-type-text");
     const heroTypeCursor = document.querySelector(".hero-type-cursor");
-    const heroPhrases = ["Hi, I’m Bagus", "I’m Technical Support"];
-    const reduceHeroTypingMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const heroPhrases = [
+        { prefix: "Hi, I’m ", highlight: "Bagus", module: "network", alert: "Hello from Bagus! 👋" },
+        { prefix: "I’m ", highlight: "ICT Support", module: "network", alert: "Role: ICT Support 🌐" },
+        { prefix: "I’m ", highlight: "Technical Support", module: "hardware", alert: "Role: Technical Support 💻" },
+        { prefix: "I Fix ", highlight: "Tech Chaos", module: "security", alert: "Troubleshooting Mode ⚡" },
+        { prefix: "Keeping ", highlight: "IT Systems Up", module: "asset", alert: "99.98% Uptime Ops 🛡️" }
+    ];
 
     if (heroTitle && heroTypeText && heroTypeCursor && heroPhrases.length) {
         let heroPhraseIndex = 0;
         let heroCharIndex = 0;
         let isHeroDeleting = false;
+        let heroTypeTimer = null;
 
-        const heroTypingDelay = 125;
-        const heroDeletingDelay = 70;
-        const heroHoldDelay = 1850;
-        const heroStartDelay = 520;
-        const heroSwapDelay = 520;
+        const heroTypingDelay = 95;
+        const heroDeletingDelay = 55;
+        const heroHoldDelay = 1950;
+        const heroStartDelay = 360;
+        const heroSwapDelay = 360;
+        const scrambleChars = "01_<>/#*";
 
         const setHeroTypingState = (typing) => {
             heroTitle.classList.toggle("is-typing", typing);
         };
 
+        const renderHeroPhrase = (phrase, charCount, showScramble = false) => {
+            const fullText = phrase.prefix + phrase.highlight;
+            const visible = fullText.slice(0, charCount);
+            const prefixPart = visible.slice(0, phrase.prefix.length);
+            const highlightPart = visible.slice(phrase.prefix.length);
+
+            heroTypeText.textContent = "";
+            if (prefixPart) {
+                heroTypeText.appendChild(document.createTextNode(prefixPart));
+            }
+            if (highlightPart) {
+                const highlightSpan = document.createElement("span");
+                highlightSpan.className = "hero-type-highlight";
+                highlightSpan.textContent = highlightPart;
+                heroTypeText.appendChild(highlightSpan);
+            }
+            if (showScramble && charCount > 0 && charCount < fullText.length) {
+                const scrambleSpan = document.createElement("span");
+                scrambleSpan.className = "hero-type-scramble";
+                scrambleSpan.textContent = scrambleChars[Math.floor(Math.random() * scrambleChars.length)];
+                heroTypeText.appendChild(scrambleSpan);
+            }
+        };
+
         const tickHeroTypewriter = () => {
-            const currentPhrase = heroPhrases[heroPhraseIndex];
-            heroTypeText.textContent = currentPhrase.slice(0, heroCharIndex);
+            const phrase = heroPhrases[heroPhraseIndex];
+            const fullLength = phrase.prefix.length + phrase.highlight.length;
 
             if (!isHeroDeleting) {
                 setHeroTypingState(true);
-                if (heroCharIndex < currentPhrase.length) {
+                if (heroCharIndex < fullLength) {
                     heroCharIndex++;
-                    setTimeout(tickHeroTypewriter, heroTypingDelay);
+                    renderHeroPhrase(phrase, heroCharIndex, true);
+                    heroTypeTimer = setTimeout(tickHeroTypewriter, heroTypingDelay);
                 } else {
+                    renderHeroPhrase(phrase, fullLength, false);
                     setHeroTypingState(false);
                     isHeroDeleting = true;
-                    setTimeout(tickHeroTypewriter, heroHoldDelay);
+                    heroTypeTimer = setTimeout(tickHeroTypewriter, heroHoldDelay);
                 }
                 return;
             }
@@ -737,7 +779,8 @@ document.addEventListener("DOMContentLoaded", () => {
             if (isHeroDeleting && heroCharIndex > 0) {
                 heroCharIndex--;
                 setHeroTypingState(true);
-                setTimeout(tickHeroTypewriter, heroDeletingDelay);
+                renderHeroPhrase(phrase, heroCharIndex, false);
+                heroTypeTimer = setTimeout(tickHeroTypewriter, heroDeletingDelay);
                 return;
             }
 
@@ -745,16 +788,52 @@ document.addEventListener("DOMContentLoaded", () => {
             heroPhraseIndex = (heroPhraseIndex + 1) % heroPhrases.length;
             heroTypeText.textContent = "";
             setHeroTypingState(false);
-            setTimeout(tickHeroTypewriter, heroSwapDelay);
+            heroTypeTimer = setTimeout(tickHeroTypewriter, heroSwapDelay);
         };
 
-        if (reduceHeroTypingMotion) {
-            heroTypeText.textContent = heroPhrases[0];
-            heroTypeCursor.style.display = "none";
-        } else {
-            heroTypeText.textContent = "";
-            setTimeout(tickHeroTypewriter, heroStartDelay);
-        }
+        const cycleHeroTitleInteractive = () => {
+            clearTimeout(heroTypeTimer);
+            heroPhraseIndex = (heroPhraseIndex + 1) % heroPhrases.length;
+            const phrase = heroPhrases[heroPhraseIndex];
+            const fullLength = phrase.prefix.length + phrase.highlight.length;
+
+            isHeroDeleting = true;
+            heroCharIndex = fullLength;
+            setHeroTypingState(true);
+
+            // Fast cyber-decode burst before landing on the selected phrase
+            let frame = 0;
+            const totalFrames = 4;
+            const runDecodeFrame = () => {
+                frame++;
+                if (frame < totalFrames) {
+                    const partial = Math.max(1, Math.floor((fullLength * frame) / totalFrames));
+                    renderHeroPhrase(phrase, partial, true);
+                    heroTypeTimer = setTimeout(runDecodeFrame, 42);
+                } else {
+                    renderHeroPhrase(phrase, fullLength, false);
+                    setHeroTypingState(false);
+                    heroTypeTimer = setTimeout(tickHeroTypewriter, heroHoldDelay);
+                }
+            };
+
+            runDecodeFrame();
+            if (typeof window.switchHeroItModule === "function") {
+                window.switchHeroItModule(phrase.module);
+            }
+            triggerPillAlert(phrase.alert, "💻", 1800);
+        };
+
+        heroTitle.addEventListener("click", cycleHeroTitleInteractive);
+        heroTitle.addEventListener("keydown", (e) => {
+            if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                cycleHeroTitleInteractive();
+            }
+        });
+
+        heroTypeText.textContent = "";
+        heroTypeTimer = setTimeout(tickHeroTypewriter, heroStartDelay);
     }
 
     // =======================================
@@ -1162,5 +1241,206 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     `;
     document.head.appendChild(style);
+
+    // =======================================
+    // 18. INTERACTIVE IT DIAGNOSTICS CONSOLE
+    // =======================================
+    const consoleStage = document.getElementById("it-console-stage");
+    const consoleCard = document.getElementById("it-console-card");
+    const consoleCmdText = document.getElementById("console-cmd-text");
+    const consoleLogs = document.getElementById("console-logs");
+    const consoleRunBtn = document.getElementById("console-run-btn");
+    const floatLatencyText = document.getElementById("float-latency-text");
+    const metricVal1 = document.getElementById("metric-val-1");
+    const metricVal2 = document.getElementById("metric-val-2");
+    const metricVal3 = document.getElementById("metric-val-3");
+    const metricFill1 = document.getElementById("metric-fill-1");
+    const metricFill2 = document.getElementById("metric-fill-2");
+    const metricFill3 = document.getElementById("metric-fill-3");
+
+    if (consoleStage && consoleCard && consoleCmdText && consoleLogs) {
+        const itModules = {
+            network: {
+                label: "Network & VPN",
+                alert: "Network Diagnostics OK",
+                cmd: "net-diag --check-vpn --uplink=mining-site",
+                logs: [
+                    { badge: "[OK]", cls: "ok", msg: "Core LAN & Branch Wi-Fi gateway reachable (12ms)" },
+                    { badge: "[ACTIVE]", cls: "ok", msg: "FortiClient / Sophos VPN tunnel encrypted & stable" },
+                    { badge: "[SYNC]", cls: "info", msg: "DNS & DHCP lease pool healthy across all nodes" }
+                ],
+                metrics: [
+                    { val: "99.98%", fill: 99 },
+                    { val: "Optimal", fill: 94 },
+                    { val: "98.5%", fill: 98 }
+                ]
+            },
+            security: {
+                label: "Endpoint Security",
+                alert: "Endpoint Guard Verified",
+                cmd: "sec-audit --endpoint=sophos --policy=enforced",
+                logs: [
+                    { badge: "[SECURE]", cls: "ok", msg: "Sophos Endpoint Protection definitions up to date" },
+                    { badge: "[OK]", cls: "ok", msg: "Domain access control & MFA policies verified" },
+                    { badge: "[INFO]", cls: "info", msg: "Zero unresolved endpoint threat alerts today" }
+                ],
+                metrics: [
+                    { val: "100%", fill: 100 },
+                    { val: "Hardened", fill: 96 },
+                    { val: "0 Alerts", fill: 100 }
+                ]
+            },
+            hardware: {
+                label: "Hardware & OS",
+                alert: "Workstations Healthy",
+                cmd: "sys-health --scan=workstations --os=win11",
+                logs: [
+                    { badge: "[OK]", cls: "ok", msg: "Laptop, RAM & NVMe health checks passed" },
+                    { badge: "[VERIFIED]", cls: "ok", msg: "Windows OS & office apps patched for daily ops" },
+                    { badge: "[READY]", cls: "info", msg: "Onsite & remote ticketing queue under SLA" }
+                ],
+                metrics: [
+                    { val: "99.4%", fill: 99 },
+                    { val: "Healthy", fill: 95 },
+                    { val: "< 15m", fill: 92 }
+                ]
+            },
+            asset: {
+                label: "IT Asset Ops",
+                alert: "Asset Registry Synced",
+                cmd: "asset-ctl --inventory --audit=active",
+                logs: [
+                    { badge: "[AUDIT]", cls: "ok", msg: "Device serials & user assignments reconciled" },
+                    { badge: "[OK]", cls: "ok", msg: "New employee workstation provisioning ready" },
+                    { badge: "[SYNC]", cls: "info", msg: "GLPI / IT asset lifecycle log updated" }
+                ],
+                metrics: [
+                    { val: "100%", fill: 100 },
+                    { val: "Tracked", fill: 97 },
+                    { val: "Synced", fill: 95 }
+                ]
+            }
+        };
+
+        const moduleOrder = ["network", "security", "hardware", "asset"];
+        let activeModuleKey = "network";
+        let consoleCycleInterval = null;
+        let isConsoleHovering = false;
+        const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+        const consoleTabs = document.querySelectorAll(".console-tab[data-module]");
+        const floatChips = document.querySelectorAll(".it-float-chip[data-module]");
+
+        const renderItModule = (moduleKey, notify = false) => {
+            const mod = itModules[moduleKey];
+            if (!mod) return;
+            activeModuleKey = moduleKey;
+
+            consoleTabs.forEach((tab) => {
+                const isActive = tab.dataset.module === moduleKey;
+                tab.classList.toggle("active", isActive);
+                tab.setAttribute("aria-selected", String(isActive));
+            });
+
+            consoleCmdText.textContent = mod.cmd;
+            consoleLogs.innerHTML = "";
+            mod.logs.forEach((entry) => {
+                const row = document.createElement("div");
+                row.className = "log-line";
+
+                const badge = document.createElement("span");
+                badge.className = `log-badge ${entry.cls}`;
+                badge.textContent = entry.badge;
+
+                const msg = document.createElement("span");
+                msg.className = "log-msg";
+                msg.textContent = entry.msg;
+
+                row.appendChild(badge);
+                row.appendChild(msg);
+                consoleLogs.appendChild(row);
+            });
+
+            if (metricVal1 && metricFill1) {
+                metricVal1.textContent = mod.metrics[0].val;
+                metricFill1.style.width = `${mod.metrics[0].fill}%`;
+            }
+            if (metricVal2 && metricFill2) {
+                metricVal2.textContent = mod.metrics[1].val;
+                metricFill2.style.width = `${mod.metrics[1].fill}%`;
+            }
+            if (metricVal3 && metricFill3) {
+                metricVal3.textContent = mod.metrics[2].val;
+                metricFill3.style.width = `${mod.metrics[2].fill}%`;
+            }
+
+            if (notify) {
+                triggerPillAlert(mod.alert, "🖥️", 1800);
+            }
+        };
+
+        const resetConsoleCycle = () => {
+            clearInterval(consoleCycleInterval);
+            consoleCycleInterval = setInterval(() => {
+                if (isConsoleHovering) return;
+                const nextIdx = (moduleOrder.indexOf(activeModuleKey) + 1) % moduleOrder.length;
+                renderItModule(moduleOrder[nextIdx], false);
+            }, 6500);
+        };
+
+        window.switchHeroItModule = (moduleKey) => {
+            renderItModule(moduleKey, false);
+            resetConsoleCycle();
+        };
+
+        const runDiagnosticsScan = () => {
+            const latency = Math.floor(Math.random() * 9) + 10; // 10ms - 18ms
+            if (consoleRunBtn) consoleRunBtn.classList.add("is-scanning");
+            if (floatLatencyText) floatLatencyText.textContent = `Latency ${latency}ms • Stable`;
+
+            renderItModule(activeModuleKey, false);
+            triggerPillAlert(`Diagnostics OK (${latency}ms)`, "⚡", 2200);
+
+            setTimeout(() => {
+                if (consoleRunBtn) consoleRunBtn.classList.remove("is-scanning");
+            }, 650);
+            resetConsoleCycle();
+        };
+
+        [...consoleTabs, ...floatChips].forEach((trigger) => {
+            trigger.addEventListener("click", () => {
+                const moduleKey = trigger.dataset.module;
+                if (!moduleKey) return;
+                renderItModule(moduleKey, true);
+                resetConsoleCycle();
+            });
+        });
+
+        if (consoleRunBtn) {
+            consoleRunBtn.addEventListener("click", runDiagnosticsScan);
+        }
+
+        consoleStage.addEventListener("mouseenter", () => { isConsoleHovering = true; });
+        consoleStage.addEventListener("mouseleave", () => { isConsoleHovering = false; });
+
+        if (!prefersReducedMotion) {
+            consoleStage.addEventListener("mousemove", (e) => {
+                if (window.innerWidth <= 992) return;
+                const rect = consoleStage.getBoundingClientRect();
+                const xRatio = (e.clientX - rect.left) / rect.width - 0.5;
+                const yRatio = (e.clientY - rect.top) / rect.height - 0.5;
+                consoleCard.style.setProperty("--rx", `${(-yRatio * 6).toFixed(2)}deg`);
+                consoleCard.style.setProperty("--ry", `${(xRatio * 7).toFixed(2)}deg`);
+            });
+
+            consoleStage.addEventListener("mouseleave", () => {
+                consoleCard.style.setProperty("--rx", "0deg");
+                consoleCard.style.setProperty("--ry", "0deg");
+            });
+        }
+
+        renderItModule("network", false);
+        resetConsoleCycle();
+    }
 
 });
