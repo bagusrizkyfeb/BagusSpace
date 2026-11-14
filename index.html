@@ -7,7 +7,7 @@
     <title>Bagus Rizky Febriyanto | IT Technical Support Portfolio</title>
     <meta name="description"
         content="Portfolio of Bagus Rizky Febriyanto, an IT Technical Support Engineer specializing in hardware troubleshooting, network setup, OS administration, and user support.">
-    <link rel="stylesheet" href="style.css?v=it-console-hero-3">
+    <link rel="stylesheet" href="style.css?v=it-pixel-hero-1">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,7 +18,7 @@
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- Defer JavaScript execution until after HTML parsing is complete -->
-    <script src="script.js?v=it-console-hero-3" defer></script>
+    <script src="script.js?v=it-pixel-hero-1" defer></script>
 </head>
 
 <body class="dark-theme">
@@ -72,24 +72,6 @@
             </div>
             <div class="hero-image">
                 <div class="it-console-stage" id="it-console-stage">
-                    <!-- Floating interactive telemetry chips -->
-                    <button type="button" class="it-float-chip chip-top" data-module="security" title="Inspect Endpoint Security">
-                        <span class="chip-icon"><i class="fa fa-shield" aria-hidden="true"></i></span>
-                        <span class="chip-meta">
-                            <strong>Endpoint Guard</strong>
-                            <small id="float-security-text">Sophos Active • 100%</small>
-                        </span>
-                    </button>
-
-                    <button type="button" class="it-float-chip chip-bottom" data-module="network" title="Inspect Network Link">
-                        <span class="chip-icon"><i class="fa fa-bolt" aria-hidden="true"></i></span>
-                        <span class="chip-meta">
-                            <strong>Core Link &amp; VPN</strong>
-                            <small id="float-latency-text">Latency 12ms • Stable</small>
-                        </span>
-                    </button>
-
-                    <!-- Main macOS-styled Interactive IT Console Card -->
                     <div class="it-console-card" id="it-console-card">
                         <div class="it-console-topbar">
                             <div class="console-dots" aria-hidden="true">
@@ -99,73 +81,34 @@
                             </div>
                             <div class="console-title">
                                 <i class="fa fa-terminal" aria-hidden="true"></i>
-                                <span>bagus@ict-ops:~</span>
+                                <span>bagus@ict-ops:~ [8-bit]</span>
                             </div>
-                            <button type="button" class="console-run-btn" id="console-run-btn" title="Run System Diagnostics">
-                                <i class="fa fa-refresh" aria-hidden="true"></i>
-                                <span>Scan</span>
-                            </button>
+                            <span class="console-scene-counter" id="pixel-scene-counter">01 / 04</span>
                         </div>
 
-                        <div class="it-console-tabs" role="tablist" aria-label="Diagnostic Modules">
-                            <button type="button" class="console-tab active" data-module="network" role="tab" aria-selected="true">
-                                <i class="fa fa-wifi" aria-hidden="true"></i> Net
-                            </button>
-                            <button type="button" class="console-tab" data-module="security" role="tab" aria-selected="false">
-                                <i class="fa fa-shield" aria-hidden="true"></i> Sec
-                            </button>
-                            <button type="button" class="console-tab" data-module="hardware" role="tab" aria-selected="false">
-                                <i class="fa fa-microchip" aria-hidden="true"></i> Sys
-                            </button>
-                            <button type="button" class="console-tab" data-module="asset" role="tab" aria-selected="false">
-                                <i class="fa fa-database" aria-hidden="true"></i> Asset
-                            </button>
-                        </div>
-
-                        <div class="it-console-screen" id="it-console-screen" aria-live="polite">
-                            <div class="console-cmd-line">
+                        <div class="it-pixel-screen" id="it-pixel-screen" title="Click to switch IT activity">
+                            <canvas id="it-pixel-canvas" width="160" height="96"
+                                aria-label="8-bit pixel animation of Bagus performing IT support activities"></canvas>
+                            <div class="pixel-status-bar">
                                 <span class="cmd-prompt">$</span>
-                                <span class="cmd-text" id="console-cmd-text">net-diag --check-vpn --uplink=mining-site</span>
+                                <span class="cmd-text" id="pixel-status-text">Fixing laptop hardware &amp; upgrading RAM...</span>
                                 <span class="cmd-cursor"></span>
                             </div>
-                            <div class="console-logs" id="console-logs">
-                                <div class="log-line">
-                                    <span class="log-badge ok">[OK]</span>
-                                    <span class="log-msg">Core LAN &amp; Branch Wi-Fi gateway reachable (12ms)</span>
-                                </div>
-                                <div class="log-line">
-                                    <span class="log-badge ok">[ACTIVE]</span>
-                                    <span class="log-msg">FortiClient / Sophos VPN tunnel encrypted &amp; stable</span>
-                                </div>
-                                <div class="log-line">
-                                    <span class="log-badge info">[SYNC]</span>
-                                    <span class="log-msg">DNS &amp; DHCP lease pool healthy across all nodes</span>
-                                </div>
-                            </div>
                         </div>
 
-                        <div class="it-console-metrics">
-                            <div class="console-metric">
-                                <div class="metric-head">
-                                    <span>Uptime</span>
-                                    <strong id="metric-val-1">99.98%</strong>
-                                </div>
-                                <div class="metric-bar"><span id="metric-fill-1" style="width: 99%"></span></div>
-                            </div>
-                            <div class="console-metric">
-                                <div class="metric-head">
-                                    <span>Health</span>
-                                    <strong id="metric-val-2">Optimal</strong>
-                                </div>
-                                <div class="metric-bar"><span id="metric-fill-2" style="width: 94%"></span></div>
-                            </div>
-                            <div class="console-metric">
-                                <div class="metric-head">
-                                    <span>SLA Rate</span>
-                                    <strong id="metric-val-3">98.5%</strong>
-                                </div>
-                                <div class="metric-bar"><span id="metric-fill-3" style="width: 98%"></span></div>
-                            </div>
+                        <div class="it-console-tabs" role="tablist" aria-label="8-Bit IT Activities">
+                            <button type="button" class="console-tab active" data-scene="0" role="tab" aria-selected="true">
+                                <i class="fa fa-wrench" aria-hidden="true"></i> Laptop Fix
+                            </button>
+                            <button type="button" class="console-tab" data-scene="1" role="tab" aria-selected="false">
+                                <i class="fa fa-wifi" aria-hidden="true"></i> Network
+                            </button>
+                            <button type="button" class="console-tab" data-scene="2" role="tab" aria-selected="false">
+                                <i class="fa fa-shield" aria-hidden="true"></i> Security
+                            </button>
+                            <button type="button" class="console-tab" data-scene="3" role="tab" aria-selected="false">
+                                <i class="fa fa-cubes" aria-hidden="true"></i> IT Asset
+                            </button>
                         </div>
                     </div>
                 </div>

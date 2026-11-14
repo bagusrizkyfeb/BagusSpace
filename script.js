@@ -1174,199 +1174,536 @@ document.addEventListener("DOMContentLoaded", () => {
     document.head.appendChild(style);
 
     // =======================================
-    // 18. INTERACTIVE IT DIAGNOSTICS CONSOLE
+    // 18. 8-BIT PIXEL ART IT ACTIVITY TERMINAL
     // =======================================
     const consoleStage = document.getElementById("it-console-stage");
     const consoleCard = document.getElementById("it-console-card");
-    const consoleCmdText = document.getElementById("console-cmd-text");
-    const consoleLogs = document.getElementById("console-logs");
-    const consoleRunBtn = document.getElementById("console-run-btn");
-    const floatLatencyText = document.getElementById("float-latency-text");
-    const metricVal1 = document.getElementById("metric-val-1");
-    const metricVal2 = document.getElementById("metric-val-2");
-    const metricVal3 = document.getElementById("metric-val-3");
-    const metricFill1 = document.getElementById("metric-fill-1");
-    const metricFill2 = document.getElementById("metric-fill-2");
-    const metricFill3 = document.getElementById("metric-fill-3");
+    const pixelScreen = document.getElementById("it-pixel-screen");
+    const pixelCanvas = document.getElementById("it-pixel-canvas");
+    const pixelStatusText = document.getElementById("pixel-status-text");
+    const pixelSceneCounter = document.getElementById("pixel-scene-counter");
+    const consoleTabs = document.querySelectorAll(".console-tab[data-scene]");
 
-    if (consoleStage && consoleCard && consoleCmdText && consoleLogs) {
-        const itModules = {
-            network: {
-                label: "Network & VPN",
-                alert: "Network Diagnostics OK",
-                cmd: "net-diag --check-vpn --uplink=mining-site",
-                logs: [
-                    { badge: "[OK]", cls: "ok", msg: "Core LAN & Branch Wi-Fi gateway reachable (12ms)" },
-                    { badge: "[ACTIVE]", cls: "ok", msg: "FortiClient / Sophos VPN tunnel encrypted & stable" },
-                    { badge: "[SYNC]", cls: "info", msg: "DNS & DHCP lease pool healthy across all nodes" }
-                ],
-                metrics: [
-                    { val: "99.98%", fill: 99 },
-                    { val: "Optimal", fill: 94 },
-                    { val: "98.5%", fill: 98 }
-                ]
-            },
-            security: {
-                label: "Endpoint Security",
-                alert: "Endpoint Guard Verified",
-                cmd: "sec-audit --endpoint=sophos --policy=enforced",
-                logs: [
-                    { badge: "[SECURE]", cls: "ok", msg: "Sophos Endpoint Protection definitions up to date" },
-                    { badge: "[OK]", cls: "ok", msg: "Domain access control & MFA policies verified" },
-                    { badge: "[INFO]", cls: "info", msg: "Zero unresolved endpoint threat alerts today" }
-                ],
-                metrics: [
-                    { val: "100%", fill: 100 },
-                    { val: "Hardened", fill: 96 },
-                    { val: "0 Alerts", fill: 100 }
-                ]
-            },
-            hardware: {
-                label: "Hardware & OS",
-                alert: "Workstations Healthy",
-                cmd: "sys-health --scan=workstations --os=win11",
-                logs: [
-                    { badge: "[OK]", cls: "ok", msg: "Laptop, RAM & NVMe health checks passed" },
-                    { badge: "[VERIFIED]", cls: "ok", msg: "Windows OS & office apps patched for daily ops" },
-                    { badge: "[READY]", cls: "info", msg: "Onsite & remote ticketing queue under SLA" }
-                ],
-                metrics: [
-                    { val: "99.4%", fill: 99 },
-                    { val: "Healthy", fill: 95 },
-                    { val: "< 15m", fill: 92 }
-                ]
-            },
-            asset: {
-                label: "IT Asset Ops",
-                alert: "Asset Registry Synced",
-                cmd: "asset-ctl --inventory --audit=active",
-                logs: [
-                    { badge: "[AUDIT]", cls: "ok", msg: "Device serials & user assignments reconciled" },
-                    { badge: "[OK]", cls: "ok", msg: "New employee workstation provisioning ready" },
-                    { badge: "[SYNC]", cls: "info", msg: "GLPI / IT asset lifecycle log updated" }
-                ],
-                metrics: [
-                    { val: "100%", fill: 100 },
-                    { val: "Tracked", fill: 97 },
-                    { val: "Synced", fill: 95 }
-                ]
-            }
-        };
+    if (consoleStage && consoleCard && pixelCanvas && pixelCanvas.getContext) {
+        const ctx = pixelCanvas.getContext("2d");
+        if (ctx) {
+            ctx.imageSmoothingEnabled = false;
 
-        const moduleOrder = ["network", "security", "hardware", "asset"];
-        let activeModuleKey = "network";
-        let consoleCycleInterval = null;
-        let isConsoleHovering = false;
-        const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+            const scenes = [
+                {
+                    name: "Laptop Fix",
+                    cmd: "hw-repair --replace-ram --laptop=thinkpad",
+                    bubble: "RAM OK!",
+                    alert: "8-Bit: Laptop Repair"
+                },
+                {
+                    name: "Network",
+                    cmd: "net-cfg --vlan=ops --wifi=up --ping=12ms",
+                    bubble: "PING 12ms",
+                    alert: "8-Bit: Network Setup"
+                },
+                {
+                    name: "Security",
+                    cmd: "sec-guard --sophos=active --block-threats",
+                    bubble: "PROTECTED",
+                    alert: "8-Bit: Endpoint Guard"
+                },
+                {
+                    name: "IT Asset",
+                    cmd: "asset-scan --audit=inventory --tag=ready",
+                    bubble: "AUDITED",
+                    alert: "8-Bit: IT Asset Audit"
+                }
+            ];
 
-        const consoleTabs = document.querySelectorAll(".console-tab[data-module]");
-        const floatChips = document.querySelectorAll(".it-float-chip[data-module]");
+            // Compact 3x5 pixel bitmap font for crisp 8-bit bubbles and labels
+            const PIXEL_FONT = {
+                A: ["010", "101", "111", "101", "101"],
+                B: ["110", "101", "110", "101", "110"],
+                C: ["011", "100", "100", "100", "011"],
+                D: ["110", "101", "101", "101", "110"],
+                E: ["111", "100", "110", "100", "111"],
+                F: ["111", "100", "110", "100", "100"],
+                G: ["011", "100", "101", "101", "011"],
+                H: ["101", "101", "111", "101", "101"],
+                I: ["111", "010", "010", "010", "111"],
+                K: ["101", "101", "110", "101", "101"],
+                L: ["100", "100", "100", "100", "111"],
+                M: ["101", "111", "111", "101", "101"],
+                N: ["101", "111", "111", "111", "101"],
+                O: ["010", "101", "101", "101", "010"],
+                P: ["110", "101", "110", "100", "100"],
+                R: ["110", "101", "110", "101", "101"],
+                S: ["011", "100", "010", "001", "110"],
+                T: ["111", "010", "010", "010", "010"],
+                U: ["101", "101", "101", "101", "111"],
+                V: ["101", "101", "101", "101", "010"],
+                X: ["101", "101", "010", "101", "101"],
+                Y: ["101", "101", "010", "010", "010"],
+                "0": ["111", "101", "101", "101", "111"],
+                "1": ["010", "110", "010", "010", "111"],
+                "2": ["110", "001", "010", "100", "111"],
+                "3": ["110", "001", "010", "001", "110"],
+                "4": ["101", "101", "111", "001", "001"],
+                "5": ["111", "100", "110", "001", "110"],
+                "6": ["011", "100", "111", "101", "111"],
+                "7": ["111", "001", "010", "010", "010"],
+                "8": ["111", "101", "111", "101", "111"],
+                "9": ["111", "101", "111", "001", "110"],
+                "!": ["1", "1", "1", "0", "1"],
+                " ": ["00", "00", "00", "00", "00"],
+                "m": ["101", "111", "101"],
+                "s": ["011", "010", "110"]
+            };
 
-        const renderItModule = (moduleKey, notify = false) => {
-            const mod = itModules[moduleKey];
-            if (!mod) return;
-            activeModuleKey = moduleKey;
+            const px = (x, y, w, h, color) => {
+                ctx.fillStyle = color;
+                ctx.fillRect(Math.round(x), Math.round(y), Math.round(w), Math.round(h));
+            };
+
+            const measurePixelText = (text) => {
+                let width = 0;
+                for (let i = 0; i < text.length; i++) {
+                    const glyph = PIXEL_FONT[text[i]] || PIXEL_FONT[" "];
+                    width += glyph[0].length + 1;
+                }
+                return Math.max(0, width - 1);
+            };
+
+            const drawPixelText = (text, x, y, color) => {
+                let cursorX = Math.round(x);
+                ctx.fillStyle = color;
+                for (let i = 0; i < text.length; i++) {
+                    const ch = text[i];
+                    const glyph = PIXEL_FONT[ch] || PIXEL_FONT[" "];
+                    const offsetY = glyph.length === 3 ? 2 : 0;
+                    for (let r = 0; r < glyph.length; r++) {
+                        for (let c = 0; c < glyph[r].length; c++) {
+                            if (glyph[r][c] === "1") {
+                                ctx.fillRect(cursorX + c, Math.round(y) + offsetY + r, 1, 1);
+                            }
+                        }
+                    }
+                    cursorX += glyph[0].length + 1;
+                }
+            };
+
+            const drawSpeechBubble = (text, x, y) => {
+                const tw = measurePixelText(text);
+                const bw = tw + 8;
+                const bh = 11;
+                px(x, y, bw, bh, "#e8f5ed");
+                px(x + 1, y - 1, bw - 2, 1, "#8fcfaf");
+                px(x + 1, y + bh, bw - 2, 1, "#8fcfaf");
+                px(x - 1, y + 1, 1, bh - 2, "#8fcfaf");
+                px(x + bw, y + 1, 1, bh - 2, "#8fcfaf");
+                // Bubble tail
+                px(x + 6, y + bh + 1, 3, 2, "#e8f5ed");
+                px(x + 6, y + bh + 3, 2, 1, "#8fcfaf");
+                drawPixelText(text, x + 4, y + 3, "#102119");
+            };
+
+            const drawBackdrop = (tick) => {
+                // Dark emerald-slate studio wall
+                px(0, 0, 160, 96, "#0b1411");
+                // Subtle retro wall grid lines
+                for (let gx = 16; gx < 160; gx += 24) {
+                    px(gx, 0, 1, 70, "#101d18");
+                }
+                for (let gy = 14; gy < 70; gy += 14) {
+                    px(0, gy, 160, 1, "#101d18");
+                }
+
+                // Small wall status board (top-left)
+                px(8, 8, 26, 15, "#172721");
+                px(9, 9, 24, 13, "#08100d");
+                px(11, 11, 2, 2, tick % 6 < 3 ? "#4ade80" : "#22c55e");
+                px(15, 11, 12, 2, "#325144");
+                px(11, 15, 8, 2, "#4f9c7a");
+                px(21, 15, 9, 2, tick % 8 < 4 ? "#8fb9ca" : "#325144");
+                px(11, 19, 18, 1, "#21382f");
+
+                // Workbench / Desk
+                px(0, 70, 160, 3, "#3b5247");
+                px(0, 73, 160, 3, "#263830");
+                px(0, 76, 160, 20, "#131e19");
+
+                // Steaming coffee mug on left side of desk
+                px(11, 63, 7, 7, "#dce8e0");
+                px(12, 64, 5, 1, "#5c3b28");
+                px(18, 65, 2, 3, "#b9cbc0");
+                const steamOffset = tick % 6;
+                if (steamOffset < 3) {
+                    px(13, 60 - steamOffset, 1, 2, "#6ea88b");
+                    px(16, 59 - steamOffset, 1, 2, "#4f7c66");
+                } else {
+                    px(14, 61 - (steamOffset - 3), 1, 2, "#6ea88b");
+                    px(15, 58 - (steamOffset - 3), 1, 2, "#4f7c66");
+                }
+            };
+
+            // 8-Bit Bagus sprite modeled after asset/about_me.png
+            const drawBagus = (tick, pose) => {
+                const bob = tick % 8 < 4 ? 0 : 1;
+                const blink = tick % 30 === 0;
+                const bx = 35;
+                const by = 29 + bob;
+
+                // Chair back behind Bagus
+                px(bx - 5, by + 18, 24, 22, "#1c2622");
+                px(bx - 3, by + 20, 20, 18, "#26332d");
+
+                // Neck & shadow
+                px(bx + 5, by + 15, 5, 4, "#cc966c");
+
+                // Center-parted black hair (matches about_me.png)
+                px(bx + 1, by - 1, 13, 4, "#111318");
+                px(bx, by + 1, 15, 5, "#111318");
+                px(bx + 2, by, 4, 2, "#242934"); // hair highlight left
+                px(bx + 9, by, 4, 2, "#242934"); // hair highlight right
+                px(bx + 6, by, 2, 2, "#0a0c10"); // center part
+                // Side hair framing ears
+                px(bx, by + 4, 2, 6, "#111318");
+                px(bx + 13, by + 4, 2, 6, "#111318");
+
+                // Face & Ears
+                px(bx, by + 7, 1, 3, "#cc966c");
+                px(bx + 14, by + 7, 1, 3, "#cc966c");
+                px(bx + 2, by + 4, 11, 11, "#e5b085");
+                px(bx + 3, by + 14, 9, 2, "#cc966c");
+                // Center hair swoop dipping slightly on forehead
+                px(bx + 2, by + 3, 4, 2, "#111318");
+                px(bx + 9, by + 3, 4, 2, "#111318");
+
+                // Eyes & eyebrows
+                px(bx + 3, by + 7, 3, 1, "#1a1d24");
+                px(bx + 9, by + 7, 3, 1, "#1a1d24");
+                if (blink) {
+                    px(bx + 4, by + 9, 2, 1, "#2a1d17");
+                    px(bx + 9, by + 9, 2, 1, "#2a1d17");
+                } else {
+                    px(bx + 4, by + 9, 2, 2, "#111318");
+                    px(bx + 9, by + 9, 2, 2, "#111318");
+                }
+
+                // Nose & friendly smile
+                px(bx + 7, by + 10, 1, 2, "#cc966c");
+                px(bx + 5, by + 13, 5, 1, "#9c6348");
+
+                // Black collared shirt (matches about_me.png)
+                px(bx - 2, by + 19, 19, 22 - bob, "#151820");
+                px(bx, by + 18, 15, 4, "#1e222d");
+                // Shirt collar & placket
+                px(bx + 3, by + 17, 3, 3, "#2b3140");
+                px(bx + 9, by + 17, 3, 3, "#2b3140");
+                px(bx + 7, by + 20, 1, 14, "#252a36");
+                px(bx + 7, by + 23, 1, 1, "#4e5769");
+                px(bx + 7, by + 28, 1, 1, "#4e5769");
+
+                // ICT Emerald ID Lanyard
+                px(bx + 4, by + 19, 1, 7, "#4f9c7a");
+                px(bx + 10, by + 19, 1, 7, "#4f9c7a");
+                px(bx + 5, by + 25, 5, 2, "#4f9c7a");
+                px(bx + 5, by + 27, 5, 6, "#e6f2eb");
+                px(bx + 6, by + 28, 3, 2, "#4f9c7a");
+
+                // Scene-specific animated right arm & tool
+                if (pose === "repair") {
+                    const toolLift = tick % 4 < 2 ? 0 : 2;
+                    px(bx + 14, by + 22, 6, 4, "#1e222d");
+                    px(bx + 19, by + 24 + toolLift, 7, 3, "#e5b085");
+                    // Pixel screwdriver
+                    px(bx + 25, by + 22 + toolLift, 4, 4, "#3b82f6");
+                    px(bx + 29, by + 24 + toolLift, 7, 1, "#cbd5e1");
+                } else if (pose === "scan") {
+                    px(bx + 14, by + 22, 6, 4, "#1e222d");
+                    px(bx + 20, by + 22, 6, 3, "#e5b085");
+                    // Handheld asset barcode scanner
+                    px(bx + 25, by + 19, 5, 4, "#334155");
+                    px(bx + 26, by + 23, 2, 4, "#475569");
+                    px(bx + 29, by + 20, 1, 2, "#4ade80");
+                } else {
+                    // Typing hands reaching onto desk/laptop
+                    const tap = tick % 2;
+                    px(bx + 14, by + 24, 6, 4, "#1e222d");
+                    px(bx + 19, by + 26 + tap, 5, 3, "#e5b085");
+                    px(bx + 17, by + 29 - tap, 4, 2, "#cc966c");
+                }
+            };
+
+            const drawLaptop = (x, y, screenColor, accentColor) => {
+                // Laptop base
+                px(x, y + 10, 26, 3, "#64748b");
+                px(x + 2, y + 9, 20, 1, "#94a3b8");
+                // Laptop screen lid
+                px(x + 4, y - 4, 22, 14, "#334155");
+                px(x + 6, y - 2, 18, 10, screenColor);
+                px(x + 8, y, 8, 2, accentColor);
+                px(x + 8, y + 4, 12, 1, "#8fcfaf");
+                px(x + 8, y + 6, 9, 1, "#4f9c7a");
+            };
+
+            // Scene 0: Laptop Hardware Repair & RAM Upgrade
+            const drawRepairScene = (tick) => {
+                drawBagus(tick, "repair");
+
+                // Open Laptop with exposed green motherboard on workbench
+                const lx = 70;
+                const ly = 56;
+                px(lx + 1, ly - 5, 25, 14, "#334155");
+                px(lx + 3, ly - 3, 21, 10, "#0b1a14");
+                // Diagnostic bars on opened laptop screen
+                px(lx + 5, ly - 1, 10, 2, "#4ade80");
+                px(lx + 5, ly + 2, 15, 2, tick % 6 < 3 ? "#facc15" : "#4ade80");
+                // Base chassis + green PCB + RAM slot
+                px(lx - 1, ly + 9, 30, 5, "#475569");
+                px(lx + 2, ly + 10, 24, 3, "#15803d");
+                px(lx + 6, ly + 10, 9, 2, "#22c55e");
+                px(lx + 7, ly + 12, 7, 1, "#facc15"); // RAM gold contacts
+
+                // Flying repair sparks above motherboard
+                const sparkTick = tick % 6;
+                px(75 + (sparkTick % 3) * 2, 56 - sparkTick * 2, 2, 2, "#facc15");
+                px(86 - (sparkTick % 2) * 3, 55 - ((sparkTick + 2) % 5) * 2, 2, 2, "#38bdf8");
+                if (sparkTick % 2 === 0) {
+                    px(80, 52, 2, 2, "#4ade80");
+                }
+
+                // Diagnostic health monitor on right side of desk
+                px(114, 39, 34, 24, "#26332d");
+                px(116, 41, 30, 18, "#091410");
+                px(128, 63, 6, 5, "#334155");
+                px(122, 68, 18, 2, "#475569");
+                drawPixelText("RAM", 119, 43, "#8fcfaf");
+                const fillW = Math.min(24, ((tick * 2) % 26));
+                px(119, 51, 24, 4, "#1a3026");
+                px(119, 51, fillW, 4, "#4ade80");
+
+                drawSpeechBubble(scenes[0].bubble, 24, 13);
+            };
+
+            // Scene 1: Network Setup, Router & Server Rack
+            const drawNetworkScene = (tick) => {
+                drawBagus(tick, "type");
+                drawLaptop(64, 57, "#091612", tick % 4 < 2 ? "#4ade80" : "#38bdf8");
+
+                // LAN cable with flowing data packets
+                px(90, 67, 34, 2, "#334d42");
+                const pktX = 91 + ((tick * 3) % 31);
+                px(pktX, 67, 3, 2, "#4ade80");
+                const pktX2 = 122 - ((tick * 2) % 30);
+                px(pktX2, 67, 2, 2, "#38bdf8");
+
+                // Wi-Fi Router on desk with expanding signal waves
+                px(98, 63, 18, 6, "#1e293b");
+                px(101, 56, 2, 7, "#64748b");
+                px(111, 56, 2, 7, "#64748b");
+                px(101, 65, 2, 2, "#4ade80");
+                px(105, 65, 2, 2, tick % 4 < 2 ? "#4ade80" : "#15803d");
+                px(109, 65, 2, 2, "#38bdf8");
+
+                const waveStep = tick % 6;
+                if (waveStep >= 0) px(104, 51, 6, 1, "#4ade80");
+                if (waveStep >= 2) {
+                    px(101, 48, 12, 1, "#38bdf8");
+                    px(100, 49, 1, 1, "#38bdf8");
+                    px(113, 49, 1, 1, "#38bdf8");
+                }
+                if (waveStep >= 4) {
+                    px(98, 45, 18, 1, "#8fcfaf");
+                    px(97, 46, 1, 1, "#8fcfaf");
+                    px(116, 46, 1, 1, "#8fcfaf");
+                }
+
+                // Server Rack on right
+                px(124, 18, 28, 52, "#1c2622");
+                px(126, 20, 24, 48, "#0c1411");
+                for (let slot = 0; slot < 4; slot++) {
+                    const sy = 23 + slot * 11;
+                    px(128, sy, 20, 8, "#1f2e28");
+                    px(130, sy + 2, 8, 2, "#2f473e");
+                    const blinkOn = (tick + slot) % 4 < 2;
+                    px(141, sy + 2, 2, 2, blinkOn ? "#4ade80" : "#15803d");
+                    px(145, sy + 2, 2, 2, (tick + slot * 2) % 5 === 0 ? "#facc15" : "#4ade80");
+                }
+
+                drawSpeechBubble(scenes[1].bubble, 21, 13);
+            };
+
+            // Scene 2: Endpoint Security & Threat Blocking
+            const drawSecurityScene = (tick) => {
+                drawBagus(tick, "type");
+
+                // Security console monitor
+                drawLaptop(63, 57, "#091712", "#4ade80");
+
+                // Glowing emerald Shield sprite
+                const sx = 104;
+                const sy = 36;
+                px(sx + 2, sy, 14, 3, "#4f9c7a");
+                px(sx, sy + 3, 18, 10, "#4f9c7a");
+                px(sx + 2, sy + 13, 14, 4, "#4f9c7a");
+                px(sx + 4, sy + 17, 10, 3, "#4f9c7a");
+                px(sx + 7, sy + 20, 4, 2, "#4f9c7a");
+                // Inner bright shield core & checkmark
+                px(sx + 3, sy + 3, 12, 11, "#0f291e");
+                px(sx + 5, sy + 9, 2, 2, "#4ade80");
+                px(sx + 7, sy + 11, 2, 2, "#4ade80");
+                px(sx + 9, sy + 9, 2, 2, "#4ade80");
+                px(sx + 11, sy + 7, 2, 2, "#4ade80");
+
+                // Incoming red pixel bug/virus sprite blocked by shield laser
+                const cycle = tick % 12;
+                const bugX = 152 - cycle * 3;
+                if (cycle < 9) {
+                    // Red pixel bug approaching from right
+                    px(bugX, 42, 6, 5, "#ef4444");
+                    px(bugX - 1, 41, 2, 2, "#fca5a5");
+                    px(bugX + 5, 41, 2, 2, "#fca5a5");
+                    px(bugX + 1, 44, 1, 1, "#111");
+                    px(bugX + 4, 44, 1, 1, "#111");
+                }
+                if (cycle >= 6 && cycle <= 9) {
+                    // Shield zap beam!
+                    px(sx + 18, 44, Math.max(4, bugX - (sx + 18)), 2, "#38bdf8");
+                }
+                if (cycle >= 9) {
+                    // Blocked green check particles
+                    px(bugX - 2, 39, 2, 2, "#4ade80");
+                    px(bugX + 3, 45, 2, 2, "#4ade80");
+                    px(bugX, 36, 2, 2, "#8fcfaf");
+                }
+
+                drawSpeechBubble(scenes[2].bubble, 19, 13);
+            };
+
+            // Scene 3: IT Asset Audit & Provisioning
+            const drawAssetScene = (tick) => {
+                drawBagus(tick, "scan");
+
+                // New workstation laptop being provisioned & scanned
+                const ax = 82;
+                const ay = 57;
+                drawLaptop(ax, ay, "#0b1a14", "#4ade80");
+                // Asset tag sticker on desk/laptop edge
+                px(ax + 8, ay + 11, 8, 2, "#facc15");
+
+                // Green scanner laser beam sweeping across asset tag
+                const sweepY = ay + 2 + (tick % 6) * 2;
+                px(65, 51, 17, 1, "#4ade80");
+                px(ax, sweepY, 16, 1, "#4ade80");
+
+                // Stacked IT device boxes on right
+                px(120, 52, 26, 18, "#8c6d46");
+                px(122, 54, 22, 2, "#b59060");
+                px(129, 57, 8, 5, "#e8ece9"); // shipping/asset label
+                px(124, 36, 20, 16, "#755938");
+                px(126, 38, 16, 2, "#9c7a4f");
+                px(130, 41, 8, 4, "#e8ece9");
+
+                // Floating pixel OK checkmarks
+                const floatY = (tick % 8);
+                drawPixelText("OK", 104, 34 - floatY, "#4ade80");
+                drawPixelText("OK", 132, 28 - ((floatY + 4) % 8), "#8fcfaf");
+
+                drawSpeechBubble(scenes[3].bubble, 24, 13);
+            };
+
+            let currentSceneIndex = 0;
+            let frameTick = 0;
+            let lastFrameTime = 0;
+            let autoCycleTimer = null;
+            let isHoveringStage = false;
+            const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+            const renderPixelFrame = () => {
+                ctx.clearRect(0, 0, 160, 96);
+                drawBackdrop(frameTick);
+                if (currentSceneIndex === 0) drawRepairScene(frameTick);
+                else if (currentSceneIndex === 1) drawNetworkScene(frameTick);
+                else if (currentSceneIndex === 2) drawSecurityScene(frameTick);
+                else drawAssetScene(frameTick);
+            };
+
+            const setActiveScene = (index, notify = false) => {
+                currentSceneIndex = ((index % scenes.length) + scenes.length) % scenes.length;
+                const scene = scenes[currentSceneIndex];
+
+                consoleTabs.forEach((tab) => {
+                    const isMatch = Number(tab.dataset.scene) === currentSceneIndex;
+                    tab.classList.toggle("active", isMatch);
+                    tab.setAttribute("aria-selected", String(isMatch));
+                });
+
+                if (pixelStatusText) {
+                    pixelStatusText.textContent = scene.cmd;
+                }
+                if (pixelSceneCounter) {
+                    pixelSceneCounter.textContent = `0${currentSceneIndex + 1} / 0${scenes.length}`;
+                }
+
+                renderPixelFrame();
+                if (notify) {
+                    triggerPillAlert(scene.alert, "👾", 1800);
+                }
+            };
+
+            const resetSceneAutoCycle = () => {
+                clearInterval(autoCycleTimer);
+                autoCycleTimer = setInterval(() => {
+                    if (isHoveringStage) return;
+                    setActiveScene(currentSceneIndex + 1, false);
+                }, 5200);
+            };
 
             consoleTabs.forEach((tab) => {
-                const isActive = tab.dataset.module === moduleKey;
-                tab.classList.toggle("active", isActive);
-                tab.setAttribute("aria-selected", String(isActive));
+                tab.addEventListener("click", () => {
+                    const idx = Number(tab.dataset.scene);
+                    if (Number.isNaN(idx)) return;
+                    setActiveScene(idx, true);
+                    resetSceneAutoCycle();
+                });
             });
 
-            consoleCmdText.textContent = mod.cmd;
-            consoleLogs.innerHTML = "";
-            mod.logs.forEach((entry) => {
-                const row = document.createElement("div");
-                row.className = "log-line";
-
-                const badge = document.createElement("span");
-                badge.className = `log-badge ${entry.cls}`;
-                badge.textContent = entry.badge;
-
-                const msg = document.createElement("span");
-                msg.className = "log-msg";
-                msg.textContent = entry.msg;
-
-                row.appendChild(badge);
-                row.appendChild(msg);
-                consoleLogs.appendChild(row);
-            });
-
-            if (metricVal1 && metricFill1) {
-                metricVal1.textContent = mod.metrics[0].val;
-                metricFill1.style.width = `${mod.metrics[0].fill}%`;
-            }
-            if (metricVal2 && metricFill2) {
-                metricVal2.textContent = mod.metrics[1].val;
-                metricFill2.style.width = `${mod.metrics[1].fill}%`;
-            }
-            if (metricVal3 && metricFill3) {
-                metricVal3.textContent = mod.metrics[2].val;
-                metricFill3.style.width = `${mod.metrics[2].fill}%`;
+            if (pixelScreen) {
+                pixelScreen.addEventListener("click", () => {
+                    setActiveScene(currentSceneIndex + 1, true);
+                    resetSceneAutoCycle();
+                });
             }
 
-            if (notify) {
-                triggerPillAlert(mod.alert, "🖥️", 1800);
+            consoleStage.addEventListener("mouseenter", () => { isHoveringStage = true; });
+            consoleStage.addEventListener("mouseleave", () => { isHoveringStage = false; });
+
+            if (!prefersReducedMotion) {
+                consoleStage.addEventListener("mousemove", (e) => {
+                    if (window.innerWidth <= 992) return;
+                    const rect = consoleStage.getBoundingClientRect();
+                    const xRatio = (e.clientX - rect.left) / rect.width - 0.5;
+                    const yRatio = (e.clientY - rect.top) / rect.height - 0.5;
+                    consoleCard.style.setProperty("--rx", `${(-yRatio * 6).toFixed(2)}deg`);
+                    consoleCard.style.setProperty("--ry", `${(xRatio * 7).toFixed(2)}deg`);
+                });
+
+                consoleStage.addEventListener("mouseleave", () => {
+                    consoleCard.style.setProperty("--rx", "0deg");
+                    consoleCard.style.setProperty("--ry", "0deg");
+                });
             }
-        };
 
-        const resetConsoleCycle = () => {
-            clearInterval(consoleCycleInterval);
-            consoleCycleInterval = setInterval(() => {
-                if (isConsoleHovering) return;
-                const nextIdx = (moduleOrder.indexOf(activeModuleKey) + 1) % moduleOrder.length;
-                renderItModule(moduleOrder[nextIdx], false);
-            }, 6500);
-        };
+            const animatePixelLoop = (timestamp) => {
+                if (timestamp - lastFrameTime >= 130) {
+                    lastFrameTime = timestamp;
+                    frameTick++;
+                    renderPixelFrame();
+                }
+                requestAnimationFrame(animatePixelLoop);
+            };
 
-        const runDiagnosticsScan = () => {
-            const latency = Math.floor(Math.random() * 9) + 10; // 10ms - 18ms
-            if (consoleRunBtn) consoleRunBtn.classList.add("is-scanning");
-            if (floatLatencyText) floatLatencyText.textContent = `Latency ${latency}ms • Stable`;
-
-            renderItModule(activeModuleKey, false);
-            triggerPillAlert(`Diagnostics OK (${latency}ms)`, "⚡", 2200);
-
-            setTimeout(() => {
-                if (consoleRunBtn) consoleRunBtn.classList.remove("is-scanning");
-            }, 650);
-            resetConsoleCycle();
-        };
-
-        [...consoleTabs, ...floatChips].forEach((trigger) => {
-            trigger.addEventListener("click", () => {
-                const moduleKey = trigger.dataset.module;
-                if (!moduleKey) return;
-                renderItModule(moduleKey, true);
-                resetConsoleCycle();
-            });
-        });
-
-        if (consoleRunBtn) {
-            consoleRunBtn.addEventListener("click", runDiagnosticsScan);
+            setActiveScene(0, false);
+            resetSceneAutoCycle();
+            requestAnimationFrame(animatePixelLoop);
         }
-
-        consoleStage.addEventListener("mouseenter", () => { isConsoleHovering = true; });
-        consoleStage.addEventListener("mouseleave", () => { isConsoleHovering = false; });
-
-        if (!prefersReducedMotion) {
-            consoleStage.addEventListener("mousemove", (e) => {
-                if (window.innerWidth <= 992) return;
-                const rect = consoleStage.getBoundingClientRect();
-                const xRatio = (e.clientX - rect.left) / rect.width - 0.5;
-                const yRatio = (e.clientY - rect.top) / rect.height - 0.5;
-                consoleCard.style.setProperty("--rx", `${(-yRatio * 6).toFixed(2)}deg`);
-                consoleCard.style.setProperty("--ry", `${(xRatio * 7).toFixed(2)}deg`);
-            });
-
-            consoleStage.addEventListener("mouseleave", () => {
-                consoleCard.style.setProperty("--rx", "0deg");
-                consoleCard.style.setProperty("--ry", "0deg");
-            });
-        }
-
-        renderItModule("network", false);
-        resetConsoleCycle();
     }
 
 });
